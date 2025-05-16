@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2025 Basingstoke Repair Network <dev@basingstoke.repair>
+//
+// SPDX-License-Identifier: CC0-1.0
+
 // @ts-check
 import { defineConfig } from 'astro/config';
 
