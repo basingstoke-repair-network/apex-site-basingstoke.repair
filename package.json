@@ -1,0 +1,23 @@
+{
+  "name": "apex-site-basingstoke-repair",
+  "type": "module",
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@iconify-json/mdi": "^1.2.3",
+    "@tailwindcss/vite": "^4.1.4",
+    "astro": "^5.7.4",
+    "astro-compress": "^2.3.8",
+    "astro-decap": "^0.3.0",
+    "astro-icon": "^1.1.5",
+    "autoprefixer": "^10.4.21",
+    "fulldev-ui": "^0.3.8",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.1.4"
+  }
+}
