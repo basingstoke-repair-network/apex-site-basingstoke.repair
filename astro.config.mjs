@@ -23,7 +23,7 @@ export default defineConfig({
 
   vite: {
     plugins: [tailwindcss()]
-  }
+  },
 
   legacy: {
     collections: true,
