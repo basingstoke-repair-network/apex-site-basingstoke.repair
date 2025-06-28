@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Any custom styles that Tailwind can't easily handle, e.g., for icon */
+.hamburger-menu .icon {
+  color: #e86046;
+  font-size: 2rem;
+}
+
+.hamburger-menu .menu {
+  z-index: 20;
+  flex-direction: column;
+  display: none; /* Hidden by default */
+  align-items: flex-end; /* changed from end to flex-end for Tailwind consistency */
+  width: fit-content;
+  position: absolute;
+  top: 3rem;
+  right: 1rem;
+  background-color: white;
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+.hamburger-menu .menu.active {
+  display: flex;
+}
+
+/* SPDX-FileCopyrightText: 2025 Basingstoke Repair Network <dev@basingstoke.repair>
+   SPDX-License-Identifier: CC0-1.0
+*/
+

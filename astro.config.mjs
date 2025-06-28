@@ -2,34 +2,17 @@
 //
 // SPDX-License-Identifier: CC0-1.0
 
-// @ts-check
+// astro.config.mjs
 import { defineConfig } from 'astro/config';
-
-import tailwindcss from "@tailwindcss/vite";
-import icon from "astro-icon";
-
-import decapCms from 'astro-decap';
-import fulldev from 'fulldev-ui/integration'
+import tailwind from '@astrojs/tailwind'; // Import the official Astro Tailwind integration
+import image from '@astrojs/image';       // Import the official Astro Image integration (if you're using <Image />)
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [decapCms({
-      cmsConfig: {
-        local_backend: true,
-        backend: { name: "github", repo: "basingstoke-repair-network/apex-site-basingstoke.repair" },
-        media_folder: "public",
-        public_folder: "/",
-      },
-    }),
-    fulldev(),
-    icon(),
+  integrations: [
+    tailwind(), // Use the official Astro Tailwind integration
+    image(),    // Use the official Astro Image integration (if applicable)
   ],
-
-  vite: {
-    plugins: [tailwindcss()]
-  },
-
-  legacy: {
-    collections: true,
-  },
+  // Remove any 'vite' or 'postcss' blocks if they are trying to configure Tailwind
+  // or PostCSS manually. The `tailwind()` integration handles it.
 });

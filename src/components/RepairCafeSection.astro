@@ -1,0 +1,47 @@
+<!-- SPDX-FileCopyrightText: 2025 Basingstoke Repair Network <dev@basingstoke.repair>
+
+  SPDX-License-Identifier: CC0-1.0
+-->
+
+---
+import { Image } from 'astro:assets';
+
+interface Props {
+  id: string;
+  title: string;
+  imageSrc?: ImageMetadata; // Optional image
+  imageAlt?: string;
+  when?: string;
+  where?: string;
+  note?: string; // For "Coming later in 2025" etc.
+  subdomainUrl?: string; // New: Optional URL for the subdomain
+}
+
+const { id, title, imageSrc, imageAlt, when, where, note, subdomainUrl } = Astro.props;
+---
+
+{subdomainUrl ? (
+  <a href={subdomainUrl} target="_blank" rel="noopener noreferrer" class="block w-full h-full">
+    <section id={id} class="mb-8 p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 transform hover:-translate-y-1">
+      <h2 class="text-brn-primary mb-4 text-2xl font-semibold">{title}</h2>
+      {imageSrc && imageAlt && (
+        <Image src={imageSrc} alt={imageAlt} class="w-full max-w-xl h-auto mb-4 rounded-lg shadow-md" />
+      )}
+      {when && <p class="mb-1 text-lg"><span class="font-medium">When?</span> {when}</p>}
+      {where && <p class="mb-1 text-lg"><span class="font-medium">Where?</span> {where}</p>}
+      {note && <p class="text-lg italic">{note}</p>}
+      <slot /> {/* For any additional content within the section */}
+    </section>
+  </a>
+) : (
+  <section id={id} class="mb-8 p-6 bg-white rounded-lg shadow-md">
+    <h2 class="text-brn-primary mb-4 text-2xl font-semibold">{title}</h2>
+    {imageSrc && imageAlt && (
+      <Image src={imageSrc} alt={imageAlt} class="w-full max-w-xl h-auto mb-4 rounded-lg shadow-md" />
+    )}
+    {when && <p class="mb-1 text-lg"><span class="font-medium">When?</span> {when}</p>}
+    {where && <p class="mb-1 text-lg"><span class="font-medium">Where?</span> {where}</p>}
+    {note && <p class="text-lg italic">{note}</p>}
+    <slot /> {/* For any additional content within the section */}
+  </section>
+)}

@@ -1,0 +1,34 @@
+# SPDX-FileCopyrightText: 2025 Basingstoke Repair Network <dev@basingstoke.repair>
+# SPDX-License-Identifier: CC0-1.0
+
+
+
+backend:
+  name: git-gateway
+  branch: main # or 'master' if that's your default branch
+
+# Uncomment the following lines if you want to use GitHub OAuth for authentication
+# publish_mode: editorial_workflow # Recommended for multi-user or review process
+# media_folder: "public/uploads" # Media files will be stored in public/uploads
+# public_folder: "/uploads" # The public path for media files
+
+collections:
+  - name: "pages"
+    label: "Pages"
+    files:
+      - file: "src/content/pages/introduction.md"
+        label: "Introduction"
+        name: "introduction"
+        fields:
+          - {label: "Title", name: "title", widget: "string"}
+          - {label: "Body", name: "body", widget: "markdown"}
+  - name: "BRN Herald"
+    label: "Herald"
+    folder: "src/content/herald"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Publish Date", name: "date", widget: "datetime"}
+      - {label: "Featured Image", name: "image", widget: "image", required: false}
+      - {label: "Body", name: "body", widget: "markdown"}

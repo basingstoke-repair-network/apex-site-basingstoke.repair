@@ -1,0 +1,26 @@
+<!-- SPDX-FileCopyrightText: 2025 Basingstoke Repair Network <dev@basingstoke.repair>
+
+  SPDX-License-Identifier: CC0-1.0
+-->
+
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+  </head>
+  <body class="font-sans leading-tight text-brn-dark bg-brn-light overscroll-x-auto">
+    <slot />
+  </body>
+</html>

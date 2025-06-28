@@ -5,9 +5,145 @@
 -->
 
 ---
-import Base from "../layouts/Base.astro";
+import { Image } from 'astro:assets';
+
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import RepairCafeSection from '../components/RepairCafeSection.astro';
+import ExpandableCard from '../components/ExpandableCard.astro'; // NEW: Import ExpandableCard component
+
+// Astro Content Collections: Import getEntry for fetching content
+import { getEntry } from 'astro:content';
+
+// Import images for Repair Cafe sections (ensure these paths are correct relative to index.astro)
+import ChinehamTeamPhoto from '../images/team-photo-chineham.jpg';
+import HatchWarrenTeamPhoto from '../images/team-photo-hatch.jpg';
+
+// Import images for supported by section (ensure these paths are correct relative to index.astro)
+import BDCouncilLogo from '../images/bd-council-logo.jpg';
+import FourLanesTrustLogo from '../images/four-lanes-trust-logo.jpg';
+import RestartersLogo from '../images/restarters-logo.jpg';
+import NorthHampshireRepairNetworkLogo from '../images/north-hampshire-repair-network-logo.jpg';
+import RepairCafeInternationalLogo from '../images/repair-cafe-international-logo.jpg';
+import GreenerBasingstokeLogo from '../images/greener-basingstoke-logo.jpg';
+
+// Astro Content Collections: Fetch introduction content
+const introduction = await getEntry('pages', 'introduction');
+// Render the Markdown content of the introduction. If introduction is null, handle it gracefully.
+const { Content } = introduction ? await introduction.render() : { Content: () => Astro.render`No introduction content found.` };
+
+// Ensure image imports are used within the template to avoid "Image is not defined" if not directly rendered
+// This is more of a mental check; the `Image` component takes care of it, but sometimes if an imported image
+// is never used, Astro might optimize it out or not process it correctly.
+// Given your current setup, these should be used within Image components, so they are properly processed.
 ---
 
-<Base title="Home">
-	<h1>Welcome, to Basingstoke Repair Network!</h1>
-</Base>
+<Layout title="Basingstoke Repair Network">
+  <Header />
+
+  <main class="p-4 md:p-8 lg:p-12 max-w-5xl mx-auto">
+    <section id="introduction" class="mb-8 p-6 bg-white rounded-lg shadow-md">
+      <h2 class="text-brn-primary mb-4 text-2xl font-semibold">
+        {introduction ? introduction.data.title : "Welcome to Basingstoke Repair Network"}
+      </h2>
+      <p class="mb-4 text-lg">TODO: simple photo montage</p>
+      {introduction ? <Content /> : <p>Placeholder introduction text if CMS content not found.</p>}
+    </section>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
+      <RepairCafeSection
+        id="chineham"
+        title="Chineham"
+        imageSrc={ChinehamTeamPhoto}
+        imageAlt="Chineham Team Photo"
+        when="3rd Saturday of each month 10am-1pm"
+        where="Christ Church Chineham, Reading Road (next to Surgery), RG24 8LT"
+        subdomainUrl="https://chineham.basingstokerepairnetwork.org.uk"
+      />
+
+      <RepairCafeSection
+        id="hatch-warren"
+        title="Hatch Warren & Beggarwood"
+        imageSrc={HatchWarrenTeamPhoto}
+        imageAlt="Hatch Warren Team Photo"
+        when="1st Saturday of each month 10.30am-1pm"
+        where="Hatch Warren Community Centre, RG22 4XF"
+        subdomainUrl="https://hatchwarren.basingstokerepairnetwork.org.uk"
+      />
+
+      <RepairCafeSection
+        id="kings-furlong"
+        title="Kings Furlong"
+        note="Coming later in 2025"
+      />
+    </div>
+
+    <section id="other-local-repair-cafes" class="mb-8 p-6 bg-white rounded-lg shadow-md">
+      <h2 class="text-brn-primary mb-4 text-2xl font-semibold">Other Local Repair Cafés</h2>
+      <p class="text-lg">TODO: Add links to other local repair cafes</p>
+    </section>
+
+    <section id="get-involved" class="mb-8 p-6 bg-white rounded-lg shadow-md">
+      <h2 class="text-brn-primary mb-4 text-2xl font-semibold">Get Involved</h2>
+      <p class="text-lg">If you have some skills in repairing clothes or household items, or could help welcome people or serve drinks, please get in touch to explore volunteering with our friendly team on ***REMOVED*** or <a href="mailto:info@chinehamrepair.org.uk" class="text-brn-primary hover:underline">info@chinehamrepair.org.uk</a>.</p>
+    </section>
+
+    <section id="common-info" class="mb-8">
+      <h2 class="text-brn-primary mb-4 text-2xl font-semibold">Common Repair Cafe Info & FAQs</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <ExpandableCard title="What can I bring for repair?">
+          <p>Common items include small electrical appliances (toasters, lamps), textiles (torn clothes, broken zips), bikes, toys, and sometimes even furniture or dull tools. If in doubt, bring it along or contact us!</p>
+        </ExpandableCard>
+        <ExpandableCard title="How much does it cost?">
+          <p>Repair Cafés are free! We operate on a donation basis. Any contributions help us cover venue costs, tools, and materials.</p>
+        </ExpandableCard>
+        <ExpandableCard title="Do I need to book?">
+          <p>Generally, no booking is required. Just turn up during opening hours. However, for very complex items or if you want to confirm a specific repairer's availability, it's sometimes good to check beforehand.</p>
+        </ExpandableCard>
+        <ExpandableCard title="Can I learn how to repair?">
+          <p>Absolutely! The idea of a Repair Café is not just to get things fixed, but also to learn. Our repairers are happy to show you how they fix things and guide you through the process.</p>
+        </ExpandableCard>
+        <ExpandableCard title="What if my item can't be fixed?">
+          <p>While our volunteers do their best, not every item can be repaired. We'll always give you an honest assessment and offer advice on what steps to take next, if any.</p>
+        </ExpandableCard>
+      </div>
+    </section>
+
+    <section id="supported-by" class="mb-8 p-6 bg-white rounded-lg shadow-md">
+      <h2 class="text-brn-primary mb-4 text-2xl font-semibold">Supported by</h2>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-8 items-center justify-center">
+        <div class="flex flex-col items-center justify-center text-center">
+          <Image src={BDCouncilLogo} alt="B+D Council" width={120} height={120} class="max-w-full h-auto" />
+        </div>
+        <div class="flex flex-col items-center justify-center text-center">
+          <Image src={FourLanesTrustLogo} alt="Four Lanes Trust" width={120} height={120} class="max-w-full h-auto" />
+          <p class="mt-2 text-sm">Four Lanes Trust</p>
+        </div>
+        <div class="flex flex-col items-center justify-center text-center">
+          <a href="https://www.restarters.net/" target="_blank" rel="noopener noreferrer">
+            <Image src={RestartersLogo} alt="Restarters" width={120} height={120} class="max-w-full h-auto" />
+          </a>
+        </div>
+        <div class="flex flex-col items-center justify-center text-center">
+          <a href="https://www.northhantsrepairnetwork.org/" target="_blank" rel="noopener noreferrer">
+            <Image src={NorthHampshireRepairNetworkLogo} alt="North Hampshire Repair Network" width={120} height={120} class="max-w-full h-auto" />
+          </a>
+        </div>
+        <div class="flex flex-col items-center justify-center text-center">
+          <a href="https://repaircafe.org/" target="_blank" rel="noopener noreferrer">
+            <Image src={RepairCafeInternationalLogo} alt="Repair Cafe International" width={120} height={120} class="max-w-full h-auto" />
+          </a>
+        </div>
+        <div class="flex flex-col items-center justify-center text-center">
+          <Image src={GreenerBasingstokeLogo} alt="Greener Basingstoke" width={120} height={120} class="max-w-full h-auto" />
+        </div>
+        <div class="flex flex-col items-center justify-center text-center">
+          <p class="text-lg">National Lottery</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>
