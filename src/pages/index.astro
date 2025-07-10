@@ -43,7 +43,7 @@ const { Content } = introduction ? await introduction.render() : { Content: () =
   <main class="p-4 md:p-8 lg:p-12 max-w-5xl mx-auto">
     <section id="introduction" class="mb-8 p-6 bg-white rounded-lg shadow-md">
       <h2 class="text-brn-primary mb-4 text-2xl font-semibold">
-        {introduction ? introduction.data.title : "Welcome to Basingstoke Repair Network"}
+        <a href="#introduction" class="hover:underline">#</a> {introduction ? introduction.data.title : "Welcome to Basingstoke Repair Network"}
       </h2>
       <p class="mb-4 text-lg">TODO: simple photo montage</p>
       {introduction ? <Content /> : <p>Placeholder introduction text if CMS content not found.</p>}
@@ -78,17 +78,23 @@ const { Content } = introduction ? await introduction.render() : { Content: () =
     </div>
 
     <section id="other-local-repair-cafes" class="mb-8 p-6 bg-white rounded-lg shadow-md">
-      <h2 class="text-brn-primary mb-4 text-2xl font-semibold">Other Local Repair Cafés</h2>
+      <h2 class="text-brn-primary mb-4 text-2xl font-semibold">
+        <a href="#other-local-repair-cafes" class="hover:underline">#</a> Other Local Repair Cafés
+      </h2>
       <p class="text-lg">TODO: Add links to other local repair cafes</p>
     </section>
 
     <section id="get-involved" class="mb-8 p-6 bg-white rounded-lg shadow-md">
-      <h2 class="text-brn-primary mb-4 text-2xl font-semibold">Get Involved</h2>
+      <h2 class="text-brn-primary mb-4 text-2xl font-semibold">
+        <a href="#get-involved" class="hover:underline">#</a> Get Involved
+      </h2>
       <p class="text-lg">If you have some skills in repairing clothes or household items, or could help welcome people or serve drinks, please get in touch to explore volunteering with our friendly team on ***REMOVED*** or <a href="mailto:info@chinehamrepair.org.uk" class="text-brn-primary hover:underline">info@chinehamrepair.org.uk</a>.</p>
     </section>
 
     <section id="common-info" class="mb-8">
-      <h2 class="text-brn-primary mb-4 text-2xl font-semibold">Common Repair Cafe Info & FAQs</h2>
+      <h2 class="text-brn-primary mb-4 text-2xl font-semibold">
+        <a href="#common-info" class="hover:underline">#</a> Common Repair Cafe Info & FAQs
+      </h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <ExpandableCard title="What can I bring for repair?">
           <p>Common items include small electrical appliances (toasters, lamps), textiles (torn clothes, broken zips), bikes, toys, and sometimes even furniture or dull tools. If in doubt, bring it along or contact us!</p>
@@ -109,7 +115,9 @@ const { Content } = introduction ? await introduction.render() : { Content: () =
     </section>
 
     <section id="supported-by" class="mb-8 p-6 bg-white rounded-lg shadow-md">
-      <h2 class="text-brn-primary mb-4 text-2xl font-semibold">Supported by</h2>
+      <h2 class="text-brn-primary mb-4 text-2xl font-semibold">
+        <a href="#supported-by" class="hover:underline">#</a> Supported by
+      </h2>
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-8 items-center justify-center">
         <div class="flex flex-col items-center justify-center text-center">
           <Image src={BDCouncilLogo} alt="B+D Council" width={120} height={120} class="max-w-full h-auto" />
