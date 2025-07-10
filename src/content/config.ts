@@ -21,7 +21,16 @@ const heraldCollection = defineCollection({
   }),
 });
 
+const faqCollection = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    order: z.number(),
+  }),
+});
+
 export const collections = {
   'pages': pagesCollection,
   'herald': heraldCollection,
+  'faq': faqCollection,
 };

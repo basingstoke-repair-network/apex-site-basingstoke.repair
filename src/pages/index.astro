@@ -12,8 +12,8 @@ import Footer from '../components/Footer.astro';
 import RepairCafeSection from '../components/RepairCafeSection.astro';
 import ExpandableCard from '../components/ExpandableCard.astro'; // NEW: Import ExpandableCard component
 
-// Astro Content Collections: Import getEntry for fetching content
-import { getEntry } from 'astro:content';
+// Astro Content Collections: Import getEntry and getCollection for fetching content
+import { getEntry, getCollection } from 'astro:content';
 
 // Import images for Repair Cafe sections (ensure these paths are correct relative to index.astro)
 import ChinehamTeamPhoto from '../images/team-photo-chineham.jpg';
@@ -34,6 +34,10 @@ import GreenerBasingstokeLogo from '../images/greener-basingstoke-logo.jpg';
 const introduction = await getEntry('pages', 'introduction');
 // Render the Markdown content of the introduction. If introduction is null, handle it gracefully.
 const { Content } = introduction ? await introduction.render() : { Content: () => Astro.render`No introduction content found.` };
+
+// Fetch FAQ items and sort by order
+const faqItems = await getCollection('faq');
+const sortedFaqItems = faqItems.sort((a, b) => a.data.order - b.data.order);
 
 // Ensure image imports are used within the template to avoid "Image is not defined" if not directly rendered
 // This is more of a mental check; the `Image` component takes care of it, but sometimes if an imported image
@@ -119,21 +123,14 @@ const { Content } = introduction ? await introduction.render() : { Content: () =
         <a href="#common-info" class="hover:underline">#</a> Common Repair Cafe Info & FAQs
       </h2>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <ExpandableCard title="What can I bring for repair?">
-          <p>Common items include small electrical appliances (toasters, lamps), textiles (torn clothes, broken zips), bikes, toys, and sometimes even furniture or dull tools. If in doubt, bring it along or contact us!</p>
-        </ExpandableCard>
-        <ExpandableCard title="How much does it cost?">
-          <p>Repair Cafés are free! We operate on a donation basis. Any contributions help us cover venue costs, tools, and materials.</p>
-        </ExpandableCard>
-        <ExpandableCard title="Do I need to book?">
-          <p>Generally, no booking is required. Just turn up during opening hours. However, for very complex items or if you want to confirm a specific repairer's availability, it's sometimes good to check beforehand.</p>
-        </ExpandableCard>
-        <ExpandableCard title="Can I learn how to repair?">
-          <p>Absolutely! The idea of a Repair Café is not just to get things fixed, but also to learn. Our repairers are happy to show you how they fix things and guide you through the process.</p>
-        </ExpandableCard>
-        <ExpandableCard title="What if my item can't be fixed?">
-          <p>While our volunteers do their best, not every item can be repaired. We'll always give you an honest assessment and offer advice on what steps to take next, if any.</p>
-        </ExpandableCard>
+        {sortedFaqItems.map(async (faqItem) => {
+          const { Content: FaqContent } = await faqItem.render();
+          return (
+            <ExpandableCard title={faqItem.data.title}>
+              <FaqContent />
+            </ExpandableCard>
+          );
+        })}
       </div>
     </section>
 
