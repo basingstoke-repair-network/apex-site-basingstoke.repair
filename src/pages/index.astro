@@ -19,6 +19,9 @@ import { getEntry } from 'astro:content';
 import ChinehamTeamPhoto from '../images/team-photo-chineham.jpg';
 import HatchWarrenTeamPhoto from '../images/team-photo-hatch.jpg';
 
+// Import main logo
+import BRNLogo from '../images/BRN-logo-long.png';
+
 // Import images for supported by section (ensure these paths are correct relative to index.astro)
 import BDCouncilLogo from '../images/bd-council-logo.jpg';
 import FourLanesTrustLogo from '../images/four-lanes-trust-logo.jpg';
@@ -39,8 +42,19 @@ const { Content } = introduction ? await introduction.render() : { Content: () =
 ---
 
 <Layout title="Basingstoke Repair Network">
+  <!-- Sticky Header with Logo -->
+  <header class="sticky top-0 z-50 shadow-md md:block hidden header-bg">
+    <div class="px-4 py-3 flex justify-center">
+      <Image src={BRNLogo} alt="Basingstoke Repair Network" width={200} height={50} class="h-8 w-auto" />
+    </div>
+  </header>
 
-  <main class="p-4 md:p-8 lg:p-12 max-w-5xl mx-auto">
+  <!-- Mobile Logo (non-sticky) -->
+  <div class="md:hidden px-4 py-3 flex justify-center header-bg">
+    <Image src={BRNLogo} alt="Basingstoke Repair Network" width={200} height={50} class="h-8 w-auto" />
+  </div>
+
+  <main class="p-4 md:p-8 lg:p-12 max-w-5xl mx-auto main-bg">
     <section id="introduction" class="mb-8 p-6 bg-white rounded-lg shadow-md">
       <h2 class="text-brn-primary mb-4 text-2xl font-semibold">
         <a href="#introduction" class="hover:underline">#</a> {introduction ? introduction.data.title : "Welcome to Basingstoke Repair Network"}
