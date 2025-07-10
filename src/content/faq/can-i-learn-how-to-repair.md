@@ -1,3 +1,9 @@
+<!--
+SPDX-FileCopyrightText: 2025 Basingstoke Repair Network <dev@basingstoke.repair>
+
+SPDX-License-Identifier: CC0-1.0
+-->
+
 ---
 title: "Can I learn how to repair?"
 order: 4
