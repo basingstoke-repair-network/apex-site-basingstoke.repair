@@ -8,7 +8,6 @@
 import { Image } from 'astro:assets';
 
 import Layout from '../layouts/Layout.astro';
-import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import RepairCafeSection from '../components/RepairCafeSection.astro';
 import ExpandableCard from '../components/ExpandableCard.astro'; // NEW: Import ExpandableCard component
@@ -40,7 +39,6 @@ const { Content } = introduction ? await introduction.render() : { Content: () =
 ---
 
 <Layout title="Basingstoke Repair Network">
-  <Header />
 
   <main class="p-4 md:p-8 lg:p-12 max-w-5xl mx-auto">
     <section id="introduction" class="mb-8 p-6 bg-white rounded-lg shadow-md">
