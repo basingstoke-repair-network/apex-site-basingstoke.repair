@@ -94,7 +94,17 @@ const { Content } = introduction ? await introduction.render() : { Content: () =
       <h2 class="text-brn-primary mb-4 text-2xl font-semibold">
         <a href="#other-local-repair-cafes" class="hover:underline">#</a> Other Local Repair Cafés
       </h2>
-      <p class="text-lg">TODO: Add links to other local repair cafes</p>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <RepairCafeSection
+          id="north-hampshire"
+          title="North Hampshire Repair Cafe"
+          imageSrc={NorthHampshireRepairNetworkLogo}
+          imageAlt="North Hampshire Repair Cafe"
+          when="Check website for dates and times"
+          where="Various locations across North Hampshire"
+          subdomainUrl="https://nhrc.uk"
+        />
+      </div>
     </section>
 
     <section id="get-involved" class="mb-8 p-6 bg-white rounded-lg shadow-md">
