@@ -13,6 +13,30 @@ export default defineConfig({
     tailwind(), // Use the official Astro Tailwind integration
     image(),    // Use the official Astro Image integration (if applicable)
   ],
-  // Remove any 'vite' or 'postcss' blocks if they are trying to configure Tailwind
-  // or PostCSS manually. The `tailwind()` integration handles it.
+  vite: {
+    plugins: [
+      {
+        name: 'strip-spdx-headers',
+        transform(code, id) {
+          // Strip SPDX license headers from JS/TS files
+          if (id.endsWith('.js') || id.endsWith('.ts') || id.endsWith('.mjs')) {
+            return code.replace(/^\/\/ SPDX-.*\n(\/\/.*\n)*/m, '');
+          }
+          // Strip SPDX headers from Astro files (HTML-style comments)
+          if (id.endsWith('.astro')) {
+            return code.replace(/^<!--\s*\n?\s*SPDX-FileCopyrightText:.*?\n\s*\n\s*SPDX-License-Identifier:.*?\n\s*-->\s*\n/s, '');
+          }
+          // Strip SPDX headers from HTML files
+          if (id.endsWith('.html')) {
+            return code.replace(/^<!--\s*\n?\s*SPDX-FileCopyrightText:.*?\n\s*\n\s*SPDX-License-Identifier:.*?\n\s*-->\s*\n/s, '');
+          }
+          // Strip SPDX headers from CSS files
+          if (id.endsWith('.css')) {
+            return code.replace(/^\/\* SPDX-.*\n(\*\/\n|.*\n)*?\*\/\n/m, '');
+          }
+          return null;
+        }
+      }
+    ]
+  }
 });
