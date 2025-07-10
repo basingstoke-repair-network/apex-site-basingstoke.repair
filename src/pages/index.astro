@@ -140,10 +140,14 @@ const sortedFaqItems = faqItems.sort((a, b) => a.data.order - b.data.order);
       </h2>
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-8 items-center justify-center">
         <div class="flex flex-col items-center justify-center text-center">
-          <Image src={BDCouncilLogo} alt="B+D Council" width={120} height={120} class="max-w-full h-auto" />
+          <a href="https://www.basingstoke.gov.uk/" target="_blank" rel="noopener noreferrer">
+            <Image src={BDCouncilLogo} alt="B+D Council" width={120} height={120} class="max-w-full h-auto" />
+          </a>
         </div>
         <div class="flex flex-col items-center justify-center text-center">
-          <Image src={FourLanesTrustLogo} alt="Four Lanes Trust" width={120} height={120} class="max-w-full h-auto" />
+          <a href="https://www.fourlanestrust.org.uk/" target="_blank" rel="noopener noreferrer">
+            <Image src={FourLanesTrustLogo} alt="Four Lanes Trust" width={120} height={120} class="max-w-full h-auto" />
+          </a>
           <p class="mt-2 text-sm">Four Lanes Trust</p>
         </div>
         <div class="flex flex-col items-center justify-center text-center">
@@ -162,9 +166,16 @@ const sortedFaqItems = faqItems.sort((a, b) => a.data.order - b.data.order);
           </a>
         </div>
         <div class="flex flex-col items-center justify-center text-center">
-          <Image src={GreenerBasingstokeLogo} alt="Greener Basingstoke" width={120} height={120} class="max-w-full h-auto" />
+          <a href="https://www.greenerbasingstoke.org.uk/" target="_blank" rel="noopener noreferrer">
+            <Image src={GreenerBasingstokeLogo} alt="Greener Basingstoke" width={120} height={120} class="max-w-full h-auto" />
+          </a>
         </div>
         <div class="flex flex-col items-center justify-center text-center">
+          <a href="https://www.tnlcommunityfund.org.uk/" target="_blank" rel="noopener noreferrer">
+            <div class="w-[120px] h-[120px] bg-gray-200 rounded-lg flex items-center justify-center mb-2">
+              <Image src="https://via.placeholder.com/120x120/cccccc/666666?text=National+Lottery" alt="National Lottery" width={120} height={120} class="max-w-full h-auto" />
+            </div>
+          </a>
           <p class="text-lg">National Lottery</p>
         </div>
       </div>
