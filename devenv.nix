@@ -1,12 +1,15 @@
 # SPDX-FileCopyrightText: 2025 Basingstoke Repair Network <dev@basingstoke.repair>
 #
 # SPDX-License-Identifier: MIT
-
-{ pkgs, lib, config, inputs, ... }:
-
 {
+  pkgs,
+  lib,
+  config,
+  inputs,
+  ...
+}: {
   # https://devenv.sh/packages/
-  packages = [ pkgs.git ];
+  packages = [pkgs.git];
 
   languages = {
     javascript = {
