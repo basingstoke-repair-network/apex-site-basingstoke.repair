@@ -59,6 +59,7 @@ const sortedFaqItems = faqItems.sort((a, b) => a.data.order - b.data.order);
   </div>
 
   <main class="p-4 md:p-8 lg:p-12 max-w-5xl mx-auto main-bg">
+    <!-- 1. Welcome -->
     <section id="introduction" class="mb-8 p-6 bg-white rounded-lg shadow-md">
       <h2 class="text-brn-primary mb-4 text-2xl font-semibold">
         <a href="#introduction" class="hover:underline">#</a> {introduction ? introduction.data.title : "Welcome to Basingstoke Repair Network"}
@@ -66,6 +67,7 @@ const sortedFaqItems = faqItems.sort((a, b) => a.data.order - b.data.order);
       {introduction ? <Content /> : <p>Placeholder introduction text if CMS content not found.</p>}
     </section>
 
+    <!-- 2. Other Cafes -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-8">
       <RepairCafeSection
         id="chineham"
@@ -94,6 +96,32 @@ const sortedFaqItems = faqItems.sort((a, b) => a.data.order - b.data.order);
       />
     </div>
 
+    <!-- 3. FAQs -->
+    <section id="common-info" class="mb-8">
+      <h2 class="text-brn-primary mb-4 text-2xl font-semibold">
+        <a href="#common-info" class="hover:underline">#</a> Common Repair Cafe Info & FAQs
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {sortedFaqItems.map(async (faqItem) => {
+          const { Content: FaqContent } = await faqItem.render();
+          return (
+            <ExpandableCard title={faqItem.data.title}>
+              <FaqContent />
+            </ExpandableCard>
+          );
+        })}
+      </div>
+    </section>
+
+    <!-- 4. Get Involved -->
+    <section id="get-involved" class="mb-8 p-6 bg-white rounded-lg shadow-md">
+      <h2 class="text-brn-primary mb-4 text-2xl font-semibold">
+        <a href="#get-involved" class="hover:underline">#</a> Get Involved
+      </h2>
+      <p class="text-lg">If you have some skills in repairing clothes or household items, or could help welcome people or serve drinks, please get in touch to explore volunteering with our friendly team on <a href="mailto:info@chinehamrepair.org.uk" class="text-brn-primary hover:underline">info@chinehamrepair.org.uk</a>.</p>
+    </section>
+
+    <!-- 5. Other Local Repair Cafes -->
     <section id="other-local-repair-cafes" class="mb-8 p-6 bg-white rounded-lg shadow-md">
       <h2 class="text-brn-primary mb-4 text-2xl font-semibold">
         <a href="#other-local-repair-cafes" class="hover:underline">#</a> Other Local Repair Cafés
@@ -111,29 +139,7 @@ const sortedFaqItems = faqItems.sort((a, b) => a.data.order - b.data.order);
       </div>
     </section>
 
-    <section id="get-involved" class="mb-8 p-6 bg-white rounded-lg shadow-md">
-      <h2 class="text-brn-primary mb-4 text-2xl font-semibold">
-        <a href="#get-involved" class="hover:underline">#</a> Get Involved
-      </h2>
-      <p class="text-lg">If you have some skills in repairing clothes or household items, or could help welcome people or serve drinks, please get in touch to explore volunteering with our friendly team on <a href="mailto:info@chinehamrepair.org.uk" class="text-brn-primary hover:underline">info@chinehamrepair.org.uk</a>.</p>
-    </section>
-
-    <section id="common-info" class="mb-8">
-      <h2 class="text-brn-primary mb-4 text-2xl font-semibold">
-        <a href="#common-info" class="hover:underline">#</a> Common Repair Cafe Info & FAQs
-      </h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {sortedFaqItems.map(async (faqItem) => {
-          const { Content: FaqContent } = await faqItem.render();
-          return (
-            <ExpandableCard title={faqItem.data.title}>
-              <FaqContent />
-            </ExpandableCard>
-          );
-        })}
-      </div>
-    </section>
-
+    <!-- 6. Supported By -->
     <section id="supported-by" class="mb-8 p-6 bg-white rounded-lg shadow-md">
       <h2 class="text-brn-primary mb-4 text-2xl font-semibold">
         <a href="#supported-by" class="hover:underline">#</a> Supported by
