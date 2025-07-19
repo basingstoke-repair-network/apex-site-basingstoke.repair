@@ -5,8 +5,8 @@ backend:
   name: git-gateway
   branch: live
 
-# Uncomment the following lines if you want to use GitHub OAuth for authentication
-publish_mode: editorial_workflow # Recommended for multi-user or review process
+# Editorial workflow for content approval process
+publish_mode: editorial_workflow
 media_folder: "public/uploads" # Media files will be stored in public/uploads
 public_folder: "/uploads" # The public path for media files
 
