@@ -3,7 +3,7 @@
 
 backend:
   name: git-gateway
-  branch: main # or 'master' if that's your default branch
+  branch: live
 
 # Uncomment the following lines if you want to use GitHub OAuth for authentication
 publish_mode: editorial_workflow # Recommended for multi-user or review process
@@ -20,7 +20,7 @@ collections:
         fields:
           - {label: "Title", name: "title", widget: "string"}
           - {label: "Body", name: "body", widget: "spdx-markdown"}
-  - name: "BRN Herald"
+  - name: "Herald"
     label: "Herald"
     folder: "src/content/herald"
     create: true
