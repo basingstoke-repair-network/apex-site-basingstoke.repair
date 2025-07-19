@@ -11,6 +11,16 @@ export default defineConfig({
   integrations: [
     tailwind(), // Use the official Astro Tailwind integration
   ],
+  image: {
+    // Configure image optimization to preserve quality for logos with text
+    service: {
+      entrypoint: 'astro/assets/services/sharp',
+      config: {
+        // Override compression for logos to maintain text clarity
+        limitInputPixels: false,
+      }
+    }
+  },
   vite: {
     plugins: [
       {

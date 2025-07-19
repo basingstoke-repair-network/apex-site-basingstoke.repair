@@ -49,13 +49,13 @@ const sortedFaqItems = faqItems.sort((a, b) => a.data.order - b.data.order);
   <!-- Sticky Header with Logo -->
   <header class="sticky top-0 z-50 shadow-md md:block hidden header-bg">
     <div class="px-4 py-3 flex justify-center">
-      <Image src={BRNLogo} alt="Basingstoke Repair Network" width={200} height={50} class="h-8 w-auto" />
+      <Image src={BRNLogo} alt="Basingstoke Repair Network" width={200} height={50} class="h-8 w-auto" quality="max" format="png" />
     </div>
   </header>
 
   <!-- Mobile Logo (non-sticky) -->
   <div class="md:hidden px-4 py-3 flex justify-center header-bg">
-    <Image src={BRNLogo} alt="Basingstoke Repair Network" width={200} height={50} class="h-8 w-auto" />
+    <Image src={BRNLogo} alt="Basingstoke Repair Network" width={200} height={50} class="h-8 w-auto" quality="max" format="png" />
   </div>
 
   <main class="p-4 md:p-8 lg:p-12 max-w-5xl mx-auto main-bg">
