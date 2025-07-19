@@ -29,8 +29,31 @@ const faqCollection = defineCollection({
   }),
 });
 
+const settingsCollection = defineCollection({
+  type: 'content',
+  schema: z.object({
+    chineham: z.object({
+      title: z.string(),
+      eventTime: z.string(),
+      eventDuration: z.number(),
+      skipDecember: z.boolean(),
+      beforeEventText: z.string(),
+      duringEventText: z.string(),
+    }),
+    hatchWarren: z.object({
+      title: z.string(),
+      eventTime: z.string(),
+      eventDuration: z.number(),
+      skipDecember: z.boolean(),
+      beforeEventText: z.string(),
+      duringEventText: z.string(),
+    }),
+  }),
+});
+
 export const collections = {
   'pages': pagesCollection,
   'herald': heraldCollection,
   'faq': faqCollection,
+  'settings': settingsCollection,
 };

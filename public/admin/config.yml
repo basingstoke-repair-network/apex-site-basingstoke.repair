@@ -39,3 +39,30 @@ collections:
       - {label: "Title", name: "title", widget: "string"}
       - {label: "Order", name: "order", widget: "number"}
       - {label: "Body", name: "body", widget: "spdx-markdown"}
+  - name: "settings"
+    label: "Settings"
+    files:
+      - file: "src/content/settings/countdown.md"
+        label: "Countdown Settings"
+        name: "countdown"
+        fields:
+          - label: "Chineham Repair Cafe"
+            name: "chineham"
+            widget: "object"
+            fields:
+              - {label: "Title", name: "title", widget: "string", default: "Chineham Repair Cafe"}
+              - {label: "Event Time", name: "eventTime", widget: "string", default: "10:00", hint: "Time in HH:MM format"}
+              - {label: "Event Duration (hours)", name: "eventDuration", widget: "number", default: 3}
+              - {label: "Skip December", name: "skipDecember", widget: "boolean", default: true}
+              - {label: "Before Event Text", name: "beforeEventText", widget: "string", default: "Next Chineham RC opens in:"}
+              - {label: "During Event Text", name: "duringEventText", widget: "string", default: "Chineham RC closes in:"}
+          - label: "Hatch Warren Repair Cafe"
+            name: "hatchWarren"
+            widget: "object"
+            fields:
+              - {label: "Title", name: "title", widget: "string", default: "Hatch Warren Repair Cafe"}
+              - {label: "Event Time", name: "eventTime", widget: "string", default: "10:00", hint: "Time in HH:MM format"}
+              - {label: "Event Duration (hours)", name: "eventDuration", widget: "number", default: 3}
+              - {label: "Skip December", name: "skipDecember", widget: "boolean", default: true}
+              - {label: "Before Event Text", name: "beforeEventText", widget: "string", default: "Next Hatch Warren RC opens in:"}
+              - {label: "During Event Text", name: "duringEventText", widget: "string", default: "Hatch Warren RC closes in:"}
