@@ -1,12 +1,12 @@
+---
+title: "What can I bring?"
+order: 1
+---
+
 <!--
 SPDX-FileCopyrightText: 2025 Basingstoke Repair Network <dev@basingstoke.repair>
 
 SPDX-License-Identifier: CC0-1.0
 -->
 
----
-title: "What can I bring for repair?"
-order: 1
----
-
-Common items include small electrical appliances (toasters, lamps), textiles (torn clothes, broken zips), bikes, toys, and sometimes even furniture or dull tools. If in doubt, bring it along or contact us!
+We repair a wide variety of items including electrical appliances, bicycles, textiles/clothing, furniture, and more. If in doubt, just bring it along!

@@ -5,13 +5,11 @@
 // astro.config.mjs
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind'; // Import the official Astro Tailwind integration
-import image from '@astrojs/image';       // Import the official Astro Image integration (if you're using <Image />)
 
 // https://astro.build/config
 export default defineConfig({
   integrations: [
     tailwind(), // Use the official Astro Tailwind integration
-    image(),    // Use the official Astro Image integration (if applicable)
   ],
   vite: {
     plugins: [
