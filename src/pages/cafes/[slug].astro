@@ -14,7 +14,7 @@ import Countdown from '../../components/Countdown.astro';
 export async function getStaticPaths() {
   const cafes = await getCollection('cafes');
   return cafes.map((cafe) => ({
-    params: { slug: cafe.data.slug },
+    params: { slug: cafe.slug },
     props: { cafe },
   }));
 }

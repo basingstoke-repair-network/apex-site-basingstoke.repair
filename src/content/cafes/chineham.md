@@ -1,12 +1,5 @@
-<!--
-SPDX-FileCopyrightText: 2025 Basingstoke Repair Network <dev@basingstoke.repair>
-
-SPDX-License-Identifier: CC0-1.0
--->
-
 ---
 title: "Chineham Repair Cafe"
-slug: "chineham"
 status: "active"
 location:
   address: "Chineham Village Hall, Thornhill Way"
@@ -32,6 +25,12 @@ images:
 description: "Welcome to Chineham Repair Cafe! We meet on the third Saturday of every month to help fix items and reduce waste in our community."
 order: 1
 ---
+
+<!--
+SPDX-FileCopyrightText: 2025 Basingstoke Repair Network <dev@basingstoke.repair>
+
+SPDX-License-Identifier: CC0-1.0
+-->
 
 Welcome to Chineham Repair Cafe, where we bring our community together to repair, learn, and reduce waste. Join us every third Saturday of the month for a friendly environment where skilled volunteers help you fix your broken items.
 

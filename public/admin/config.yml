@@ -73,7 +73,6 @@ collections:
     slug: "{{slug}}"
     fields:
       - {label: "Title", name: "title", widget: "string"}
-      - {label: "Slug", name: "slug", widget: "string", hint: "URL-friendly identifier (e.g., 'chineham', 'hatch-warren')"}
       - label: "Status"
         name: "status"
         widget: "select"

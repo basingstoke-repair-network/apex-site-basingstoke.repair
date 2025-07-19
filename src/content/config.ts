@@ -55,7 +55,6 @@ const cafesCollection = defineCollection({
   type: 'content',
   schema: z.object({
     title: z.string(),
-    slug: z.string(),
     status: z.enum(['active', 'coming-soon', 'closed']),
     location: z.object({
       address: z.string(),
@@ -73,7 +72,7 @@ const cafesCollection = defineCollection({
       phone: z.string().optional(),
       website: z.string().url().optional(),
       subdomain: z.string().optional(),
-    }),
+    }).optional(),
     images: z.object({
       hero: z.string().optional(),
       team: z.string().optional(),

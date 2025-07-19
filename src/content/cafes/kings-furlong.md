@@ -1,12 +1,5 @@
-<!--
-SPDX-FileCopyrightText: 2025 Basingstoke Repair Network <dev@basingstoke.repair>
-
-SPDX-License-Identifier: CC0-1.0
--->
-
 ---
 title: "Kings Furlong Repair Cafe"
-slug: "kings-furlong"
 status: "coming-soon"
 location:
   address: "Kings Furlong Centre, Lychpit"
@@ -17,7 +10,6 @@ schedule:
   time: "10:00"
   duration: 3
   skipDecember: true
-contact: {}
 images:
   gallery:
     enabled: false
@@ -31,6 +23,12 @@ description: "Kings Furlong Repair Cafe is coming later in 2025! We'll be servin
 notes: "Coming later in 2025"
 order: 3
 ---
+
+<!--
+SPDX-FileCopyrightText: 2025 Basingstoke Repair Network <dev@basingstoke.repair>
+
+SPDX-License-Identifier: CC0-1.0
+-->
 
 # Kings Furlong Repair Cafe - Coming Soon!
 
