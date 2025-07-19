@@ -1,12 +1,5 @@
-<!--
-SPDX-FileCopyrightText: 2025 Basingstoke Repair Network <dev@basingstoke.repair>
-
-SPDX-License-Identifier: CC0-1.0
--->
-
 ---
 title: "Hatch Warren & Beggarwood Repair Cafe"
-slug: "hatch-warren"
 status: "active"
 location:
   address: "Hatch Warren Community Centre, Western Way"
@@ -32,6 +25,12 @@ images:
 description: "Join us at Hatch Warren & Beggarwood Repair Cafe on the first Saturday of every month to repair items and build community connections."
 order: 2
 ---
+
+<!--
+SPDX-FileCopyrightText: 2025 Basingstoke Repair Network <dev@basingstoke.repair>
+
+SPDX-License-Identifier: CC0-1.0
+-->
 
 Welcome to Hatch Warren & Beggarwood Repair Cafe! We're a community-driven initiative that brings neighbors together to repair items, share skills, and reduce waste.
 
