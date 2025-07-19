@@ -1,9 +1,3 @@
-<!--
-SPDX-FileCopyrightText: 2025 Basingstoke Repair Network <dev@basingstoke.repair>
-
-SPDX-License-Identifier: CC0-1.0
--->
-
 ---
 chineham:
   title: "Chineham Repair Cafe"
@@ -20,5 +14,11 @@ hatchWarren:
   beforeEventText: "Next Hatch Warren RC opens in:"
   duringEventText: "Hatch Warren RC closes in:"
 ---
+
+<!--
+SPDX-FileCopyrightText: 2025 Basingstoke Repair Network <dev@basingstoke.repair>
+
+SPDX-License-Identifier: CC0-1.0
+-->
 
 This file contains countdown settings for the repair cafes. These settings can be managed through the CMS admin interface.
