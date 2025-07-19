@@ -66,3 +66,80 @@ collections:
               - {label: "Skip December", name: "skipDecember", widget: "boolean", default: true}
               - {label: "Before Event Text", name: "beforeEventText", widget: "string", default: "Next Hatch Warren RC opens in:"}
               - {label: "During Event Text", name: "duringEventText", widget: "string", default: "Hatch Warren RC closes in:"}
+  - name: "cafes"
+    label: "Repair Cafes"
+    folder: "src/content/cafes"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Slug", name: "slug", widget: "string", hint: "URL-friendly identifier (e.g., 'chineham', 'hatch-warren')"}
+      - label: "Status"
+        name: "status"
+        widget: "select"
+        options: ["active", "coming-soon", "closed"]
+        default: "active"
+      - label: "Location"
+        name: "location"
+        widget: "object"
+        fields:
+          - {label: "Address", name: "address", widget: "string"}
+          - {label: "Postcode", name: "postcode", widget: "string"}
+          - {label: "Venue", name: "venue", widget: "string"}
+      - label: "Schedule"
+        name: "schedule"
+        widget: "object"
+        fields:
+          - label: "Frequency"
+            name: "frequency"
+            widget: "select"
+            options: ["first-saturday", "third-saturday", "custom"]
+            default: "third-saturday"
+          - {label: "Time", name: "time", widget: "string", default: "10:00", hint: "Time in HH:MM format"}
+          - {label: "Duration (hours)", name: "duration", widget: "number", default: 3}
+          - {label: "Skip December", name: "skipDecember", widget: "boolean", default: true}
+      - label: "Contact"
+        name: "contact"
+        widget: "object"
+        fields:
+          - {label: "Email", name: "email", widget: "string", required: false}
+          - {label: "Phone", name: "phone", widget: "string", required: false}
+          - {label: "Website", name: "website", widget: "string", required: false}
+          - {label: "Subdomain", name: "subdomain", widget: "string", required: false, hint: "e.g., 'chineham' for chineham.basingstoke.repair"}
+      - label: "Images"
+        name: "images"
+        widget: "object"
+        required: false
+        fields:
+          - {label: "Hero Image", name: "hero", widget: "image", required: false}
+          - {label: "Team Photo", name: "team", widget: "image", required: false}
+          - label: "Photo Gallery"
+            name: "gallery"
+            widget: "object"
+            required: false
+            fields:
+              - {label: "Enable Gallery", name: "enabled", widget: "boolean", default: false}
+              - label: "Gallery Type"
+                name: "type"
+                widget: "select"
+                options: ["manual", "google-drive", "google-photos"]
+                default: "manual"
+              - {label: "Google Drive Folder ID", name: "googleDriveFolderId", widget: "string", required: false, hint: "From Google Drive share link"}
+              - {label: "Google Photos Album ID", name: "googlePhotosAlbumId", widget: "string", required: false}
+              - {label: "Google API Key", name: "apiKey", widget: "string", required: false, hint: "Required for Google Photos"}
+              - {label: "Gallery Title", name: "title", widget: "string", default: "Photo Gallery"}
+              - {label: "Columns (0 = auto)", name: "columns", widget: "number", default: 0, min: 0, max: 5}
+              - {label: "Max Images", name: "maxImages", widget: "number", default: 50, min: 1, max: 100}
+              - {label: "Show Image Titles", name: "showTitles", widget: "boolean", default: false}
+              - label: "Manual Images"
+                name: "manualImages"
+                widget: "list"
+                required: false
+                fields:
+                  - {label: "Image", name: "src", widget: "image"}
+                  - {label: "Alt Text", name: "alt", widget: "string"}
+                  - {label: "Title", name: "title", widget: "string", required: false}
+      - {label: "Description", name: "description", widget: "text", required: false}
+      - {label: "Notes", name: "notes", widget: "text", required: false}
+      - {label: "Order", name: "order", widget: "number", default: 0, hint: "Display order on homepage"}
+      - {label: "Body", name: "body", widget: "spdx-markdown"}
