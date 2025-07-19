@@ -1,0 +1,363 @@
+<!--
+SPDX-FileCopyrightText: 2025 Basingstoke Repair Network <dev@basingstoke.repair>
+
+SPDX-License-Identifier: CC0-1.0
+-->
+
+---
+export interface Props {
+  eventType?: 'chineham' | 'hatch-warren' | 'custom'; // Predefined event types or custom
+  targetDate?: string; // ISO date string - optional override for custom events
+  title?: string;
+  eventDuration?: number; // Duration in hours (default: 3)
+  eventTime?: string; // Time in HH:MM format (default: "10:00")
+  className?: string;
+  beforeEventText?: string; // Text shown before event starts
+  duringEventText?: string; // Text shown during event
+  skipDecember?: boolean; // Skip December for recurring events (default: true for chineham/hatch-warren)
+}
+
+const { 
+  eventType = 'custom',
+  targetDate,
+  title = "Event Countdown", 
+  eventDuration = 3,
+  eventTime = "10:00",
+  className = "",
+  beforeEventText = "Event starts in:",
+  duringEventText = "Event ends in:",
+  skipDecember = (eventType === 'chineham' || eventType === 'hatch-warren')
+} = Astro.props;
+---
+
+<div class={`countdown-container ${className}`} data-event-type={eventType} data-target-date={targetDate} data-event-duration={eventDuration} data-event-time={eventTime} data-skip-december={skipDecember} data-before-text={beforeEventText} data-during-text={duringEventText}>
+  <div class="countdown-title">
+    <h3>{title}</h3>
+  </div>
+  
+  <div class="countdown-status">
+    <p class="status-text">Loading...</p>
+  </div>
+  
+  <div class="countdown-display">
+    <div class="time-unit">
+      <span class="time-value days">00</span>
+      <span class="time-label">Days</span>
+    </div>
+    <div class="time-unit">
+      <span class="time-value hours">00</span>
+      <span class="time-label">Hours</span>
+    </div>
+    <div class="time-unit">
+      <span class="time-value minutes">00</span>
+      <span class="time-label">Minutes</span>
+    </div>
+    <div class="time-unit">
+      <span class="time-value seconds">00</span>
+      <span class="time-label">Seconds</span>
+    </div>
+  </div>
+</div>
+
+<style>
+  .countdown-container {
+    text-align: center;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .countdown-title h3 {
+    margin: 0 0 1rem 0;
+    color: #2d3748;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  .countdown-status {
+    margin-bottom: 1rem;
+  }
+
+  .status-text {
+    font-size: 1rem;
+    color: #4a5568;
+    margin: 0;
+    font-weight: 500;
+  }
+
+  .status-text.event-before {
+    color: #ed8936;
+    font-weight: 600;
+  }
+
+  .status-text.event-active {
+    color: #48bb78;
+    font-weight: 600;
+  }
+
+  .countdown-display {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .time-unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0.75rem;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 0.375rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+
+  .time-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2d3748;
+    line-height: 1;
+    font-family: 'Courier New', monospace;
+  }
+
+  .time-label {
+    font-size: 0.75rem;
+    color: #718096;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 0.25rem;
+  }
+
+  @media (max-width: 640px) {
+    .countdown-display {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.75rem;
+    }
+    
+    .time-value {
+      font-size: 1.5rem;
+    }
+    
+    .countdown-container {
+      padding: 1rem;
+    }
+  }
+</style>
+
+<script>
+  class CountdownTimer {
+    constructor(container) {
+      this.container = container;
+      this.eventType = container.dataset.eventType || 'custom';
+      this.eventDuration = parseInt(container.dataset.eventDuration) || 3;
+      this.eventDurationMs = this.eventDuration * 60 * 60 * 1000; // Convert hours to milliseconds
+      this.eventTime = container.dataset.eventTime || "10:00";
+      this.skipDecember = container.dataset.skipDecember === 'true';
+      this.beforeEventText = container.dataset.beforeText || "Event starts in:";
+      this.duringEventText = container.dataset.duringText || "Event ends in:";
+      
+      // Set target date based on event type or override
+      this.targetDate = this.calculateTargetDate(container.dataset.targetDate);
+      
+      this.elements = {
+        days: container.querySelector('.days'),
+        hours: container.querySelector('.hours'),
+        minutes: container.querySelector('.minutes'),
+        seconds: container.querySelector('.seconds'),
+        status: container.querySelector('.status-text')
+      };
+      
+      this.init();
+    }
+    
+    calculateTargetDate(overrideDate) {
+      if (overrideDate) {
+        return new Date(overrideDate);
+      }
+      
+      const now = new Date();
+      const [hours, minutes] = this.eventTime.split(':').map(Number);
+      
+      switch (this.eventType) {
+        case 'chineham':
+          return this.getThirdSaturday(now, hours, minutes);
+        case 'hatch-warren':
+          return this.getFirstSaturday(now, hours, minutes);
+        default:
+          // For custom events without override, default to next Saturday
+          return this.getNextSaturday(now, hours, minutes);
+      }
+    }
+    
+    getFirstSaturday(referenceDate, hours, minutes) {
+      const date = new Date(referenceDate);
+      date.setDate(1); // First day of current month
+      
+      // Find first Saturday
+      while (date.getDay() !== 6) { // 6 = Saturday
+        date.setDate(date.getDate() + 1);
+      }
+      
+      date.setHours(hours, minutes, 0, 0);
+      
+      // If this month's first Saturday has passed, get next month's
+      if (date <= referenceDate) {
+        date.setMonth(date.getMonth() + 1);
+        date.setDate(1);
+        while (date.getDay() !== 6) {
+          date.setDate(date.getDate() + 1);
+        }
+        date.setHours(hours, minutes, 0, 0);
+      }
+      
+      // Skip December if enabled
+      if (this.skipDecember && date.getMonth() === 11) { // 11 = December
+        date.setFullYear(date.getFullYear() + 1, 0, 1); // January 1st next year
+        while (date.getDay() !== 6) {
+          date.setDate(date.getDate() + 1);
+        }
+        date.setHours(hours, minutes, 0, 0);
+      }
+      
+      return date;
+    }
+    
+    getThirdSaturday(referenceDate, hours, minutes) {
+      const date = new Date(referenceDate);
+      date.setDate(1); // First day of current month
+      
+      // Find first Saturday
+      while (date.getDay() !== 6) {
+        date.setDate(date.getDate() + 1);
+      }
+      
+      // Add 14 days to get third Saturday
+      date.setDate(date.getDate() + 14);
+      date.setHours(hours, minutes, 0, 0);
+      
+      // If this month's third Saturday has passed, get next month's
+      if (date <= referenceDate) {
+        date.setMonth(date.getMonth() + 1);
+        date.setDate(1);
+        while (date.getDay() !== 6) {
+          date.setDate(date.getDate() + 1);
+        }
+        date.setDate(date.getDate() + 14);
+        date.setHours(hours, minutes, 0, 0);
+      }
+      
+      // Skip December if enabled
+      if (this.skipDecember && date.getMonth() === 11) { // 11 = December
+        date.setFullYear(date.getFullYear() + 1, 0, 1); // January 1st next year
+        while (date.getDay() !== 6) {
+          date.setDate(date.getDate() + 1);
+        }
+        date.setDate(date.getDate() + 14); // Third Saturday
+        date.setHours(hours, minutes, 0, 0);
+      }
+      
+      return date;
+    }
+    
+    getNextSaturday(referenceDate, hours, minutes) {
+      const date = new Date(referenceDate);
+      const daysUntilSaturday = (6 - date.getDay() + 7) % 7;
+      
+      if (daysUntilSaturday === 0) {
+        // Today is Saturday, check if time has passed
+        const todayAtEventTime = new Date(date);
+        todayAtEventTime.setHours(hours, minutes, 0, 0);
+        
+        if (todayAtEventTime > date) {
+          date.setHours(hours, minutes, 0, 0);
+          return date;
+        } else {
+          // Time has passed, get next Saturday
+          date.setDate(date.getDate() + 7);
+        }
+      } else {
+        date.setDate(date.getDate() + daysUntilSaturday);
+      }
+      
+      date.setHours(hours, minutes, 0, 0);
+      return date;
+    }
+    
+    init() {
+      this.updateCountdown();
+      this.interval = setInterval(() => this.updateCountdown(), 1000);
+    }
+    
+    updateCountdown() {
+      const now = new Date().getTime();
+      const targetTime = this.targetDate.getTime();
+      const eventEndTime = targetTime + this.eventDurationMs;
+      const nextEventTime = eventEndTime + this.eventDurationMs; // Next event starts 3 hours after previous ends
+      
+      let timeRemaining;
+      let status;
+      
+      if (now < targetTime) {
+        // Before event starts
+        timeRemaining = targetTime - now;
+        status = this.beforeEventText;
+        this.elements.status.className = 'status-text event-before';
+      } else if (now >= targetTime && now < eventEndTime) {
+        // During event
+        timeRemaining = eventEndTime - now;
+        status = this.duringEventText;
+        this.elements.status.className = 'status-text event-active';
+      } else {
+        // Event has ended - calculate next occurrence based on event type
+        this.targetDate = this.calculateTargetDate();
+        this.updateCountdown();
+        return;
+      }
+      
+      if (timeRemaining > 0) {
+        const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+        
+        this.elements.days.textContent = String(days).padStart(2, '0');
+        this.elements.hours.textContent = String(hours).padStart(2, '0');
+        this.elements.minutes.textContent = String(minutes).padStart(2, '0');
+        this.elements.seconds.textContent = String(seconds).padStart(2, '0');
+        this.elements.status.textContent = status;
+      } else {
+        this.elements.days.textContent = '00';
+        this.elements.hours.textContent = '00';
+        this.elements.minutes.textContent = '00';
+        this.elements.seconds.textContent = '00';
+        this.elements.status.textContent = 'Event time!';
+      }
+    }
+    
+    destroy() {
+      if (this.interval) {
+        clearInterval(this.interval);
+      }
+    }
+  }
+  
+  // Initialize countdown timers
+  document.addEventListener('DOMContentLoaded', () => {
+    const countdownContainers = document.querySelectorAll('.countdown-container');
+    countdownContainers.forEach(container => {
+      new CountdownTimer(container);
+    });
+  });
+  
+  // Handle page navigation in Astro
+  document.addEventListener('astro:page-load', () => {
+    const countdownContainers = document.querySelectorAll('.countdown-container');
+    countdownContainers.forEach(container => {
+      new CountdownTimer(container);
+    });
+  });
+</script>
