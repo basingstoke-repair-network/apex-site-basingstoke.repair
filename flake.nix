@@ -28,7 +28,7 @@
           src = ./.;
 
           # Hash of the npm dependencies (you may need to update this)
-          npmDepsHash = "sha256-3VjfJJFiDPdwfBZ/8zJaF7lwiIHuRCkN+ymh4l5BrOc=";
+          npmDepsHash = import ./deps-hash.nix;
 
           npmFlags = ["--legacy-peer-deps"];
 
