@@ -1,0 +1,108 @@
+<!-- SPDX-FileCopyrightText: 2025 Basingstoke Repair Network <dev@basingstoke.repair>
+  SPDX-License-Identifier: CC0-1.0
+-->
+
+---
+import Layout from '../layouts/Layout.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { Image } from 'astro:assets';
+
+// Import logos
+import BDCouncilLogo from '../images/bd-council-logo.jpg';
+import FourLanesTrustLogo from '../images/four-lanes-trust-logo.jpg';
+import RestartersLogo from '../images/restarters-logo.jpg';
+import NorthHampshireRepairNetworkLogo from '../images/north-hampshire-repair-network-logo.jpg';
+import RepairCafeInternationalLogo from '../images/repair-cafe-international-logo.jpg';
+import GreenerBasingstokeLogo from '../images/greener-basingstoke-logo.jpg';
+---
+
+<Layout title="Our Supporters - Basingstoke Repair Network">
+  <Header />
+  <main class="p-4 md:p-8 lg:p-12 max-w-5xl mx-auto main-bg">
+    <section class="mb-8 p-6 bg-white rounded-lg shadow-md">
+      <h1 class="text-brn-primary mb-4 text-3xl font-semibold">Our Supporters & Sponsorship</h1>
+
+      <p class="text-lg mb-4">
+        Basingstoke Repair Network is a non-profit community project. We rely on the generous support of local organisations and funders to keep our events free and accessible to everyone. Their contributions help us cover venue costs, purchase tools and supplies, and promote our events.
+      </p>
+
+      <h2 class="text-2xl font-semibold text-brn-dark mt-8 mb-4">Our Impact in Numbers</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+        <div class="p-6 bg-brn-light rounded-lg">
+          <p class="text-4xl font-bold text-brn-primary">500kg+</p>
+          <p class="mt-2 text-lg">Of waste diverted from landfill</p>
+        </div>
+        <div class="p-6 bg-brn-light rounded-lg">
+          <p class="text-4xl font-bold text-brn-primary">300+</p>
+          <p class="mt-2 text-lg">Residents helped with repairs</p>
+        </div>
+        <div class="p-6 bg-brn-light rounded-lg">
+          <p class="text-4xl font-bold text-brn-primary">50+</p>
+          <p class="mt-2 text-lg">Active community volunteers</p>
+        </div>
+      </div>
+
+      <h2 class="text-2xl font-semibold text-brn-dark mt-8 mb-4">Become a Sponsor</h2>
+      <p class="text-lg mb-4">
+        We offer several tiers of sponsorship for local businesses and organisations who want to support our mission. It's a great way to demonstrate your commitment to the local community and environmental sustainability.
+      </p>
+      <ul class="list-disc list-inside text-lg space-y-2 mb-6">
+        <li><b>Bronze (£100):</b> Your logo on our website and a social media thank you.</li>
+        <li><b>Silver (£250):</b> All of the above, plus your banner displayed at our events.</li>
+        <li><b>Gold (£500+):</b> All of the above, plus a featured spot in our newsletter.</li>
+      </ul>
+      <p class="text-lg">To discuss sponsorship opportunities, please get in touch with our team.</p>
+      <div class="mt-4 text-center">
+        <a href="mailto:info@chinehamrepair.org.uk" class="inline-block bg-brn-primary text-white font-bold py-3 px-6 rounded-lg hover:bg-brn-dark transition-colors duration-300">
+          Contact Us About Sponsorship
+        </a>
+      </div>
+
+      <h2 class="text-2xl font-semibold text-brn-dark mt-8 mb-4">A Big Thanks to Our Current Supporters</h2>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-8 items-center justify-center">
+        <div class="flex flex-col items-center justify-center text-center">
+          <a href="https://www.basingstoke.gov.uk/" target="_blank" rel="noopener noreferrer">
+            <Image src={BDCouncilLogo} alt="B+D Council" width={120} height={120} class="max-w-full h-auto" />
+          </a>
+        </div>
+        <div class="flex flex-col items-center justify-center text-center">
+          <a href="https://www.fourlanestrust.org.uk/" target="_blank" rel="noopener noreferrer">
+            <Image src={FourLanesTrustLogo} alt="Four Lanes Trust" width={120} height={120} class="max-w-full h-auto" />
+          </a>
+          <p class="mt-2 text-sm">Four Lanes Trust</p>
+        </div>
+        <div class="flex flex-col items-center justify-center text-center">
+          <a href="https://www.restarters.net/" target="_blank" rel="noopener noreferrer">
+            <Image src={RestartersLogo} alt="Restarters" width={120} height={120} class="max-w-full h-auto" />
+          </a>
+        </div>
+        <div class="flex flex-col items-center justify-center text-center">
+          <a href="https://www.northhantsrepairnetwork.org/" target="_blank" rel="noopener noreferrer">
+            <Image src={NorthHampshireRepairNetworkLogo} alt="North Hampshire Repair Network" width={120} height={120} class="max-w-full h-auto" />
+          </a>
+        </div>
+        <div class="flex flex-col items-center justify-center text-center">
+          <a href="https://repaircafe.org/" target="_blank" rel="noopener noreferrer">
+            <Image src={RepairCafeInternationalLogo} alt="Repair Cafe International" width={120} height={120} class="max-w-full h-auto" />
+          </a>
+        </div>
+        <div class="flex flex-col items-center justify-center text-center">
+          <a href="https://www.greenerbasingstoke.org.uk/" target="_blank" rel="noopener noreferrer">
+            <Image src={GreenerBasingstokeLogo} alt="Greener Basingstoke" width={120} height={120} class="max-w-full h-auto" />
+          </a>
+        </div>
+        <div class="flex flex-col items-center justify-center text-center">
+          <a href="https://www.tnlcommunityfund.org.uk/" target="_blank" rel="noopener noreferrer">
+            <div class="w-[120px] h-[120px] bg-gray-200 rounded-lg flex items-center justify-center mb-2">
+              <Image src="https://via.placeholder.com/120x120/cccccc/666666?text=National+Lottery" alt="National Lottery" width={120} height={120} class="max-w-full h-auto" />
+            </div>
+          </a>
+          <p class="text-lg">National Lottery</p>
+        </div>
+      </div>
+
+    </section>
+  </main>
+  <Footer />
+</Layout>
