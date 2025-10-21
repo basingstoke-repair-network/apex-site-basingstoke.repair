@@ -8,8 +8,8 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-      day: "Saturday"
-      time: "07:00"
+      day: "Sunday"
+      time: "09:00"
       timezone: "Europe/London"
     commit-message:
       prefix: "chore(ci-deps)"
@@ -23,8 +23,8 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
-      day: "Saturday"
-      time: "07:00"
+      day: "Sunday"
+      time: "09:00"
       timezone: "Europe/London"
     commit-message:
       prefix: "chore(deps)"
