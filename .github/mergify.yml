@@ -1,13 +1,52 @@
 pull_request_rules:
-  - name: Automatic merge for Dependabot pull requests
+  - name: Automatic merge for Dependabot pull requests when its reviewed.
     conditions:
       - author=dependabot[bot]
+      - label != do-not-merge
+      - "#approved-reviews-by >= 1"
       - -conflict
       - -draft
     actions:
       queue:
+  - name: Automatically approve Dependabot PRs
+    conditions:
+      - author = dependabot[bot]
+      - dependabot-update-type = version-update:semver-minor
+    actions:
+      review:
+        type: APPROVE
   - name: Delete head branch on merged pull requests
     conditions:
       - merged
     actions:
       delete_head_branch:
+  - name: Automatically merge backport if they pass tests (TODO)
+    conditions:
+      - author = mergify[bot]
+      - base ~= ^mergify/bp/
+      - head = live
+    actions:
+      queue:
+  - name: Automatic merge when reviews approve, unless 'do-not-merge' label is present
+    conditions:
+      - "#approved-reviews-by >= 1"
+      - label != do-not-merge
+      - head = staging 
+    actions:
+      queue:
+  - name: backport patches to the live branch and assign to original author
+    conditions:
+      - label = backport-live
+      - head = staging 
+    actions:
+      backport:
+        branches:
+          - "live"
+        assignees:
+          - "{{ author }}"
+  - name: Warn maintainers not to merge manually.
+    conditions:
+      - -closed
+    actions:
+      comment:
+        message: "Note to maintainers: do not merge using the GitHub UI. We handle it differently here ;-)"
