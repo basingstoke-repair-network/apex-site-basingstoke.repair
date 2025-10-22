@@ -4,13 +4,10 @@
 
 // astro.config.mjs
 import { defineConfig } from 'astro/config';
-import tailwind from '@astrojs/tailwind'; // Import the official Astro Tailwind integration
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [
-    tailwind(), // Use the official Astro Tailwind integration
-  ],
+  integrations: [],
   image: {
     // Configure image optimization to preserve quality for logos with text
     service: {

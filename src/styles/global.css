@@ -1,6 +1,12 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-brn-dark: #02011A;
+  --color-brn-light: #EEEEEE;
+  --color-brn-header: #c6c8c9;
+  --color-brn-primary: #28276f;
+  --color-brn-accent: #e86046;
+}
 
 /* Any custom styles that Tailwind can't easily handle, e.g., for icon */
 .hamburger-menu .icon {
