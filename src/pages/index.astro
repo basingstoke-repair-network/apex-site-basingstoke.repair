@@ -58,6 +58,11 @@ const sortedFaqItems = faqItems.sort((a, b) => a.data.order - b.data.order);
     <Image src={BRNLogo} alt="Basingstoke Repair Network" width={200} height={50} class="h-8 w-auto" quality="max" format="png" />
   </div>
 
+  <!-- Next Cafe Banner -->
+  <div class="bg-brn-primary text-white text-center p-4 text-xl">
+    Our next Repair Cafe is at <strong>Chineham</strong> on <strong>Saturday, October 19th, 10am-1pm</strong>.
+  </div>
+
   <main class="p-4 md:p-8 lg:p-12 max-w-5xl mx-auto main-bg">
     <!-- 1. Welcome -->
     <section id="introduction" class="mb-8 p-6 bg-white rounded-lg shadow-md">
@@ -65,6 +70,9 @@ const sortedFaqItems = faqItems.sort((a, b) => a.data.order - b.data.order);
         <a href="#introduction" class="hover:underline">#</a> {introduction ? introduction.data.title : "Welcome to Basingstoke Repair Network"}
       </h2>
       {introduction ? <Content /> : <p>Placeholder introduction text if CMS content not found.</p>}
+      <div class="mt-4">
+        <a href="/what-to-expect" class="text-brn-primary font-semibold hover:underline">First time visitor? Find out what to expect &rarr;</a>
+      </div>
     </section>
 
     <!-- 2. Other Cafes -->
@@ -114,11 +122,14 @@ const sortedFaqItems = faqItems.sort((a, b) => a.data.order - b.data.order);
     </section>
 
     <!-- 4. Get Involved -->
-    <section id="get-involved" class="mb-8 p-6 bg-white rounded-lg shadow-md">
+    <section id="get-involved" class="mb-8 p-6 bg-white rounded-lg shadow-md text-center">
       <h2 class="text-brn-primary mb-4 text-2xl font-semibold">
-        <a href="#get-involved" class="hover:underline">#</a> Get Involved
+        <a href="/volunteer" class="hover:underline"># Get Involved</a>
       </h2>
-      <p class="text-lg">If you have some skills in repairing clothes or household items, or could help welcome people or serve drinks, please get in touch to explore volunteering with our friendly team on <a href="mailto:info@chinehamrepair.org.uk" class="text-brn-primary hover:underline">info@chinehamrepair.org.uk</a>.</p>
+      <p class="text-lg mb-4">Our friendly team of volunteers is what makes the Repair Cafe possible. If you have skills to share or just want to help out, we have a role for you.</p>
+      <a href="/volunteer" class="inline-block bg-brn-primary text-white font-bold py-3 px-6 rounded-lg hover:bg-brn-dark transition-colors duration-300">
+          Learn About Volunteering
+        </a>
     </section>
 
     <!-- 5. Other Local Repair Cafes -->
@@ -142,8 +153,9 @@ const sortedFaqItems = faqItems.sort((a, b) => a.data.order - b.data.order);
     <!-- 6. Supported By -->
     <section id="supported-by" class="mb-8 p-6 bg-white rounded-lg shadow-md">
       <h2 class="text-brn-primary mb-4 text-2xl font-semibold">
-        <a href="#supported-by" class="hover:underline">#</a> Supported by
+        <a href="/sponsors" class="hover:underline"># A Big Thanks to Our Supporters</a>
       </h2>
+      <p class="text-lg text-center mb-6">We are grateful for the support of these organisations. <a href="/sponsors" class="font-semibold hover:underline">Find out how you can help</a>.</p>
       <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-8 items-center justify-center">
         <div class="flex flex-col items-center justify-center text-center">
           <a href="https://www.basingstoke.gov.uk/" target="_blank" rel="noopener noreferrer">
