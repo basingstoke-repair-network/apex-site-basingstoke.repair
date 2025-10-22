@@ -18,7 +18,9 @@ const { Content } = await page.render();
   <main class="p-4 md:p-8 lg:p-12 max-w-5xl mx-auto main-bg">
     <section class="mb-8 p-6 bg-white rounded-lg shadow-md">
       <h1 class="text-brn-primary mb-4 text-3xl font-semibold">{page.data.title}</h1>
-      <Content />
+      <div class="prose">
+        <Content />
+      </div>
     </section>
   </main>
 </Layout>

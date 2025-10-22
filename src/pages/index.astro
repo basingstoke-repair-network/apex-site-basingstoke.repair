@@ -66,7 +66,9 @@ const { Content } = introduction ? await introduction.render() : { Content: () =
       <h2 class="text-brn-primary mb-4 text-2xl font-semibold">
         <a href="#introduction" class="hover:underline">#</a> {introduction ? introduction.data.title : "Welcome to Basingstoke Repair Network"}
       </h2>
-      {introduction ? <Content /> : <p>Placeholder introduction text if CMS content not found.</p>}
+      <div class="prose">
+        {introduction ? <Content /> : <p>Placeholder introduction text if CMS content not found.</p>}
+      </div>
       <div class="mt-4">
         <a href="/what-to-expect" class="text-brn-primary font-semibold hover:underline">First time visitor? Find out what to expect &rarr;</a>
         <a href="/faq" class="text-brn-primary font-semibold hover:underline">Frequently Asked Questions &rarr;</a>
