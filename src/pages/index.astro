@@ -10,7 +10,6 @@ import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
 import Footer from '../components/Footer.astro';
 import RepairCafeSection from '../components/RepairCafeSection.astro';
-import ExpandableCard from '../components/ExpandableCard.astro'; // NEW: Import ExpandableCard component
 
 // Astro Content Collections: Import getEntry and getCollection for fetching content
 import { getEntry, getCollection } from 'astro:content';
@@ -35,9 +34,7 @@ const introduction = await getEntry('pages', 'introduction');
 // Render the Markdown content of the introduction. If introduction is null, handle it gracefully.
 const { Content } = introduction ? await introduction.render() : { Content: () => Astro.render`No introduction content found.` };
 
-// Fetch FAQ items and sort by order
-const faqItems = await getCollection('faq');
-const sortedFaqItems = faqItems.sort((a, b) => a.data.order - b.data.order);
+
 
 // Ensure image imports are used within the template to avoid "Image is not defined" if not directly rendered
 // This is more of a mental check; the `Image` component takes care of it, but sometimes if an imported image
@@ -72,6 +69,7 @@ const sortedFaqItems = faqItems.sort((a, b) => a.data.order - b.data.order);
       {introduction ? <Content /> : <p>Placeholder introduction text if CMS content not found.</p>}
       <div class="mt-4">
         <a href="/what-to-expect" class="text-brn-primary font-semibold hover:underline">First time visitor? Find out what to expect &rarr;</a>
+        <a href="/faq" class="text-brn-primary font-semibold hover:underline">Frequently Asked Questions &rarr;</a>
       </div>
     </section>
 
@@ -104,22 +102,7 @@ const sortedFaqItems = faqItems.sort((a, b) => a.data.order - b.data.order);
       />
     </div>
 
-    <!-- 3. FAQs -->
-    <section id="common-info" class="mb-8">
-      <h2 class="text-brn-primary mb-4 text-2xl font-semibold">
-        <a href="#common-info" class="hover:underline">#</a> Common Repair Cafe Info & FAQs
-      </h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {sortedFaqItems.map(async (faqItem) => {
-          const { Content: FaqContent } = await faqItem.render();
-          return (
-            <ExpandableCard title={faqItem.data.title}>
-              <FaqContent />
-            </ExpandableCard>
-          );
-        })}
-      </div>
-    </section>
+    
 
     <!-- 4. Get Involved -->
     <section id="get-involved" class="mb-8 p-6 bg-white rounded-lg shadow-md text-center">
