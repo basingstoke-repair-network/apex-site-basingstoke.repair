@@ -1,0 +1,213 @@
+<!-- 
+ SPDX-FileCopyrightText: 2025 Basingstoke Repair Network <dev@basingstoke.repair>
+
+ SPDX-License-Identifier: CC0-1.0
+-->
+
+---
+import { Image } from 'astro:assets';
+
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import RepairCafeSection from '../components/RepairCafeSection.astro';
+import ExpandableCard from '../components/ExpandableCard.astro';
+import PhotoCarousel from '../components/PhotoCarousel.astro';
+
+// Astro Content Collections: Import getEntry and getCollection for fetching content
+import { getEntry, getCollection } from 'astro:content';
+
+// Import images
+import ChinehamTeamPhoto from '../images/team-photo-chineham.jpg';
+import HatchWarrenTeamPhoto from '../images/team-photo-hatch.jpg';
+import BDCouncilLogo from '../images/bd-council-logo.jpg';
+import FourLanesTrustLogo from '../images/four-lanes-trust-logo.jpg';
+import RestartersLogo from '../images/restarters-logo.jpg';
+import NorthHampshireRepairNetworkLogo from '../images/north-hampshire-repair-network-logo.jpg';
+import RepairCafeInternationalLogo from '../images/repair-cafe-international-logo.jpg';
+import GreenerBasingstokeLogo from '../images/greener-basingstoke-logo.jpg';
+
+// Fetch content
+const introduction = await getEntry('pages', 'introduction');
+const { Content } = introduction ? await introduction.render() : { Content: () => 'No introduction content found.' };
+const faqItems = await getCollection('faq');
+const sortedFaqItems = faqItems.sort((a, b) => a.data.order - b.data.order);
+---
+
+<Layout title="Basingstoke Repair Network">
+  <Header />
+
+  <main class="p-4 md:p-8 lg:p-12 max-w-5xl mx-auto main-bg">
+    <!-- 1. Photo Montage/Carousel -->
+    <PhotoCarousel />
+
+    <!-- 2. Mission Statement -->
+    <section id="mission" class="mb-8 p-6 bg-white rounded-lg shadow-md">
+      <h2 class="text-brn-primary mb-4 text-2xl font-semibold">
+        <a href="#mission" class="hover:underline">#</a> Our Mission
+      </h2>
+      <div class="text-lg leading-relaxed">
+        <p class="mb-4">
+          The Basingstoke Repair Network brings communities together to fix, mend, and give new life to broken items. 
+          We believe in the power of repair to reduce waste, build skills, and strengthen neighborhood connections.
+        </p>
+        <p class="mb-4">
+          Our Repair Cafés are free community events where volunteers help repair clothes, small electrical items, 
+          bicycles, and other household goods. It's not just about fixing things - it's about learning, sharing knowledge, 
+          and building a more sustainable future together.
+        </p>
+        <p>
+          Join us in creating a culture of repair rather than replace, where nothing useful is thrown away 
+          and everyone has the chance to learn valuable repair skills.
+        </p>
+      </div>
+    </section>
+
+    <!-- 3. Welcome/Introduction -->
+    <section id="introduction" class="mb-8 p-6 bg-white rounded-lg shadow-md">
+      <h2 class="text-brn-primary mb-4 text-2xl font-semibold">
+        <a href="#introduction" class="hover:underline">#</a> {introduction ? introduction.data.title : "Welcome"}
+      </h2>
+      {introduction ? <Content /> : <p>Placeholder introduction text if CMS content not found.</p>}
+    </section>
+
+    <!-- 4. Our Repair Cafés -->
+    <section id="our-cafes" class="mb-8">
+      <h2 class="text-brn-primary mb-6 text-2xl font-semibold text-center">
+        <a href="#our-cafes" class="hover:underline">#</a> Our Repair Cafés - When & Where
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <RepairCafeSection
+        id="chineham"
+        title="Chineham"
+        imageSrc={ChinehamTeamPhoto}
+        imageAlt="Chineham Team Photo"
+        when="3rd Saturday of each month 10am-1pm"
+        where="Christ Church Chineham, Reading Road (next to Surgery), RG24 8LT"
+        subdomainUrl="https://chineham.basingstokerepairnetwork.org.uk"
+      />
+
+      <RepairCafeSection
+        id="hatch-warren"
+        title="Hatch Warren & Beggarwood"
+        imageSrc={HatchWarrenTeamPhoto}
+        imageAlt="Hatch Warren Team Photo"
+        when="1st Saturday of each month 10.30am-1pm"
+        where="Hatch Warren Community Centre, RG22 4XF"
+        subdomainUrl="https://hatchwarren.basingstokerepairnetwork.org.uk"
+      />
+
+      <RepairCafeSection
+        id="kings-furlong"
+        title="Kings Furlong"
+        note="Coming later in 2025"
+      />
+      </div>
+    </section>
+
+    <!-- 5. FAQs -->
+    <section id="common-info" class="mb-8">
+      <h2 class="text-brn-primary mb-4 text-2xl font-semibold">
+        <a href="#common-info" class="hover:underline">#</a> Common Repair Cafe Info & FAQs
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {sortedFaqItems.map(async (faqItem) => {
+          const { Content: FaqContent } = await faqItem.render();
+          return (
+            <ExpandableCard title={faqItem.data.title}>
+              <FaqContent />
+            </ExpandableCard>
+          );
+        })}
+      </div>
+    </section>
+
+    <!-- 6. Get Involved -->
+    <section id="get-involved" class="mb-8 p-6 bg-white rounded-lg shadow-md">
+      <h2 class="text-brn-primary mb-4 text-2xl font-semibold">
+        <a href="#get-involved" class="hover:underline">#</a> Get Involved
+      </h2>
+      <p class="text-lg mb-4">If you have some skills in repairing clothes or household items, or could help welcome people or serve drinks, please get in touch to explore volunteering with our friendly team:</p>
+      <div class="bg-gray-50 p-4 rounded-lg">
+        <h3 class="text-brn-primary font-semibold mb-2">Contact Information</h3>
+        <p class="mb-2">
+          <strong>Email:</strong> <a href="mailto:info@basingstoke.repair" class="text-brn-primary hover:underline">info@basingstoke.repair</a>
+        </p>
+        <p class="mb-2">
+          <strong>Chineham Specific Enquiries:</strong> <a href="mailto:info@chinehamrepair.org.uk" class="text-brn-primary hover:underline">info@chinehamrepair.org.uk</a>
+        </p>
+        <p class="text-sm text-gray-600">
+          We welcome volunteers of all skill levels - from experienced repairers to friendly faces who can help with refreshments and welcoming visitors.
+        </p>
+      </div>
+    </section>
+
+    <!-- 7. Other Local Repair Cafes -->
+    <section id="other-local-repair-cafes" class="mb-8 p-6 bg-white rounded-lg shadow-md">
+      <h2 class="text-brn-primary mb-4 text-2xl font-semibold">
+        <a href="#other-local-repair-cafes" class="hover:underline">#</a> Other Local Repair Cafés
+      </h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <RepairCafeSection
+          id="north-hampshire"
+          title="North Hampshire Repair Cafe"
+          imageSrc={NorthHampshireRepairNetworkLogo}
+          imageAlt="North Hampshire Repair Cafe"
+          when="Check website for dates and times"
+          where="Various locations across North Hampshire"
+          subdomainUrl="https://nhrc.uk"
+        />
+      </div>
+    </section>
+
+    <!-- 8. Supported By -->
+    <section id="supported-by" class="mb-8 p-6 bg-white rounded-lg shadow-md">
+      <h2 class="text-brn-primary mb-4 text-2xl font-semibold">
+        <a href="#supported-by" class="hover:underline">#</a> Supported by
+      </h2>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-8 items-center justify-center">
+        <div class="flex flex-col items-center justify-center text-center">
+          <a href="https://www.basingstoke.gov.uk/" target="_blank" rel="noopener noreferrer">
+            <Image src={BDCouncilLogo} alt="B+D Council" width={120} height={120} class="max-w-full h-auto" />
+          </a>
+        </div>
+        <div class="flex flex-col items-center justify-center text-center">
+          <a href="https://www.fourlanestrust.org.uk/" target="_blank" rel="noopener noreferrer">
+            <Image src={FourLanesTrustLogo} alt="Four Lanes Trust" width={120} height={120} class="max-w-full h-auto" />
+          </a>
+          <p class="mt-2 text-sm">Four Lanes Trust</p>
+        </div>
+        <div class="flex flex-col items-center justify-center text-center">
+          <a href="https://www.restarters.net/" target="_blank" rel="noopener noreferrer">
+            <Image src={RestartersLogo} alt="Restarters" width={120} height={120} class="max-w-full h-auto" />
+          </a>
+        </div>
+        <div class="flex flex-col items-center justify-center text-center">
+          <a href="https://www.northhantsrepairnetwork.org/" target="_blank" rel="noopener noreferrer">
+            <Image src={NorthHampshireRepairNetworkLogo} alt="North Hampshire Repair Network" width={120} height={120} class="max-w-full h-auto" />
+          </a>
+        </div>
+        <div class="flex flex-col items-center justify-center text-center">
+          <a href="https://repaircafe.org/" target="_blank" rel="noopener noreferrer">
+            <Image src={RepairCafeInternationalLogo} alt="Repair Cafe International" width={120} height={120} class="max-w-full h-auto" />
+          </a>
+        </div>
+        <div class="flex flex-col items-center justify-center text-center">
+          <a href="https://www.greenerbasingstoke.org.uk/" target="_blank" rel="noopener noreferrer">
+            <Image src={GreenerBasingstokeLogo} alt="Greener Basingstoke" width={120} height={120} class="max-w-full h-auto" />
+          </a>
+        </div>
+        <div class="flex flex-col items-center justify-center text-center">
+          <a href="https://www.tnlcommunityfund.org.uk/" target="_blank" rel="noopener noreferrer">
+            <div class="w-[120px] h-[120px] bg-gray-200 rounded-lg flex items-center justify-center mb-2">
+              <Image src="https://via.placeholder.com/120x120/cccccc/666666?text=National+Lottery" alt="National Lottery" width={120} height={120} class="max-w-full h-auto" />
+            </div>
+          </a>
+          <p class="text-lg">National Lottery</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</Layout>

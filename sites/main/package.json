@@ -1,0 +1,21 @@
+{
+  "name": "brn-main-site",
+  "type": "module",
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/tailwind": "^6.0.2",
+    "@tailwindcss/postcss": "^4.1.16",
+    "astro": "^5.15.3",
+    "sharp": "^0.34.4",
+    "tailwindcss": "^4.1.16",
+    "typescript": "^5.7.2"
+  }
+}

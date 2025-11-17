@@ -1,0 +1,163 @@
+# SPDX-FileCopyrightText: 2025 Basingstoke Repair Network <dev@basingstoke.repair>
+# SPDX-License-Identifier: CC0-1.0
+
+# Use DecapBridge auth (required)
+backend:
+  name: git-gateway
+  repo: basingstoke-repair-network/apex-site-basingstoke.repair
+  branch: live
+  identity_url: https://auth.decapbridge.com/sites/4deb9c5e-8289-4d9a-aa61-8c573e51ed82
+  gateway_url: https://gateway.decapbridge.com
+
+  # Quickly see who did what (optional)
+  commit_messages:
+    create: Create {{collection}} “{{slug}}” - {{author-name}} <{{author-login}}> via DecapBridge
+    update: Update {{collection}} “{{slug}}” - {{author-name}} <{{author-login}}> via DecapBridge
+    delete: Delete {{collection}} “{{slug}}” - {{author-name}} <{{author-login}}> via DecapBridge
+    uploadMedia: Upload “{{path}}” - {{author-name}} <{{author-login}}> via DecapBridge
+    deleteMedia: Delete “{{path}}” - {{author-name}} <{{author-login}}> via DecapBridge
+    openAuthoring: Message {{message}} - {{author-name}} <{{author-login}}> via DecapBridge
+
+# Better Decap + Bridge logo (optional)
+logo_url: https://decapbridge.com/decapcms-with-bridge.svg
+
+# Add site links in DecapCMS (optional)
+site_url: https://apex-basingstoke-repair-site.netlify.app
+
+# Editorial workflow for content approval process
+publish_mode: editorial_workflow
+media_folder: "public/uploads" # Media files will be stored in public/uploads
+public_folder: "/uploads" # The public path for media files
+
+collections:
+  - name: "pages"
+    label: "Pages"
+    files:
+      - file: "src/content/pages/introduction.md"
+        label: "Introduction"
+        name: "introduction"
+        fields:
+          - {label: "Title", name: "title", widget: "string"}
+          - {label: "Body", name: "body", widget: "spdx-markdown"}
+  - name: "Herald"
+    label: "Herald"
+    folder: "src/content/herald"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Publish Date", name: "date", widget: "datetime"}
+      - {label: "Featured Image", name: "image", widget: "image", required: false}
+      - {label: "Body", name: "body", widget: "spdx-markdown"}
+  - name: "FAQ"
+    label: "FAQ"
+    folder: "src/content/faq"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Order", name: "order", widget: "number"}
+      - {label: "Body", name: "body", widget: "spdx-markdown"}
+  - name: "settings"
+    label: "Settings"
+    files:
+      - file: "src/content/settings/countdown.md"
+        label: "Countdown Settings"
+        name: "countdown"
+        fields:
+          - label: "Chineham Repair Cafe"
+            name: "chineham"
+            widget: "object"
+            fields:
+              - {label: "Title", name: "title", widget: "string", default: "Chineham Repair Cafe"}
+              - {label: "Event Time", name: "eventTime", widget: "string", default: "10:00", hint: "Time in HH:MM format"}
+              - {label: "Event Duration (hours)", name: "eventDuration", widget: "number", default: 3}
+              - {label: "Skip December", name: "skipDecember", widget: "boolean", default: true}
+              - {label: "Before Event Text", name: "beforeEventText", widget: "string", default: "Next Chineham RC opens in:"}
+              - {label: "During Event Text", name: "duringEventText", widget: "string", default: "Chineham RC closes in:"}
+          - label: "Hatch Warren Repair Cafe"
+            name: "hatchWarren"
+            widget: "object"
+            fields:
+              - {label: "Title", name: "title", widget: "string", default: "Hatch Warren Repair Cafe"}
+              - {label: "Event Time", name: "eventTime", widget: "string", default: "10:00", hint: "Time in HH:MM format"}
+              - {label: "Event Duration (hours)", name: "eventDuration", widget: "number", default: 3}
+              - {label: "Skip December", name: "skipDecember", widget: "boolean", default: true}
+              - {label: "Before Event Text", name: "beforeEventText", widget: "string", default: "Next Hatch Warren RC opens in:"}
+              - {label: "During Event Text", name: "duringEventText", widget: "string", default: "Hatch Warren RC closes in:"}
+  - name: "cafes"
+    label: "Repair Cafes"
+    folder: "src/content/cafes"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - label: "Status"
+        name: "status"
+        widget: "select"
+        options: ["active", "coming-soon", "closed"]
+        default: "active"
+      - label: "Location"
+        name: "location"
+        widget: "object"
+        fields:
+          - {label: "Address", name: "address", widget: "string"}
+          - {label: "Postcode", name: "postcode", widget: "string"}
+          - {label: "Venue", name: "venue", widget: "string"}
+      - label: "Schedule"
+        name: "schedule"
+        widget: "object"
+        fields:
+          - label: "Frequency"
+            name: "frequency"
+            widget: "select"
+            options: ["first-saturday", "third-saturday", "custom"]
+            default: "third-saturday"
+          - {label: "Time", name: "time", widget: "string", default: "10:00", hint: "Time in HH:MM format"}
+          - {label: "Duration (hours)", name: "duration", widget: "number", default: 3}
+          - {label: "Skip December", name: "skipDecember", widget: "boolean", default: true}
+      - label: "Contact"
+        name: "contact"
+        widget: "object"
+        fields:
+          - {label: "Email", name: "email", widget: "string", required: false}
+          - {label: "Phone", name: "phone", widget: "string", required: false}
+          - {label: "Website", name: "website", widget: "string", required: false}
+          - {label: "Subdomain", name: "subdomain", widget: "string", required: false, hint: "e.g., 'chineham' for chineham.basingstoke.repair"}
+      - label: "Images"
+        name: "images"
+        widget: "object"
+        required: false
+        fields:
+          - {label: "Hero Image", name: "hero", widget: "image", required: false}
+          - {label: "Team Photo", name: "team", widget: "image", required: false}
+          - label: "Photo Gallery"
+            name: "gallery"
+            widget: "object"
+            required: false
+            fields:
+              - {label: "Enable Gallery", name: "enabled", widget: "boolean", default: false}
+              - label: "Gallery Type"
+                name: "type"
+                widget: "select"
+                options: ["manual", "google-drive", "google-photos"]
+                default: "manual"
+              - {label: "Google Drive Folder ID", name: "googleDriveFolderId", widget: "string", required: false, hint: "From Google Drive share link"}
+              - {label: "Google Photos Album ID", name: "googlePhotosAlbumId", widget: "string", required: false}
+              - {label: "Google API Key", name: "apiKey", widget: "string", required: false, hint: "Required for Google Photos"}
+              - {label: "Gallery Title", name: "title", widget: "string", default: "Photo Gallery"}
+              - {label: "Columns (0 = auto)", name: "columns", widget: "number", default: 0, min: 0, max: 5}
+              - {label: "Max Images", name: "maxImages", widget: "number", default: 50, min: 1, max: 100}
+              - {label: "Show Image Titles", name: "showTitles", widget: "boolean", default: false}
+              - label: "Manual Images"
+                name: "manualImages"
+                widget: "list"
+                required: false
+                fields:
+                  - {label: "Image", name: "src", widget: "image"}
+                  - {label: "Alt Text", name: "alt", widget: "string"}
+                  - {label: "Title", name: "title", widget: "string", required: false}
+      - {label: "Description", name: "description", widget: "text", required: false}
+      - {label: "Notes", name: "notes", widget: "text", required: false}
+      - {label: "Order", name: "order", widget: "number", default: 0, hint: "Display order on homepage"}
+      - {label: "Body", name: "body", widget: "spdx-markdown"}

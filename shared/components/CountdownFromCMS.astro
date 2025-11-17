@@ -1,0 +1,42 @@
+<!--
+SPDX-FileCopyrightText: 2025 Basingstoke Repair Network <dev@basingstoke.repair>
+
+SPDX-License-Identifier: CC0-1.0
+-->
+
+---
+import { getEntry } from 'astro:content';
+import Countdown from './Countdown.astro';
+
+export interface Props {
+  eventType: 'chineham' | 'hatch-warren';
+  className?: string;
+  // All other props will be loaded from CMS and can be overridden
+  title?: string;
+  eventDuration?: number;
+  eventTime?: string;
+  skipDecember?: boolean;
+  beforeEventText?: string;
+  duringEventText?: string;
+}
+
+const { eventType, className, ...overrides } = Astro.props;
+
+// Load settings from CMS
+const settings = await getEntry('settings', 'countdown');
+const eventSettings = settings?.data[eventType as keyof typeof settings.data];
+
+// Merge CMS settings with any overrides
+const finalProps = {
+  eventType,
+  className,
+  title: overrides.title ?? eventSettings?.title ?? 'Event',
+  eventDuration: overrides.eventDuration ?? eventSettings?.eventDuration ?? 3,
+  eventTime: overrides.eventTime ?? eventSettings?.eventTime ?? '10:00',
+  skipDecember: overrides.skipDecember ?? eventSettings?.skipDecember ?? false,
+  beforeEventText: overrides.beforeEventText ?? eventSettings?.beforeEventText ?? 'Event starts in:',
+  duringEventText: overrides.duringEventText ?? eventSettings?.duringEventText ?? 'Event ends in:',
+};
+---
+
+<Countdown {...finalProps} />

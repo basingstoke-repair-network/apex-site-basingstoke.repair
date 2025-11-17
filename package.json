@@ -1,16 +1,29 @@
 {
-  "name": "apex-site-basingstoke-repair",
+  "name": "brn-multi-site",
   "type": "module",
   "version": "0.1.0",
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro"
+    "dev": "npm run dev:main",
+    "dev:main": "cd sites/main && npm run dev",
+    "dev:chineham": "cd sites/chineham && npm run dev",
+    "dev:hatch-warren": "cd sites/hatch-warren && npm run dev",
+    "dev:kings-furlong": "cd sites/kings-furlong && npm run dev",
+    "build": "npm run build:all",
+    "build:all": "npm run build:main && npm run build:chineham && npm run build:hatch-warren && npm run build:kings-furlong",
+    "build:main": "cd sites/main && npm run build",
+    "build:chineham": "cd sites/chineham && npm run build",
+    "build:hatch-warren": "cd sites/hatch-warren && npm run build",
+    "build:kings-furlong": "cd sites/kings-furlong && npm run build",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:coverage": "vitest --coverage",
+    "install:all": "npm run install:main && npm run install:chineham && npm run install:hatch-warren && npm run install:kings-furlong",
+    "install:main": "cd sites/main && npm install --legacy-peer-deps",
+    "install:chineham": "cd sites/chineham && npm install --legacy-peer-deps",
+    "install:hatch-warren": "cd sites/hatch-warren && npm install --legacy-peer-deps",
+    "install:kings-furlong": "cd sites/kings-furlong && npm install --legacy-peer-deps"
   },
   "devDependencies": {
-    "@astrojs/tailwind": "^6.0.2",
     "astro": "^5.15.3",
     "sharp": "^0.34.4"
   },

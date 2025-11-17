@@ -1,0 +1,59 @@
+# Main Basingstoke Repair Network site
+[build]
+  base = "sites/main"
+  publish = "sites/main/dist"
+  command = "npm run build:main"
+
+# Build settings for different sites
+[context.production]
+  environment = { SITE = "main" }
+
+[context.deploy-preview]
+  environment = { SITE = "main" }
+
+# Branch-specific builds for different sites
+[context.chineham]
+  base = "sites/chineham"
+  publish = "sites/chineham/dist"
+  command = "npm run build:chineham"
+  environment = { SITE = "chineham" }
+
+[context.hatch-warren]
+  base = "sites/hatch-warren"
+  publish = "sites/hatch-warren/dist"
+  command = "npm run build:hatch-warren"
+  environment = { SITE = "hatch-warren" }
+
+[context.kings-furlong]
+  base = "sites/kings-furlong"
+  publish = "sites/kings-furlong/dist"
+  command = "npm run build:kings-furlong"
+  environment = { SITE = "kings-furlong" }
+
+# Redirects for main domain
+[[redirects]]
+  from = "/chineham/*"
+  to = "https://chineham.basingstoke.repair/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hatch-warren/*"
+  to = "https://hatchwarren.basingstoke.repair/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/kings-furlong/*"
+  to = "https://kingsfurlong.basingstoke.repair/:splat"
+  status = 301
+  force = true
+
+# Headers for security
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"

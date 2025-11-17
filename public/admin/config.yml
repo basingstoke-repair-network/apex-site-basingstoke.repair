@@ -26,14 +26,14 @@ site_url: https://apex-basingstoke-repair-site.netlify.app
 
 # Editorial workflow for content approval process
 publish_mode: editorial_workflow
-media_folder: "public/uploads" # Media files will be stored in public/uploads
-public_folder: "/uploads" # The public path for media files
+media_folder: "shared/images" # Media files will be stored in shared/images
+public_folder: "/shared/images" # The public path for media files
 
 collections:
   - name: "pages"
     label: "Pages"
     files:
-      - file: "src/content/pages/introduction.md"
+      - file: "sites/main/src/content/pages/introduction.md"
         label: "Introduction"
         name: "introduction"
         fields:

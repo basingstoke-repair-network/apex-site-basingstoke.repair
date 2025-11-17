@@ -1,0 +1,425 @@
+<!--
+SPDX-FileCopyrightText: 2025 Basingstoke Repair Network <dev@basingstoke.repair>
+
+SPDX-License-Identifier: CC0-1.0
+-->
+
+---
+import { getCollection } from 'astro:content';
+import Layout from '@shared/layouts/Layout.astro';
+import PhotoGallery from '@shared/components/PhotoGallery.astro';
+import SimplePhotoGallery from '@shared/components/SimplePhotoGallery.astro';
+import Countdown from '@shared/components/Countdown.astro';
+
+export async function getStaticPaths() {
+  const cafes = await getCollection('cafes');
+  return cafes.map((cafe) => ({
+    params: { slug: cafe.slug },
+    props: { cafe },
+  }));
+}
+
+const { cafe } = Astro.props;
+const { Content } = await cafe.render();
+
+// Format schedule display
+function getScheduleText(schedule: any) {
+  const timeFormatted = schedule.time;
+  const endTime = new Date(`2000-01-01T${schedule.time}`);
+  endTime.setHours(endTime.getHours() + schedule.duration);
+  const endTimeFormatted = endTime.toTimeString().slice(0, 5);
+  
+  const frequencyTextMap: Record<string, string> = {
+    'first-saturday': 'First Saturday of every month',
+    'third-saturday': 'Third Saturday of every month',
+    'custom': 'Custom schedule'
+  };
+  const frequencyText = frequencyTextMap[schedule.frequency] || 'Check schedule';
+  
+  return `${frequencyText}, ${timeFormatted} - ${endTimeFormatted}`;
+}
+
+// Determine countdown event type
+const countdownEventType = cafe.data.schedule.frequency === 'first-saturday' ? 'hatch-warren' : 
+                          cafe.data.schedule.frequency === 'third-saturday' ? 'chineham' : null;
+
+// Format status display
+const statusDisplayMap: Record<string, string> = {
+  'active': 'Open',
+  'coming-soon': 'Coming Soon',
+  'closed': 'Closed'
+};
+const statusDisplay = statusDisplayMap[cafe.data.status] || cafe.data.status;
+
+const statusClassMap: Record<string, string> = {
+  'active': 'status-active',
+  'coming-soon': 'status-coming-soon',
+  'closed': 'status-closed'
+};
+const statusClass = statusClassMap[cafe.data.status] || '';
+---
+
+<Layout title={cafe.data.title}>
+  <main class="cafe-page">
+    <div class="hero-section">
+      {cafe.data.images?.hero && (
+        <div class="hero-image">
+          <img src={cafe.data.images.hero} alt={`${cafe.data.title} hero image`} />
+        </div>
+      )}
+      
+      <div class="hero-content">
+        <h1>{cafe.data.title}</h1>
+        <div class={`status-badge ${statusClass}`}>
+          {statusDisplay}
+        </div>
+        
+        {cafe.data.description && (
+          <p class="description">{cafe.data.description}</p>
+        )}
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="cafe-details">
+        <div class="details-grid">
+          <!-- Schedule & Countdown -->
+          {cafe.data.status === 'active' && (
+            <div class="detail-card schedule-card">
+              <h3>Schedule</h3>
+              <p class="schedule-text">{getScheduleText(cafe.data.schedule)}</p>
+              {cafe.data.schedule.skipDecember && (
+                <p class="schedule-note">*We skip December</p>
+              )}
+              
+              {countdownEventType && (
+                <div class="countdown-section">
+                  <Countdown eventType={countdownEventType} />
+                </div>
+              )}
+            </div>
+          )}
+
+          <!-- Location -->
+          <div class="detail-card location-card">
+            <h3>Location</h3>
+            <address>
+              <strong>{cafe.data.location.venue}</strong><br>
+              {cafe.data.location.address}<br>
+              {cafe.data.location.postcode}
+            </address>
+          </div>
+
+          <!-- Contact -->
+          {(cafe.data.contact?.email || cafe.data.contact?.phone || cafe.data.contact?.website || cafe.data.contact?.subdomain) && (
+            <div class="detail-card contact-card">
+              <h3>Contact</h3>
+              <div class="contact-list">
+                {cafe.data.contact.email && (
+                  <a href={`mailto:${cafe.data.contact.email}`} class="contact-link">
+                    📧 {cafe.data.contact.email}
+                  </a>
+                )}
+                {cafe.data.contact.phone && (
+                  <a href={`tel:${cafe.data.contact.phone}`} class="contact-link">
+                    📞 {cafe.data.contact.phone}
+                  </a>
+                )}
+                {cafe.data.contact.website && (
+                  <a href={cafe.data.contact.website} target="_blank" rel="noopener noreferrer" class="contact-link">
+                    🌐 Visit Website
+                  </a>
+                )}
+                {cafe.data.contact.subdomain && (
+                  <a href={`https://${cafe.data.contact.subdomain}.basingstoke.repair`} target="_blank" rel="noopener noreferrer" class="contact-link">
+                    🏠 {cafe.data.contact.subdomain}.basingstoke.repair
+                  </a>
+                )}
+              </div>
+            </div>
+          )}
+
+          <!-- Team Photo -->
+          {cafe.data.images?.team && (
+            <div class="detail-card team-card">
+              <h3>Our Team</h3>
+              <img src={cafe.data.images.team} alt={`${cafe.data.title} team`} class="team-photo" />
+            </div>
+          )}
+        </div>
+
+        <!-- Notes -->
+        {cafe.data.notes && (
+          <div class="notes-section">
+            <div class="note-banner">
+              <strong>Note:</strong> {cafe.data.notes}
+            </div>
+          </div>
+        )}
+
+        <!-- Main Content -->
+        <div class="content-section">
+          <Content />
+        </div>
+
+        <!-- Photo Gallery -->
+        {cafe.data.images?.gallery?.enabled && (
+          <div class="gallery-section">
+            {cafe.data.images.gallery.type === 'manual' ? (
+              <SimplePhotoGallery
+                images={cafe.data.images.gallery.manualImages || []}
+                title={cafe.data.images.gallery.title || 'Photo Gallery'}
+                columns={cafe.data.images.gallery.columns || 0}
+                showTitles={cafe.data.images.gallery.showTitles || false}
+              />
+            ) : (
+              <PhotoGallery
+                googleDriveFolderId={cafe.data.images.gallery.type === 'google-drive' ? cafe.data.images.gallery.googleDriveFolderId : undefined}
+                googlePhotosAlbumId={cafe.data.images.gallery.type === 'google-photos' ? cafe.data.images.gallery.googlePhotosAlbumId : undefined}
+                apiKey={cafe.data.images.gallery.apiKey}
+                title={cafe.data.images.gallery.title || 'Photo Gallery'}
+                columns={cafe.data.images.gallery.columns || 0}
+                maxImages={cafe.data.images.gallery.maxImages || 50}
+                showTitles={cafe.data.images.gallery.showTitles || false}
+              />
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .cafe-page {
+    min-height: 100vh;
+  }
+
+  .hero-section {
+    position: relative;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 3rem 1rem;
+    text-align: center;
+  }
+
+  .hero-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+  }
+
+  .hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.3;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .hero-content h1 {
+    font-size: 2.5rem;
+    margin: 0 0 1rem 0;
+    font-weight: 700;
+  }
+
+  .status-badge {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .status-active {
+    background: #48bb78;
+    color: white;
+  }
+
+  .status-coming-soon {
+    background: #ed8936;
+    color: white;
+  }
+
+  .status-closed {
+    background: #f56565;
+    color: white;
+  }
+
+  .description {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    margin: 0;
+    opacity: 0.95;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+  }
+
+  .details-grid {
+    display: grid;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+
+  .detail-card {
+    background: white;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+  }
+
+  .detail-card h3 {
+    margin: 0 0 1rem 0;
+    color: #2d3748;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .schedule-text {
+    font-size: 1rem;
+    color: #4a5568;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .schedule-note {
+    font-size: 0.875rem;
+    color: #718096;
+    font-style: italic;
+    margin: 0;
+  }
+
+  .countdown-section {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e2e8f0;
+  }
+
+  address {
+    font-style: normal;
+    line-height: 1.6;
+    color: #4a5568;
+  }
+
+  .contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .contact-link {
+    color: #3182ce;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .contact-link:hover {
+    color: #2c5282;
+    text-decoration: underline;
+  }
+
+  .team-photo {
+    width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .notes-section {
+    margin-bottom: 2rem;
+  }
+
+  .note-banner {
+    background: #fef5e7;
+    border: 1px solid #f6e05e;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    color: #744210;
+  }
+
+  .content-section {
+    background: white;
+    border-radius: 0.75rem;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+    margin-bottom: 2rem;
+    line-height: 1.7;
+  }
+
+  .content-section :global(h1),
+  .content-section :global(h2),
+  .content-section :global(h3),
+  .content-section :global(h4),
+  .content-section :global(h5),
+  .content-section :global(h6) {
+    color: #2d3748;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .content-section :global(h1:first-child),
+  .content-section :global(h2:first-child),
+  .content-section :global(h3:first-child) {
+    margin-top: 0;
+  }
+
+  .content-section :global(p) {
+    margin-bottom: 1rem;
+    color: #4a5568;
+  }
+
+  .content-section :global(ul),
+  .content-section :global(ol) {
+    margin-bottom: 1rem;
+    padding-left: 1.5rem;
+  }
+
+  .content-section :global(li) {
+    margin-bottom: 0.5rem;
+    color: #4a5568;
+  }
+
+  .gallery-section {
+    margin-top: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .hero-content h1 {
+      font-size: 2rem;
+    }
+
+    .details-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .container {
+      padding: 1rem;
+    }
+
+    .detail-card {
+      padding: 1rem;
+    }
+
+    .content-section {
+      padding: 1.5rem;
+    }
+  }
+</style>

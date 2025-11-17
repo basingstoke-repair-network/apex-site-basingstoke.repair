@@ -1,0 +1,23 @@
+# SPDX-FileCopyrightText: 2025 Basingstoke Repair Network <dev@basingstoke.repair>
+# SPDX-License-Identifier: CC0-1.0
+
+backend:
+  name: git-gateway
+  branch: live
+
+# Editorial workflow for content approval process
+publish_mode: editorial_workflow
+media_folder: "public/uploads" # Media files will be stored in public/uploads
+public_folder: "/uploads" # The public path for media files
+
+collections:
+  - name: "Herald"
+    label: "Herald"
+    folder: "src/content/herald"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Publish Date", name: "date", widget: "datetime"}
+      - {label: "Featured Image", name: "image", widget: "image", required: false}
+      - {label: "Body", name: "body", widget: "spdx-markdown"}
