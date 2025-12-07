@@ -6,11 +6,9 @@ name: Build site
 
 on:
   push:
-  pull_request:
-    branches: ['staging', 'live']
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -19,13 +17,20 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
+  build-deploy:
     runs-on: ubuntu-latest
     name: Build the website
 
     steps:
       - uses: actions/checkout@v5
-      - name: Install, build, and upload your site
+      - name: Install, build your site
+        if: false
         run: |
           npm install --legacy-peer-deps
           npm run build
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v4 
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          force_oprhan: true
