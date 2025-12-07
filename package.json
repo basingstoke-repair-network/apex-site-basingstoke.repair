@@ -1,0 +1,16 @@
+{
+  "name": "basingstoke-repair-network",
+  "version": "1.0.0",
+  "description": "Basingstoke Repair Network Website",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx serve public -l 3000",
+    "start": "npx serve public -l 3000"
+  },
+  "keywords": ["repair", "cafe", "community", "basingstoke"],
+  "author": "Basingstoke Repair Network",
+  "license": "MIT",
+  "devDependencies": {
+    "serve": "^14.2.1"
+  }
+}
