@@ -1,0 +1,62 @@
+# SPDX-FileCopyrightText: 2025 Basingstoke Repair Network
+# SPDX-License-Identifier: MIT
+
+[build]
+  # No build command needed for static site
+  publish = "public"
+
+  # Skip unnecessary build steps
+  command = "echo 'No build step required for static site'"
+
+[build.environment]
+  # Node version for any scripts
+  NODE_VERSION = "18"
+
+# Redirect rules
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  force = false
+  conditions = {Role = ["admin"]}
+
+# Headers for security and performance
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Security headers
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+    # Performance - Cache static assets
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/*.css"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Content-Type = "text/css; charset=utf-8"
+
+[[headers]]
+  for = "/*.js"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+    Content-Type = "application/javascript; charset=utf-8"
+
+[[headers]]
+  for = "/assets/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Custom 404 page (optional - create if needed)
+# [[redirects]]
+#   from = "/*"
+#   to = "/404.html"
+#   status = 404
