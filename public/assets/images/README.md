@@ -36,7 +36,6 @@ This directory contains all images for the Basingstoke Repair Network website.
 - `basingstoke-council.png` - Basingstoke & Deane Council logo
 - `four-lanes-trust.png` - Four Lanes Trust logo
 - `restarters.png` - Restarters.net logo
-- `nh-repair-network.png` - North Hampshire Repair Network logo
 - `repair-cafe-international.png` - Repair Café International logo
 - `greener-basingstoke.png` - Greener Basingstoke logo
 - `national-lottery.png` - National Lottery logo
