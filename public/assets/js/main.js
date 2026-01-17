@@ -210,6 +210,107 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Image Lightbox Functionality
+    const lightbox = document.getElementById('image-lightbox');
+    const lightboxImage = lightbox.querySelector('.lightbox-image');
+    const lightboxClose = lightbox.querySelector('.lightbox-close');
+    const lightboxBackdrop = lightbox.querySelector('.lightbox-backdrop');
+
+    // Function to open lightbox
+    function openLightbox(imageSrc, imageAlt) {
+        lightboxImage.src = imageSrc;
+        lightboxImage.alt = imageAlt;
+        lightbox.classList.remove('hidden');
+        // Use setTimeout to ensure the display change happens before opacity change
+        setTimeout(() => {
+            lightbox.classList.add('active');
+        }, 10);
+        document.body.style.overflow = 'hidden';
+    }
+
+    // Function to close lightbox
+    function closeLightbox() {
+        lightbox.classList.remove('active');
+        setTimeout(() => {
+            lightbox.classList.add('hidden');
+            lightboxImage.src = '';
+            lightboxImage.alt = '';
+            document.body.style.overflow = '';
+        }, 300);
+    }
+
+    // Add click listeners to team photos (clickable-image class)
+    document.querySelectorAll('.clickable-image').forEach(img => {
+        // Make images keyboard accessible
+        img.setAttribute('tabindex', '0');
+        img.setAttribute('role', 'button');
+
+        // Click handler
+        img.addEventListener('click', function() {
+            const src = this.src;
+            const alt = this.alt;
+            openLightbox(src, alt);
+        });
+
+        // Keyboard handler (Enter and Space keys)
+        img.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                const src = this.src;
+                const alt = this.alt;
+                openLightbox(src, alt);
+            }
+        });
+    });
+
+    // Add click listeners to hero images (background images on hero-slide)
+    document.querySelectorAll('.hero-slide').forEach(slide => {
+        // Extract background image URL from inline style
+        const style = slide.getAttribute('style') || '';
+        const urlMatch = style.match(/url\(['"]?([^'")\s]+)['"]?\)/);
+
+        if (urlMatch && urlMatch[1]) {
+            const imageUrl = urlMatch[1];
+
+            // Add magnify icon overlay
+            const magnifyIcon = document.createElement('div');
+            magnifyIcon.className = 'hero-magnify-icon';
+            magnifyIcon.innerHTML = '<i class="fas fa-search-plus"></i>';
+            magnifyIcon.setAttribute('tabindex', '0');
+            magnifyIcon.setAttribute('role', 'button');
+            magnifyIcon.setAttribute('aria-label', 'View image full size');
+            slide.style.position = 'relative';
+            slide.appendChild(magnifyIcon);
+
+            // Click handler for magnify icon
+            magnifyIcon.addEventListener('click', function(e) {
+                e.stopPropagation();
+                openLightbox(imageUrl, 'Hero image');
+            });
+
+            // Keyboard handler for magnify icon
+            magnifyIcon.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    openLightbox(imageUrl, 'Hero image');
+                }
+            });
+        }
+    });
+
+    // Close lightbox on close button click
+    lightboxClose.addEventListener('click', closeLightbox);
+
+    // Close lightbox on backdrop click
+    lightboxBackdrop.addEventListener('click', closeLightbox);
+
+    // Close lightbox on Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+            closeLightbox();
+        }
+    });
+
     // Console welcome message
     console.log('%c🔧 Welcome to Basingstoke Repair Network! 🔧', 'color: #28276f; font-size: 16px; font-weight: bold;');
     console.log('%cInterested in contributing? Contact us at info@chinehamrepair.org.uk', 'color: #02011A; font-size: 12px;');
