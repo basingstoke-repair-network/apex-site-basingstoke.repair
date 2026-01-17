@@ -210,6 +210,72 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Image Lightbox Functionality
+    const lightbox = document.getElementById('image-lightbox');
+    const lightboxImage = lightbox.querySelector('.lightbox-image');
+    const lightboxClose = lightbox.querySelector('.lightbox-close');
+    const lightboxBackdrop = lightbox.querySelector('.lightbox-backdrop');
+
+    // Function to open lightbox
+    function openLightbox(imageSrc, imageAlt) {
+        lightboxImage.src = imageSrc;
+        lightboxImage.alt = imageAlt;
+        lightbox.classList.remove('hidden');
+        // Use setTimeout to ensure the display change happens before opacity change
+        setTimeout(() => {
+            lightbox.classList.add('active');
+        }, 10);
+        document.body.style.overflow = 'hidden';
+    }
+
+    // Function to close lightbox
+    function closeLightbox() {
+        lightbox.classList.remove('active');
+        setTimeout(() => {
+            lightbox.classList.add('hidden');
+            lightboxImage.src = '';
+            lightboxImage.alt = '';
+            document.body.style.overflow = '';
+        }, 300);
+    }
+
+    // Add click listeners to all clickable images
+    document.querySelectorAll('.clickable-image').forEach(img => {
+        // Make images keyboard accessible
+        img.setAttribute('tabindex', '0');
+        img.setAttribute('role', 'button');
+
+        // Click handler
+        img.addEventListener('click', function() {
+            const src = this.src;
+            const alt = this.alt;
+            openLightbox(src, alt);
+        });
+
+        // Keyboard handler (Enter and Space keys)
+        img.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                const src = this.src;
+                const alt = this.alt;
+                openLightbox(src, alt);
+            }
+        });
+    });
+
+    // Close lightbox on close button click
+    lightboxClose.addEventListener('click', closeLightbox);
+
+    // Close lightbox on backdrop click
+    lightboxBackdrop.addEventListener('click', closeLightbox);
+
+    // Close lightbox on Escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+            closeLightbox();
+        }
+    });
+
     // Console welcome message
     console.log('%c🔧 Welcome to Basingstoke Repair Network! 🔧', 'color: #28276f; font-size: 16px; font-weight: bold;');
     console.log('%cInterested in contributing? Contact us at info@chinehamrepair.org.uk', 'color: #02011A; font-size: 12px;');
