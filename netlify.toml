@@ -2,14 +2,12 @@
 # SPDX-License-Identifier: MIT
 
 [build]
-  # No build command needed for static site
-  publish = "public"
-
-  # Skip unnecessary build steps
-  command = "echo 'No build step required for static site'"
+  # Astro build command
+  publish = "dist"
+  command = "npm run build"
 
 [build.environment]
-  # Node version for any scripts
+  # Node version for Astro
   NODE_VERSION = "18"
 
 # Redirect rules

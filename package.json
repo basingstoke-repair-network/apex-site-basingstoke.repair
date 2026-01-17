@@ -1,15 +1,24 @@
 {
   "name": "basingstoke-repair-network",
-  "version": "1.0.0",
-  "description": "Basingstoke Repair Network Website",
-  "main": "index.html",
+  "version": "2.0.0",
+  "description": "Basingstoke Repair Network Website - Astro",
+  "type": "module",
   "scripts": {
-    "dev": "npx serve public -l 3000",
-    "start": "npx serve public -l 3000"
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "legacy:dev": "npx serve public -l 3000"
   },
   "keywords": ["repair", "cafe", "community", "basingstoke"],
   "author": "Basingstoke Repair Network",
   "license": "MIT",
+  "dependencies": {
+    "astro": "^4.16.18",
+    "@astrojs/check": "^0.9.4",
+    "typescript": "^5.6.3"
+  },
   "devDependencies": {
     "serve": "^14.2.1"
   }
