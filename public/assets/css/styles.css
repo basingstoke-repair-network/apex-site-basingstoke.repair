@@ -37,6 +37,20 @@ body {
     text-decoration: none;
 }
 
+/* Header Logo */
+header img[alt*="Logo"] {
+    object-fit: contain;
+    max-width: 200px;
+    max-height: 48px;
+    width: auto;
+}
+
+@media (min-width: 768px) {
+    header img[alt*="Logo"] {
+        max-height: 64px;
+    }
+}
+
 /* Content Styles */
 .content-bg {
     background-color: var(--content-bg);
