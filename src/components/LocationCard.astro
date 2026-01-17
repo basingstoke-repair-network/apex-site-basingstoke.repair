@@ -1,0 +1,63 @@
+---
+// SPDX-FileCopyrightText: 2025 Basingstoke Repair Network
+// SPDX-License-Identifier: MIT
+
+import type { Location } from '@/types/index';
+
+interface Props {
+  location: Location;
+}
+
+const { location } = Astro.props;
+const colorClasses = {
+  blue: 'text-blue-600',
+  green: 'text-green-600',
+  purple: 'text-purple-600'
+};
+---
+
+{location.status === 'coming-soon' ? (
+    <div id={location.id} class="max-w-4xl mx-auto mb-12 bg-white rounded-lg shadow-lg overflow-hidden">
+        <div class="p-8 text-center">
+            <h3 class={`text-3xl font-bold mb-4 ${colorClasses[location.color]}`}>{location.name}</h3>
+            <div class="text-lg">
+                <p class={`flex items-center justify-center mb-4`}>
+                    <i class={`fas fa-clock ${colorClasses[location.color]} text-3xl mr-3`}></i>
+                    <span class="text-2xl font-semibold">{location.when}</span>
+                </p>
+                <p class="text-gray-600 max-w-2xl mx-auto">
+                    {location.description}
+                </p>
+            </div>
+        </div>
+    </div>
+) : (
+    <div id={location.id} class="max-w-4xl mx-auto mb-12 bg-white rounded-lg shadow-lg overflow-hidden">
+        <div class={`md:flex ${location.imagePosition === 'right' ? 'md:flex-row-reverse' : ''}`}>
+            <div class="md:w-1/3">
+                <img
+                    src={location.teamImage}
+                    alt={`${location.name} Team`}
+                    class="w-full h-64 md:h-full object-cover clickable-image"
+                    onerror="this.src='https://picsum.photos/400/300';"
+                >
+            </div>
+            <div class="p-8 md:w-2/3">
+                <h3 class={`text-3xl font-bold mb-4 ${colorClasses[location.color]}`}>{location.name}</h3>
+                <div class="space-y-3 text-lg">
+                    <p class="flex items-start">
+                        <i class={`fas fa-calendar-alt ${colorClasses[location.color]} mt-1 mr-3`}></i>
+                        <span><strong>When:</strong> {location.when}</span>
+                    </p>
+                    <p class="flex items-start">
+                        <i class={`fas fa-map-marker-alt ${colorClasses[location.color]} mt-1 mr-3`}></i>
+                        <span><strong>Where:</strong> {location.where}{location.postcode && `, ${location.postcode}`}</span>
+                    </p>
+                    <p class="mt-4">
+                        {location.description}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+)}

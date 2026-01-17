@@ -1,0 +1,37 @@
+---
+// SPDX-FileCopyrightText: 2025 Basingstoke Repair Network
+// SPDX-License-Identifier: MIT
+
+import { heroSlides } from '@data/heroSlides';
+---
+
+<section class="hero-section">
+    <div class="swiper hero-swiper">
+        <div class="swiper-wrapper">
+            {heroSlides.map((slide, index) => (
+                <div class="swiper-slide">
+                    <div class="hero-slide" style={`background: linear-gradient(rgba(2, 1, 26, 0.5), rgba(2, 1, 26, 0.5)), url('${slide.image}') center/cover;`}>
+                        <div class="container mx-auto px-4 h-full flex items-center">
+                            <div class="text-white max-w-3xl">
+                                {index === 0 ? (
+                                    <h1 class="text-4xl md:text-6xl font-bold mb-4">{slide.title}</h1>
+                                ) : (
+                                    <h2 class="text-4xl md:text-6xl font-bold mb-4">{slide.title}</h2>
+                                )}
+                                <p class="text-xl md:text-2xl mb-6">{slide.subtitle}</p>
+                                {slide.buttonText && slide.buttonLink && (
+                                    <a href={slide.buttonLink} class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg transition">
+                                        {slide.buttonText}
+                                    </a>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ))}
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </div>
+</section>
