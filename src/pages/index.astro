@@ -1,0 +1,168 @@
+---
+// SPDX-FileCopyrightText: 2025 Basingstoke Repair Network
+// SPDX-License-Identifier: MIT
+
+import Layout from '@layouts/Layout.astro';
+import Header from '@components/Header.astro';
+import HeroCarousel from '@components/HeroCarousel.astro';
+import LocationCard from '@components/LocationCard.astro';
+import Supporters from '@components/Supporters.astro';
+import Footer from '@components/Footer.astro';
+
+import { locations } from '@data/locations';
+import { otherCafes } from '@data/otherCafes';
+---
+
+<Layout title="Basingstoke Repair Network - Community Repair Cafés">
+    <Header />
+
+    <HeroCarousel />
+
+    <!-- Main Content -->
+    <main class="content-bg">
+        <!-- Introduction Section -->
+        <section class="container mx-auto px-4 py-16">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-4xl font-bold text-center mb-8 content-text">What is a Repair Café?</h2>
+                <div class="text-lg leading-relaxed content-text space-y-4">
+                    <p>
+                        Repair Cafés are free community events where people bring broken items and work alongside skilled volunteers to fix them. Instead of throwing away that broken toaster, torn jacket, or wobbly chair, bring it to a Repair Café and give it a new lease of life!
+                    </p>
+                    <p>
+                        Our mission is simple: reduce waste, save money, learn new skills, and build community connections. Every item repaired is one less in the landfill and one step toward a more sustainable future.
+                    </p>
+                    <p>
+                        The Basingstoke Repair Network is part of a global movement with over <strong>4,500 repair cafés worldwide</strong>. We're expanding across Basingstoke and North Hampshire, bringing the power of repair to more communities.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Environmental Impact Section -->
+        <section class="bg-white py-16">
+            <div class="container mx-auto px-4">
+                <div class="max-w-4xl mx-auto">
+                    <h2 class="text-3xl font-bold text-center mb-12 content-text">Why Repair Matters</h2>
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="text-center">
+                            <div class="text-5xl mb-4 text-blue-600">
+                                <i class="fas fa-leaf"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-2">Reduce Waste</h3>
+                            <p class="text-gray-600">Keep items out of landfills and reduce environmental impact</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-5xl mb-4 text-green-600">
+                                <i class="fas fa-hand-holding-heart"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-2">Build Community</h3>
+                            <p class="text-gray-600">Connect with neighbors and share skills</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-5xl mb-4 text-purple-600">
+                                <i class="fas fa-tools"></i>
+                            </div>
+                            <h3 class="text-xl font-bold mb-2">Learn Skills</h3>
+                            <p class="text-gray-600">Discover how things work and gain repair confidence</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Locations Section -->
+        <section id="locations" class="container mx-auto px-4 py-16">
+            <h2 class="text-4xl font-bold text-center mb-12 content-text">Our Locations</h2>
+            {locations.map(location => <LocationCard location={location} />)}
+        </section>
+
+        <!-- Other Local Repair Cafés -->
+        <section id="other-cafes" class="bg-white py-16">
+            <div class="container mx-auto px-4">
+                <div class="max-w-4xl mx-auto">
+                    <h2 class="text-3xl font-bold text-center mb-8 content-text">Other Local Repair Cafés</h2>
+                    {otherCafes.map(cafe => (
+                        <div class="bg-gray-50 rounded-lg p-8">
+                            <div class="flex flex-col md:flex-row items-center gap-6">
+                                <div class="md:w-1/3 flex justify-center">
+                                    <img
+                                        src={cafe.logo}
+                                        alt={`${cafe.name} Logo`}
+                                        class="clickable-image max-h-32 object-contain"
+                                        onerror={`this.src='https://via.placeholder.com/200x150?text=${cafe.shortName}';`}
+                                    >
+                                </div>
+                                <div class="md:w-2/3 text-center md:text-left">
+                                    <h3 class="text-2xl font-bold mb-3 text-purple-600">{cafe.name}</h3>
+                                    <p class="text-lg text-gray-600 mb-4">
+                                        {cafe.description.split('North Hampshire Repair Cafe')[0]}
+                                        <a href={cafe.link} class="text-blue-600 hover:underline font-semibold" target="_blank" rel="noopener noreferrer">North Hampshire Repair Cafe</a>
+                                        {cafe.description.split('North Hampshire Repair Cafe').slice(1).join('North Hampshire Repair Cafe')}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+
+        <!-- Get Involved Section -->
+        <section id="get-involved" class="container mx-auto px-4 py-16">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-4xl font-bold text-center mb-8 content-text">Get Involved</h2>
+                <div class="bg-white rounded-lg shadow-lg p-8">
+                    <div class="text-center mb-8">
+                        <h3 class="text-2xl font-bold mb-4">We Need You!</h3>
+                        <p class="text-lg text-gray-600 mb-6">
+                            Whether you're a skilled repairer or just want to help out, we'd love to have you join our team. We're looking for:
+                        </p>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6 mb-8">
+                        <div class="bg-blue-50 rounded-lg p-6">
+                            <h4 class="text-xl font-bold mb-3 text-blue-600">
+                                <i class="fas fa-wrench mr-2"></i>Repair Volunteers
+                            </h4>
+                            <ul class="space-y-2 text-gray-700">
+                                <li><i class="fas fa-check text-green-600 mr-2"></i>Electrical repairs</li>
+                                <li><i class="fas fa-check text-green-600 mr-2"></i>IT repairs</li>
+                                <li><i class="fas fa-check text-green-600 mr-2"></i>Textile & sewing</li>
+                                <li><i class="fas fa-check text-green-600 mr-2"></i>Bicycle repairs</li>
+                                <li><i class="fas fa-check text-green-600 mr-2"></i>Carpentry & furniture</li>
+                                <li><i class="fas fa-check text-green-600 mr-2"></i>Any other repair skills!</li>
+                            </ul>
+                        </div>
+                        <div class="bg-green-50 rounded-lg p-6">
+                            <h4 class="text-xl font-bold mb-3 text-green-600">
+                                <i class="fas fa-hands-helping mr-2"></i>Support Volunteers
+                            </h4>
+                            <ul class="space-y-2 text-gray-700">
+                                <li><i class="fas fa-check text-green-600 mr-2"></i>Welcome & registration</li>
+                                <li><i class="fas fa-check text-green-600 mr-2"></i>Refreshments</li>
+                                <li><i class="fas fa-check text-green-600 mr-2"></i>Setup & cleanup</li>
+                                <li><i class="fas fa-check text-green-600 mr-2"></i>Social media</li>
+                                <li><i class="fas fa-check text-green-600 mr-2"></i>Event coordination</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="text-center bg-gray-50 rounded-lg p-6">
+                        <h4 class="text-xl font-bold mb-4">Contact Us</h4>
+                        <div class="space-y-3">
+                            <p class="flex items-center justify-center text-lg">
+                                <i class="fas fa-envelope text-blue-600 mr-3"></i>
+                                <a href="mailto:info@chinehamrepair.org.uk" class="text-blue-600 hover:underline">info@chinehamrepair.org.uk</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Supporters Section -->
+        <Supporters />
+    </main>
+
+    <Footer />
+</Layout>
