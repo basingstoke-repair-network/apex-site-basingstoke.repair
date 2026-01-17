@@ -246,7 +246,8 @@ document.addEventListener('DOMContentLoaded', function() {
         img.setAttribute('role', 'button');
 
         // Click handler
-        img.addEventListener('click', function() {
+        img.addEventListener('click', function(e) {
+            e.preventDefault();
             const src = this.src;
             const alt = this.alt;
             openLightbox(src, alt);
