@@ -37,6 +37,18 @@ body {
     text-decoration: none;
 }
 
+/* BRN Logo - Fluid responsive scaling */
+.brn-logo {
+    display: block;
+    height: 4rem; /* Fallback for browsers without clamp() */
+    height: clamp(3rem, 8vw, 5rem);
+    width: auto;
+    min-width: 0; /* Allow shrinking in flex container */
+    flex-shrink: 0; /* Prevent flex squashing */
+    object-fit: contain;
+    aspect-ratio: auto; /* Maintain intrinsic aspect ratio */
+}
+
 /* Content Styles */
 .content-bg {
     background-color: var(--content-bg);
