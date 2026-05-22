@@ -21,11 +21,6 @@ pull_request_rules:
     actions:
       review:
         type: APPROVE
-  - name: Delete head branch on merged pull requests
-    conditions:
-      - merged
-    actions:
-      delete_head_branch:
   - name: Automatically merge backport if they pass tests (TODO)
     conditions:
       - author = mergify[bot]
@@ -38,7 +33,7 @@ pull_request_rules:
     conditions:
       - "#approved-reviews-by >= 1"
       - label != do-not-merge
-      - head = staging 
+      - head = staging
       - check-success = Build site
     actions:
       queue:
@@ -59,3 +54,5 @@ pull_request_rules:
     actions:
       comment:
         message: "Note to maintainers: do not merge using the GitHub UI. We handle it differently here ;-)"
+merge_protections_settings:
+  reporting_method: check-runs
