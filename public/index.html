@@ -1,434 +1,1133 @@
-<!--
-SPDX-FileCopyrightText: 2025 Basingstoke Repair Network
-SPDX-License-Identifier: MIT
--->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Basingstoke Repair Network - Community Repair Cafés</title>
-    <meta name="description" content="Join the Basingstoke Repair Network - community repair cafés helping fix items, reduce waste, and build sustainable communities across Basingstoke and North Hampshire.">
+    <title>Basingstoke Repair Network - Fix It, Don't Bin It!</title>
+    <meta name="description"
+        content="Basingstoke Repair Network - Volunteer-run repair cafés helping fix broken things, saving you money and keeping items out of landfill.">
+    <style>
+        /* CSS Reset and Base Styles */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-    <!-- TailwindCSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+        :root {
+            /* Colors from https://basingstoke.repair */
+            --color-primary: #28276f;
+            --color-primary-dark: #1a1850;
+            --color-text: #02011A;
+            --color-bg: #eeeeee;
+            --color-white: #ffffff;
+            --color-gray: #c6c8c9;
 
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            /* Typography */
+            --font-heading: Georgia, 'Times New Roman', serif;
+            --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
 
-    <!-- Swiper CSS for carousel -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+            /* Spacing scale */
+            --space-xs: 0.5rem;
+            --space-sm: 0.75rem;
+            --space-md: 1rem;
+            --space-lg: 1.5rem;
+            --space-xl: 2rem;
+            --space-2xl: 3rem;
+            --space-3xl: 4rem;
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="assets/css/styles.css">
+            /* Border radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        /* Typography */
+        h1,
+        h2,
+        h3 {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            line-height: 1.3;
+            color: var(--color-primary);
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: var(--space-md);
+        }
+
+        h2 {
+            font-size: clamp(1.5rem, 4vw, 2.25rem);
+            margin-bottom: var(--space-md);
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--color-primary);
+            margin-top: var(--space-sm);
+            border-radius: 2px;
+        }
+
+        h3 {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            margin-bottom: var(--space-sm);
+            color: var(--color-primary);
+        }
+
+        p {
+            margin-bottom: var(--space-md);
+        }
+
+        a {
+            color: var(--color-primary);
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s ease;
+            cursor: pointer;
+        }
+
+        a:hover,
+        a:focus {
+            border-bottom-color: var(--color-primary);
+        }
+
+        /* Layout Container */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-md);
+        }
+
+        /* Header & Navigation */
+        header {
+            background: var(--color-gray);
+            padding: var(--space-md) 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(2, 1, 26, 0.08);
+        }
+
+        .header-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo img {
+            max-height: clamp(70px, 12vw, 120px);
+            width: 100%;
+            max-width: 360px;
+            height: auto;
+            display: block;
+        }
+
+        @media (min-width: 640px) {
+            .logo img {
+                max-width: 480px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .logo img {
+                max-width: 560px;
+            }
+        }
+
+        .logo-text {
+            font-family: var(--font-heading);
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            color: var(--color-primary);
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .logo-text span {
+            display: block;
+            font-size: 0.6em;
+            color: var(--color-primary);
+            font-weight: 400;
+            letter-spacing: 0.05em;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: var(--space-sm) var(--space-lg);
+        }
+
+        nav a {
+            color: var(--color-primary);
+            font-weight: 500;
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--radius-md);
+            transition: all 0.2s ease;
+        }
+
+        nav a:hover,
+        nav a:focus {
+            background: var(--color-primary);
+            color: var(--color-white);
+            border-bottom-color: transparent;
+        }
+
+        /* Burger Menu */
+        .burger-menu {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 44px;
+            height: 44px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            gap: 6px;
+        }
+
+        .burger-line {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--color-text);
+            border-radius: 2px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .burger-menu.is-active .burger-line:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+
+        .burger-menu.is-active .burger-line:nth-child(2) {
+            opacity: 0;
+        }
+
+        .burger-menu.is-active .burger-line:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
+        /* Mobile Navigation */
+        @media (max-width: 639px) {
+            .burger-menu {
+                display: flex;
+                position: absolute;
+                right: var(--space-md);
+                top: 50%;
+                transform: translateY(-50%);
+            }
+
+            .header-content {
+                position: relative;
+                padding-right: 60px;
+            }
+
+            .nav-menu {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--color-gray);
+                box-shadow: 0 4px 12px rgba(2, 1, 26, 0.1);
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(-10px);
+                transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+                z-index: 99;
+            }
+
+            .nav-menu.is-open {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+            }
+
+            .nav-menu ul {
+                flex-direction: column;
+                gap: 0;
+                padding: var(--space-md);
+            }
+
+            .nav-menu li {
+                border-bottom: 1px solid var(--color-bg);
+            }
+
+            .nav-menu li:last-child {
+                border-bottom: none;
+            }
+
+            .nav-menu a {
+                display: block;
+                padding: var(--space-md);
+                text-align: center;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .burger-line,
+            .nav-menu {
+                transition: none;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+            color: var(--color-white);
+            padding: var(--space-3xl) var(--space-md);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '🔧 ✂️ 🔌';
+            position: absolute;
+            top: 10%;
+            right: 5%;
+            font-size: clamp(2rem, 6vw, 4rem);
+            opacity: 0.15;
+        }
+
+        .hero::after {
+            content: '🧵 🪑 🚲';
+            position: absolute;
+            bottom: 10%;
+            left: 5%;
+            font-size: clamp(2rem, 6vw, 4rem);
+            opacity: 0.15;
+        }
+
+        .hero h1 {
+            color: var(--color-white);
+            margin-bottom: var(--space-lg);
+        }
+
+        .hero h1::after {
+            display: none;
+        }
+
+        .hero-tagline {
+            font-size: clamp(1.25rem, 3vw, 1.75rem);
+            max-width: 700px;
+            margin: 0 auto var(--space-lg);
+            font-weight: 300;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            gap: var(--space-md);
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: var(--space-sm) var(--space-xl);
+            border-radius: var(--radius-lg);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+        }
+
+        .btn-primary {
+            background: var(--color-primary);
+            color: var(--color-white);
+        }
+
+        .btn-primary:hover {
+            background: var(--color-primary);
+            border-bottom-color: transparent;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--color-white);
+            color: var(--color-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--color-bg);
+            border-bottom-color: transparent;
+            transform: translateY(-2px);
+        }
+
+        /* Sections */
+        section {
+            padding: var(--space-3xl) var(--space-md);
+        }
+
+        section:nth-child(even) {
+            background: var(--color-white);
+        }
+
+        .section-intro {
+            font-size: 1.1rem;
+            max-width: 700px;
+            color: var(--color-primary);
+            margin-bottom: var(--space-xl);
+        }
+
+        /* Cards */
+        .card-grid {
+            display: grid;
+            gap: var(--space-lg);
+            margin-top: var(--space-xl);
+            margin-bottom: var(--space-xl);
+        }
+
+        .card {
+            background: var(--color-bg);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            border-left: 4px solid var(--color-primary-dark);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(74, 63, 53, 0.1);
+        }
+
+        .card h3 {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .card-icon {
+            font-size: 1.5em;
+        }
+
+        /* Location & Map Section */
+        .location-grid {
+            display: grid;
+            gap: var(--space-xl);
+            margin-top: var(--space-xl);
+        }
+
+        .location-card {
+            background: var(--color-white);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            border: 2px solid var(--color-primary-dark);
+        }
+
+        .location-card h3 {
+            color: var(--color-primary);
+            margin-bottom: var(--space-md);
+        }
+
+        .location-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: var(--radius-md);
+            margin-bottom: var(--space-md);
+        }
+
+        .location-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-md);
+            margin-bottom: var(--space-md);
+        }
+
+        .location-meta span {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            background: var(--color-bg);
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 300px;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            margin-top: var(--space-md);
+            border: 2px solid var(--color-primary-dark);
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Lists */
+        ul,
+        ol {
+            margin-left: var(--space-lg);
+            margin-bottom: var(--space-md);
+        }
+
+        li {
+            margin-bottom: var(--space-sm);
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-sm);
+            margin: var(--space-md) 0;
+        }
+
+        .skill-tag {
+            background: var(--color-primary);
+            color: var(--color-white);
+            padding: var(--space-xs) var(--space-md);
+            border-radius: var(--radius-lg);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Notice/Disclaimer */
+        .notice {
+            background: linear-gradient(135deg, #fff9e6 0%, #fff5d6 100%);
+            border-left: 4px solid var(--color-gray);
+            padding: var(--space-md);
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            margin: var(--space-lg) 0;
+        }
+
+        .notice p {
+            margin: 0;
+            color: var(--color-text);
+        }
+
+        /* Email Button */
+        .email-cta {
+            background: var(--color-primary);
+            color: var(--color-white);
+            padding: var(--space-lg);
+            border-radius: var(--radius-lg);
+            text-align: center;
+            margin-top: var(--space-xl);
+        }
+
+        .email-cta a {
+            color: var(--color-primary);
+            font-weight: 600;
+            border-bottom: 2px solid var(--color-primary);
+        }
+
+        .email-cta a:hover {
+            color: var(--color-white);
+            border-bottom-color: var(--color-white);
+        }
+
+        /* Supporters */
+        .supporters-section {
+            background: var(--color-white);
+        }
+
+        .supporters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--space-lg);
+            margin-top: var(--space-xl);
+            align-items: center;
+        }
+
+        .supporter-logo {
+            background: white;
+            padding: var(--space-md);
+            border-radius: var(--radius-md);
+            border: 2px solid var(--color-primary-dark);
+            text-align: center;
+            transition: transform 0.2s ease;
+        }
+
+        .supporter-logo:hover {
+            transform: translateY(-4px);
+        }
+
+        .supporter-logo img {
+            max-width: 100%;
+            height: 80px;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .supporter-name {
+            font-size: 0.85rem;
+            color: var(--color-primary);
+            margin-top: var(--space-sm);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--color-primary);
+            color: var(--color-bg);
+            padding: var(--space-2xl) var(--space-md);
+            text-align: center;
+        }
+
+        footer a {
+            color: var(--color-primary);
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: var(--space-lg);
+            margin-bottom: var(--space-lg);
+        }
+
+        .charity-info {
+            margin-top: var(--space-lg);
+            padding-top: var(--space-lg);
+            border-top: 1px solid var(--color-primary-dark);
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Image Placeholders */
+        .image-placeholder {
+            background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-white);
+            font-size: 3rem;
+            min-height: 200px;
+            margin: var(--space-lg) 0;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-md);
+            margin: var(--space-xl) 0;
+        }
+
+        /* Breakpoints */
+
+        /* Tablet: 640px and up */
+        @media (min-width: 640px) {
+            .card-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .location-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Desktop: 1024px and up */
+        @media (min-width: 1024px) {
+            .header-content {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+
+            .container {
+                padding: 0 var(--space-xl);
+            }
+
+            section {
+                padding: var(--space-3xl) var(--space-xl);
+            }
+
+            .card-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .hero {
+                padding: var(--space-3xl) var(--space-xl);
+            }
+
+            .supporters-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .section-intro {
+                max-width: 900px;
+            }
+        }
+
+        /* Large Desktop: 1440px and up */
+        @media (min-width: 1440px) {
+            :root {
+                --space-3xl: 5rem;
+            }
+
+            .container {
+                max-width: 1400px;
+            }
+
+            .section-intro {
+                max-width: 1100px;
+            }
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 639px) {
+
+            .hero::before,
+            .hero::after {
+                display: none;
+            }
+
+            .map-container {
+                height: 250px;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            header {
+                position: static;
+            }
+
+            .hero {
+                background: white;
+                color: black;
+            }
+
+            .hero h1 {
+                color: black;
+            }
+
+            .btn {
+                border: 2px solid black;
+            }
+
+            .map-container {
+                display: none;
+            }
+        }
+
+        /* Focus styles for accessibility */
+        a:focus-visible,
+        button:focus-visible {
+            outline: 3px solid var(--color-primary);
+            outline-offset: 2px;
+        }
+
+        /* Reduced motion preference */
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            .card:hover,
+            .btn:hover {
+                transform: none;
+            }
+        }
+    </style>
 </head>
-<body class="bg-gray-50">
-    <!-- Header -->
-    <header class="header-bg sticky top-0 z-50 shadow-md">
-        <nav class="container mx-auto px-4 py-4">
-            <div class="flex justify-between items-center">
-                <!-- Logo -->
-                <div class="flex items-center">
-                    <img src="assets/images/logos/brn-logo.png" alt="Basingstoke Repair Network Logo" class="h-12 md:h-16" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                    <div class="text-2xl font-bold header-icon-color hidden">BRN</div>
-                </div>
 
-                <!-- Desktop Navigation -->
-                <div class="hidden md:flex space-x-6">
-                    <a href="#chineham" class="nav-link hover:text-blue-600 transition">Chineham</a>
-                    <a href="#hatch-warren" class="nav-link hover:text-blue-600 transition">Hatch Warren</a>
-                    <a href="#kings-furlong" class="nav-link hover:text-blue-600 transition">Kings Furlong</a>
-                    <a href="#other-cafes" class="nav-link hover:text-blue-600 transition">Other Cafés</a>
-                    <a href="#get-involved" class="nav-link hover:text-blue-600 transition">Get Involved</a>
-                </div>
-
-                <!-- Mobile Menu Button -->
-                <button id="mobile-menu-button" class="md:hidden header-icon-color focus:outline-none">
-                    <i class="fas fa-bars text-2xl"></i>
-                </button>
-            </div>
-
-            <!-- Mobile Navigation -->
-            <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4">
-                <a href="#chineham" class="block py-2 nav-link hover:text-blue-600 transition">Chineham Repair Café</a>
-                <a href="#hatch-warren" class="block py-2 nav-link hover:text-blue-600 transition">Hatch Warren Repair Café</a>
-                <a href="#kings-furlong" class="block py-2 nav-link hover:text-blue-600 transition">Kings Furlong Repair Café</a>
-                <a href="#other-cafes" class="block py-2 nav-link hover:text-blue-600 transition">Other Local Repair Cafés</a>
-                <a href="#get-involved" class="block py-2 nav-link hover:text-blue-600 transition">Get Involved</a>
-            </div>
-        </nav>
+<body>
+    <!-- Header with Navigation -->
+    <header>
+        <div class="container header-content">
+            <a href="#" class="logo" aria-label="Back to top">
+                <img src="https://basingstoke.repair/assets/images/logos/brn-logo.png"
+                    alt="Basingstoke Repair Network - Fix It, Don't Bin It!">
+            </a>
+            <button class="burger-menu" aria-label="Toggle navigation menu" aria-expanded="false"
+                aria-controls="mobile-nav">
+                <span class="burger-line"></span>
+                <span class="burger-line"></span>
+                <span class="burger-line"></span>
+            </button>
+            <nav id="mobile-nav" class="nav-menu">
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#why-repair">Why Repair</a></li>
+                    <li><a href="#locations">Locations</a></li>
+                    <li><a href="#volunteer">Volunteer</a></li>
+                    <li><a href="#supporters">Supporters</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
-    <!-- Hero Section with Carousel -->
-    <section class="hero-section">
-        <div class="swiper hero-swiper">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide">
-                    <div class="hero-slide" style="background: linear-gradient(rgba(2, 1, 26, 0.5), rgba(2, 1, 26, 0.5)), url('assets/images/hero/fix-it-dont-bin-it.jpg') center/cover;">
-                        <div class="container mx-auto px-4 h-full flex items-center">
-                            <div class="text-white max-w-3xl">
-                                <h1 class="text-4xl md:text-6xl font-bold mb-4">Fix It, Don't Bin It!</h1>
-                                <p class="text-xl md:text-2xl mb-6">Join the Basingstoke Repair Network and help build a sustainable community</p>
-                                <a href="#get-involved" class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-8 rounded-lg transition">Get Involved</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="hero-slide" style="background: linear-gradient(rgba(2, 1, 26, 0.5), rgba(2, 1, 26, 0.5)), url('assets/images/hero/textile-repairs.jpg') center/cover;">
-                        <div class="container mx-auto px-4 h-full flex items-center">
-                            <div class="text-white max-w-3xl">
-                                <h2 class="text-4xl md:text-6xl font-bold mb-4">Expert Textile Repairs</h2>
-                                <p class="text-xl md:text-2xl">Skilled volunteers ready to mend clothes, bags, and fabrics</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="hero-slide" style="background: linear-gradient(rgba(2, 1, 26, 0.5), rgba(2, 1, 26, 0.5)), url('assets/images/hero/community-repair-cafes.jpg') center/cover;">
-                        <div class="container mx-auto px-4 h-full flex items-center">
-                            <div class="text-white max-w-3xl">
-                                <h2 class="text-4xl md:text-6xl font-bold mb-4">Community Repair Cafés</h2>
-                                <p class="text-xl md:text-2xl">Free repair help for your broken items</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="swiper-slide">
-                    <div class="hero-slide" style="background: linear-gradient(rgba(2, 1, 26, 0.5), rgba(2, 1, 26, 0.5)), url('assets/images/hero/learn-repair-share.jpg') center/cover;">
-                        <div class="container mx-auto px-4 h-full flex items-center">
-                            <div class="text-white max-w-3xl">
-                                <h2 class="text-4xl md:text-6xl font-bold mb-4">Learn, Repair, Share</h2>
-                                <p class="text-xl md:text-2xl">Part of a global movement of 4,500+ repair cafés</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Fix It, Don't Bin It!</h1>
+            <p class="hero-tagline">Our Repair Cafés are here to help fix your broken things, saving you money, and
+                keeping them out of landfill.</p>
+            <div class="hero-cta">
+                <a href="#locations" class="btn btn-primary">Find a Repair Café</a>
+                <a href="#volunteer" class="btn btn-secondary">Volunteer With Us</a>
             </div>
-            <div class="swiper-pagination"></div>
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
+
         </div>
     </section>
 
-    <!-- Main Content -->
-    <main class="content-bg">
-        <!-- Introduction Section -->
-        <section class="container mx-auto px-4 py-16">
-            <div class="max-w-4xl mx-auto">
-                <h2 class="text-4xl font-bold text-center mb-8 content-text">What is a Repair Café?</h2>
-                <div class="text-lg leading-relaxed content-text space-y-4">
-                    <p>
-                        Repair Cafés are free community events where people bring broken items and work alongside skilled volunteers to fix them. Instead of throwing away that broken toaster, torn jacket, or wobbly chair, bring it to a Repair Café and give it a new lease of life!
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <h2>How It Works</h2>
+            <p class="section-intro">Come along to one of our Repair Café sessions, bring your broken items, and sit
+                with our friendly volunteers while they try to fix them. It's completely free, though donations are
+                welcome</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h3><span class="card-icon">🚶</span> Come Along</h3>
+                    <p>Find your nearest Repair Café from our list below. Just drop in during our opening hours — no
+                        appointment needed</p>
+                </div>
+                <div class="card">
+                    <h3><span class="card-icon">👀</span> Stay & Watch</h3>
+                    <p>We work on a first-come, first-served basis. Sit with our volunteer repairers and see how your
+                        item gets fixed.</p>
+                </div>
+                <div class="card">
+                    <h3><span class="card-icon">☕</span> Enjoy a Cuppa</h3>
+                    <p>While you wait, enjoy a cup of tea or coffee, chat with other visitors, and learn something new
                     </p>
-                    <p>
-                        Our mission is simple: reduce waste, save money, learn new skills, and build community connections. Every item repaired is one less in the landfill and one step toward a more sustainable future.
+                </div>
+            </div>
+
+            <h3>💡 How You Can Help Us Help You</h3>
+            <ul>
+                <li><strong>Clean your item</strong> — it's much nicer for our volunteers to work on</li>
+                <li><strong>Bring all the bits</strong> — leads, chargers, manuals, broken parts, screws</li>
+                <li><strong>Bring batteries</strong> if your item needs them</li>
+                <li><strong>Arrive early</strong> — we work on a first-come, first-served basis</li>
+            </ul>
+
+            <div class="notice">
+                <p><strong>Note:</strong> We do our very best, but repairs are offered on a best-endeavours basis. We
+                    can't guarantee everything will be fixable or perfect afterwards, but we'll always try our hardest
+                </p>
+            </div>
+
+            <h3>✅ What We Can Try to Fix</h3>
+            <p>Our volunteers have recently fixed:</p>
+            <div class="skills-grid">
+                <span class="skill-tag">🌱 Garden tools</span>
+                <span class="skill-tag">🍳 Kitchen tools</span>
+                <span class="skill-tag">🧸 Toys</span>
+                <span class="skill-tag">🚲 Bikes</span>
+                <span class="skill-tag">💡 Lights</span>
+                <span class="skill-tag">👕 Clothes</span>
+                <span class="skill-tag">💻 Laptops</span>
+                <span class="skill-tag">🖥️ PCs</span>
+                <span class="skill-tag">🌬️ Vacuum cleaners</span>
+                <span class="skill-tag">🪑 Chairs</span>
+                <span class="skill-tag">💍 Jewellery</span>
+                <span class="skill-tag">✂️ Sharpening</span>
+                <span class="skill-tag">🛋️ Upholstery</span>
+                <span class="skill-tag">...and more</span>
+            </div>
+            <div class="notice">
+                <p>Sharpening and Upholstery are not always available <a href"mailto:info@basingsoke.reapir">Email us
+                        beforehand</a></p>
+            </div>
+            <h3>❌ What We Can't Fix</h3>
+            <p>Unfortunately, for safety reasons, we <strong>cannot</strong> repair:</p>
+            <ul>
+                <li>Items where we can't test whether they'll be safe to use afterwards</li>
+                <li>Cane Furniture</li>
+                <li>Electric Blankets</li>
+                <li>Petrol Driven items</li>
+                <li>Microwaves</li>
+                <li>Fridges & Freezers</li>
+                <li>Anything our volunteers consider unsafe to work on</li>
+            </ul>
+
+            <div class="notice">
+                <p><strong>Not sure?</strong> <a href="mailto:info@basingstoke.repair">Email us beforehand</a> with
+                    brief details of your item and we'll let you know if we can help</p>
+            </div>
+
+            <!-- Image Placeholder -->
+            <div class="image-grid">
+                <div class="image-placeholder" title="Photo: Team in action">📸<br><small>Team in action</small></div>
+                <div class="image-placeholder" title="Photo: Repair work">🔧<br><small>Repairs underway</small></div>
+                <div class="image-placeholder" title="Photo: Happy customer">😊<br><small>Happy fix!</small></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Repair Matters Section -->
+    <section id="why-repair">
+        <div class="container">
+            <h2>Why Repair Matters</h2>
+            <p class="section-intro">Repairing instead of replacing helps create a more sustainable, connected, and
+                skillful community. Here's why repair matters:</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h3><span class="card-icon">🌍</span> Reduce Waste</h3>
+                    <p>Keep items out of landfills and reduce environmental impact. Every item repaired is one less in
+                        the bin</p>
+                </div>
+                <div class="card">
+                    <h3><span class="card-icon">🤝</span> Build Community</h3>
+                    <p>Connect with neighbors and share skills. Repair Cafés are social spaces where people come
+                        together</p>
+                </div>
+                <div class="card">
+                    <h3><span class="card-icon">🛠️</span> Learn Skills</h3>
+                    <p>Discover how things work and gain repair confidence. Watch, learn, and try it yourself next time
                     </p>
-                    <p>
-                        The Basingstoke Repair Network is part of a global movement with over <strong>4,500 repair cafés worldwide</strong>. We're expanding across Basingstoke and North Hampshire, bringing the power of repair to more communities.
-                    </p>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Environmental Impact Section -->
-        <section class="bg-white py-16">
-            <div class="container mx-auto px-4">
-                <div class="max-w-4xl mx-auto">
-                    <h2 class="text-3xl font-bold text-center mb-12 content-text">Why Repair Matters</h2>
-                    <div class="grid md:grid-cols-3 gap-8">
-                        <div class="text-center">
-                            <div class="text-5xl mb-4 text-blue-600">
-                                <i class="fas fa-leaf"></i>
-                            </div>
-                            <h3 class="text-xl font-bold mb-2">Reduce Waste</h3>
-                            <p class="text-gray-600">Keep items out of landfills and reduce environmental impact</p>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-5xl mb-4 text-green-600">
-                                <i class="fas fa-hand-holding-heart"></i>
-                            </div>
-                            <h3 class="text-xl font-bold mb-2">Build Community</h3>
-                            <p class="text-gray-600">Connect with neighbors and share skills</p>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-5xl mb-4 text-purple-600">
-                                <i class="fas fa-tools"></i>
-                            </div>
-                            <h3 class="text-xl font-bold mb-2">Learn Skills</h3>
-                            <p class="text-gray-600">Discover how things work and gain repair confidence</p>
-                        </div>
+    <!-- Locations Section -->
+    <section id="locations">
+        <div class="container">
+            <h2>Our Repair Cafés</h2>
+            <p class="section-intro">We run regular Repair Cafés across Basingstoke. Find your nearest location and pop
+                in</p>
+
+            <div class="location-grid">
+                <div class="location-card">
+                    <h3>Chineham Repair Café</h3>
+                    <img src="https://basingstoke.repair/assets/images/locations/chineham-team.jpg"
+                        alt="Chineham Repair Café Team" class="location-image">
+                    <div class="location-meta">
+                        <span>📅 3rd Saturday of each month</span>
+                        <span>🕐 10am - 1pm</span>
+                    </div>
+                    <p><strong>Christ Church Chineham</strong><br>Reading Road (next to Surgery)<br>RG24 8LT</p>
+                    <div class="map-container">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2495.456789012345!2d-1.078901!3d51.284567!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4874212345678901%3A0xabcdef1234567890!2sChrist%20Church%20Chineham!5e0!3m2!1sen!2suk!4v1234567890123!5m2!1sen!2suk"
+                            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                            title="Map showing Christ Church Chineham location">
+                        </iframe>
                     </div>
                 </div>
-            </div>
-        </section>
 
-        <!-- Locations Section -->
-        <section id="locations" class="container mx-auto px-4 py-16">
-            <h2 class="text-4xl font-bold text-center mb-12 content-text">Our Locations</h2>
-
-            <!-- Chineham Repair Café -->
-            <div id="chineham" class="max-w-4xl mx-auto mb-12 bg-white rounded-lg shadow-lg overflow-hidden">
-                <div class="md:flex">
-                    <div class="md:w-1/3">
-                        <img src="assets/images/locations/chineham-team.jpg" alt="Chineham Repair Café Team" class="w-full h-64 md:h-full object-cover clickable-image" onerror="this.src='https://picsum.photos/400/300?';">
+                <div class="location-card">
+                    <h3>Hatch Warren & Beggarwood Repair Café</h3>
+                    <img src="https://basingstoke.repair/assets/images/locations/hatch-warren-team.jpg"
+                        alt="Hatch Warren Repair Café Team" class="location-image">
+                    <div class="location-meta">
+                        <span>📅 1st Saturday of each month</span>
+                        <span>🕐 10:30am - 1pm</span>
                     </div>
-                    <div class="p-8 md:w-2/3">
-                        <h3 class="text-3xl font-bold mb-4 text-blue-600">Chineham Repair Café</h3>
-                        <div class="space-y-3 text-lg">
-                            <p class="flex items-start">
-                                <i class="fas fa-calendar-alt text-blue-600 mt-1 mr-3"></i>
-                                <span><strong>When:</strong> 3rd Saturday of each month, 10am-1pm</span>
-                            </p>
-                            <p class="flex items-start">
-                                <i class="fas fa-map-marker-alt text-blue-600 mt-1 mr-3"></i>
-                                <span><strong>Where:</strong> Christ Church Chineham, Reading Road (next to Surgery), RG24 8LT</span>
-                            </p>
-                            <p class="mt-4">
-                                Our flagship repair café has been serving the Chineham community with expert volunteers ready to help fix electrical items, textiles, bikes, and more!
-                            </p>
-                        </div>
+                    <p><strong>Hatch Warren Community Centre</strong><br>RG22 4XF</p>
+                    <div class="map-container">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2495.456789012345!2d-1.078901!3d51.284567!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4874212345678901%3A0xabcdef1234567890!2sHatch%20Warren%20Community%20Centre!5e0!3m2!1sen!2suk!4v1234567890123!5m2!1sen!2suk"
+                            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                            title="Map showing Hatch Warren Community Centre location">
+                        </iframe>
                     </div>
                 </div>
             </div>
 
-            <!-- Hatch Warren & Beggarwood Repair Café -->
-            <div id="hatch-warren" class="max-w-4xl mx-auto mb-12 bg-white rounded-lg shadow-lg overflow-hidden">
-                <div class="md:flex md:flex-row-reverse">
-                    <div class="md:w-1/3">
-                        <img src="assets/images/locations/hatch-warren-team.jpg" alt="Hatch Warren Repair Café Team" class="w-full h-64 md:h-full object-cover clickable-image" onerror="this.src='https://picsum.photos/400/300';">
-                    </div>
-                    <div class="p-8 md:w-2/3">
-                        <h3 class="text-3xl font-bold mb-4 text-green-600">Hatch Warren & Beggarwood Repair Café</h3>
-                        <div class="space-y-3 text-lg">
-                            <p class="flex items-start">
-                                <i class="fas fa-calendar-alt text-green-600 mt-1 mr-3"></i>
-                                <span><strong>When:</strong> 1st Saturday of each month, 10:30am-1pm</span>
-                            </p>
-                            <p class="flex items-start">
-                                <i class="fas fa-map-marker-alt text-green-600 mt-1 mr-3"></i>
-                                <span><strong>Where:</strong> Hatch Warren Community Centre, RG22 4XF</span>
-                            </p>
-                            <p class="mt-4">
-                                Bringing repair expertise to the Hatch Warren and Beggarwood communities. Join us for free repairs and a warm welcome!
-                            </p>
-                        </div>
-                    </div>
-                </div>
+            <div class="location-card" style="margin-top: var(--space-xl);">
+                <h3>Coming Soon: Kings Furlong</h3>
+                <p>We're hoping to start a new Repair Café in Kings Furlong. Stay tuned for updates on dates and
+                    location</p>
+                <p><a href="#contact">Contact us</a> to register your interest.</p>
             </div>
 
-            <!-- Kings Furlong Repair Café -->
-            <div id="kings-furlong" class="max-w-4xl mx-auto mb-12 bg-white rounded-lg shadow-lg overflow-hidden">
-                <div class="p-8 text-center">
-                    <h3 class="text-3xl font-bold mb-4 text-purple-600">Kings Furlong Repair Café</h3>
-                    <div class="text-lg">
-              <!-- Not yet.
-                        <p class="flex items-center justify-center mb-4">
-                            <i class="fas fa-clock text-purple-600 text-3xl mr-3"></i>
-                            <span class="text-2xl font-semibold">Coming Later in 2026</span>
-</p> -->
-                        <p class="text-gray-600 max-w-2xl mx-auto">
-                            We hope to start a new Repair Cafe in Kings Furlong. Stay tuned for updates on dates and location! <a href="mailto:info@chinehamrepair.org.uk" class="text-blue-600 hover:underline">Get in touch</a> if you'd like to know more about joining the team there.
-                        </p>
-                    </div>
-                </div>
+            <h2 style="margin-top: var(--space-2xl);">Other Local Repair Cafés</h2>
+            <p class="section-intro">Looking for a Repair Café outside Basingstoke? Here's another option in the local
+                area:</p>
+
+            <div class="location-card">
+                <h3>North Hampshire Repair Café</h3>
+                <p>North Hampshire Repair Café (NHRC) is another Repair Café that rotates around different locations in
+                    North Hampshire. Visit their website for
+                    details on dates, times, and location.</p>
+                <p>
+                    🌐 <a href="https://nhrc.uk" target="_blank" rel="noopener noreferrer">nhrc.uk</a>
+                </p>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <!-- Other Local Repair Cafés -->
-        <section id="other-cafes" class="bg-white py-16">
-            <div class="container mx-auto px-4">
-                <div class="max-w-4xl mx-auto">
-                    <h2 class="text-3xl font-bold text-center mb-8 content-text">Other Local Repair Cafés</h2>
-                    <div class="bg-gray-50 rounded-lg p-8">
-                        <div class="flex flex-col md:flex-row items-center gap-6">
-                            <div class="md:w-1/3 flex justify-center">
-                                <img src="assets/images/supporters/nhrc-logo.png" alt="North Hampshire Repair Cafe Logo" class="clickable-image max-h-32 object-contain" onerror="this.src='https://picsum.photos/200/150';">
-                            </div>
-                            <div class="md:w-2/3 text-center md:text-left">
-                                <h3 class="text-2xl font-bold mb-3 text-purple-600">North Hampshire Repair Cafe</h3>
-                                <p class="text-lg text-gray-600 mb-4">
-                                    North Hampshire Repair Cafe (NHRC) is another Repair Cafe in North Hampshire, please visit the
-                                    <a href="https://nhrc.uk" class="text-blue-600 hover:underline font-semibold" target="_blank" rel="noopener noreferrer">North Hampshire Repair Cafe</a>
-                                    website.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <!-- Volunteer Section -->
+    <section id="volunteer">
+        <div class="container">
+            <h2>We Need You!</h2>
+            <p class="section-intro">We're always looking for friendly people to join our volunteer team. We've learned
+                that to run a successful and sustainable Cafe takes many different skills and personalities.</p>
+
+            <h3>🙋 What Sort of Skills?</h3>
+            <p>There's probably a place for you if you're good with:</p>
+            <div class="skills-grid">
+                <span class="skill-tag">👋 People</span>
+                <span class="skill-tag">☕ Refreshments</span>
+                <span class="skill-tag">🔌 Electronics</span>
+                <span class="skill-tag">🧵 Sewing</span>
+                <span class="skill-tag">🔍 Fault finding</span>
+                <span class="skill-tag">🔧 Soldering</span>
+                <span class="skill-tag">🪵 Woodworking</span>
+                <span class="skill-tag">✂️ Sharpening</span>
+                <span class="skill-tag">⚡ Electrics</span>
+                <span class="skill-tag">🛋️ Upholstery</span>
+                <span class="skill-tag">🦺 Safety</span>
+                <span class="skill-tag">📱 Social media</span>
+                <span class="skill-tag">📝 Record keeping</span>
             </div>
-        </section>
+            <p style="margin-top: var(--space-md);">...and any other repair skills you might have</p>
 
-        <!-- Get Involved Section -->
-        <section id="get-involved" class="container mx-auto px-4 py-16">
-            <div class="max-w-4xl mx-auto">
-                <h2 class="text-4xl font-bold text-center mb-8 content-text">Get Involved</h2>
-                <div class="bg-white rounded-lg shadow-lg p-8">
-                    <div class="text-center mb-8">
-                        <h3 class="text-2xl font-bold mb-4">We Need You!</h3>
-                        <p class="text-lg text-gray-600 mb-6">
-                            Whether you're a skilled repairer or just want to help out, we'd love to have you join our team. We're looking for:
-                        </p>
-                    </div>
+            <h3>🤔 Not Sure If You Can Help?</h3>
+            <p>If you've got time to give and enthusiasm to share, we'd love to chat. No formal qualifications needed —
+                just a willingness to learn and help others.</p>
 
-                    <div class="grid md:grid-cols-2 gap-6 mb-8">
-                        <div class="bg-blue-50 rounded-lg p-6">
-                            <h4 class="text-xl font-bold mb-3 text-blue-600">
-                                <i class="fas fa-wrench mr-2"></i>Repair Volunteers
-                            </h4>
-                            <ul class="space-y-2 text-gray-700">
-                                <li><i class="fas fa-check text-green-600 mr-2"></i>Electrical repairs</li>
-                                <li><i class="fas fa-check text-green-600 mr-2"></i>IT repairs</li>
-                                <li><i class="fas fa-check text-green-600 mr-2"></i>Textile & sewing</li>
-                                <li><i class="fas fa-check text-green-600 mr-2"></i>Bicycle repairs</li>
-                                <li><i class="fas fa-check text-green-600 mr-2"></i>Carpentry & furniture</li>
-                                <li><i class="fas fa-check text-green-600 mr-2"></i>Any other repair skills!</li>
-                            </ul>
-                        </div>
-                        <div class="bg-green-50 rounded-lg p-6">
-                            <h4 class="text-xl font-bold mb-3 text-green-600">
-                                <i class="fas fa-hands-helping mr-2"></i>Support Volunteers
-                            </h4>
-                            <ul class="space-y-2 text-gray-700">
-                                <li><i class="fas fa-check text-green-600 mr-2"></i>Welcome & registration</li>
-                                <li><i class="fas fa-check text-green-600 mr-2"></i>Refreshments</li>
-                                <li><i class="fas fa-check text-green-600 mr-2"></i>Setup & cleanup</li>
-                                <li><i class="fas fa-check text-green-600 mr-2"></i>Social media</li>
-                                <li><i class="fas fa-check text-green-600 mr-2"></i>Event coordination</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="text-center bg-gray-50 rounded-lg p-6">
-                        <h4 class="text-xl font-bold mb-4">Contact Us</h4>
-                        <div class="space-y-3">
-                            <p class="flex items-center justify-center text-lg">
-                                <i class="fas fa-envelope text-blue-600 mr-3"></i>
-                                <a href="mailto:info@chinehamrepair.org.uk" class="text-blue-600 hover:underline">info@chinehamrepair.org.uk</a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
+            <div class="email-cta">
+                <h3>Ready to Get Involved?</h3>
+                <p>To explore volunteering with our friendly team:</p>
+                <p style="margin-top: var(--space-md);">
+                    📧 <a href="mailto:info@basingstoke.repair">info@basingstoke.repair</a><br><br>
+                    🌐 <a href="https://basingstoke.repair" target="_blank">basingstoke.repair</a>
+                </p>
+                <p style="margin-top: var(--space-md); font-size: 0.9rem;">Or just come along to one of our sessions and
+                    say hello</p>
             </div>
-        </section>
 
-        <!-- Supporters Section -->
-        <section class="bg-white py-16">
-            <div class="container mx-auto px-4">
-                <div class="max-w-5xl mx-auto">
-                    <h2 class="text-3xl font-bold text-center mb-12 content-text">Our Supporters</h2>
-                    <p class="text-center text-lg mb-8 text-gray-600">
-                        We're grateful for the support of these organizations helping us build a sustainable community
-                    </p>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 items-center">
-                        <div class="supporter-logo">
-                            <a href="https://www.basingstoke.gov.uk/" target="_blank" rel="noopener noreferrer" aria-label="Visit Basingstoke & Deane Council website">
-                                <img src="assets/images/supporters/basingstoke-council.png" alt="Basingstoke & Deane Council" title="Basingstoke & Deane Council - Supporting local community initiatives" onerror="this.style.display='none';">
-                                <span class="supporter-name">Basingstoke & Deane Council</span>
-                            </a>
-                        </div>
-                        <div class="supporter-logo">
-                            <a href="https://fourlanestrust.org.uk/" target="_blank" rel="noopener noreferrer" aria-label="Visit Four Lanes Trust website">
-                                <img src="assets/images/supporters/four-lanes-trust.png" alt="Four Lanes Trust" title="Four Lanes Trust - Community funding and support" onerror="this.style.display='none';">
-                                <span class="supporter-name">Four Lanes Trust</span>
-                            </a>
-                        </div>
-                        <div class="supporter-logo">
-                            <a href="https://restarters.net/" target="_blank" rel="noopener noreferrer" aria-label="Visit Restarters.net website">
-                                <img src="assets/images/supporters/restarters.png" alt="Restarters.net" title="Restarters.net - Community repair data and resources" onerror="this.style.display='none';">
-                                <span class="supporter-name">Restarters.net</span>
-                            </a>
-                        </div>
-                        <div class="supporter-logo">
-                            <a href="https://www.repaircafe.org/" target="_blank" rel="noopener noreferrer" aria-label="Visit Repair Café International website">
-                                <img src="assets/images/supporters/repair-cafe-international.png" alt="Repair Café International" title="Repair Café International - Global repair café network" onerror="this.style.display='none';">
-                                <span class="supporter-name">Repair Café International</span>
-                            </a>
-                        </div>
-                        <div class="supporter-logo">
-                            <a href="https://greenerbasingstoke.org/" target="_blank" rel="noopener noreferrer" aria-label="Visit Greener Basingstoke website">
-                                <img src="assets/images/supporters/greener-basingstoke.png" alt="Greener Basingstoke" title="Greener Basingstoke - Local environmental initiatives" onerror="this.style.display='none';">
-                                <span class="supporter-name">Greener Basingstoke</span>
-                            </a>
-                        </div>
-                        <div class="supporter-logo">
-                            <a href="https://www.tnlcommunityfund.org.uk/" target="_blank" rel="noopener noreferrer" aria-label="Visit National Lottery website">
-                                <img src="assets/images/supporters/national-lottery.png" alt="National Lottery Community Fund" title="National Lottery Community Fund - Funding good causes" onerror="this.style.display='none';">
-                                <span class="supporter-name">National Lottery</span>
-                            </a>
-                        </div>
-                        <div class="supporter-logo">
-                            <a href="https://www.veolia.co.uk/" target="_blank" rel="noopener noreferrer" aria-label="Visit Veolia website">
-                                <img src="assets/images/supporters/veolia.png" alt="Veolia" title="Veolia - Environmental services and sustainability" onerror="this.style.display='none';">
-                                <span class="supporter-name">Veolia</span>
-                            </a>
-                        </div>
-                        <div class="supporter-logo">
-                            <a href="https://www.oakleystitchers.org.uk/" target="_blank" rel="noopener noreferrer" aria-label="Visit Oakley Stitchers CIC website">
-                                <img src="assets/images/supporters/oakley-stitchers.jpg" alt="Oakley Stitchers CIC" title="Oakley Stitchers CIC - Community sewing and textile repairs" onerror="this.style.display='none';">
-                                <span class="supporter-name">Oakley Stitchers CIC</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
+            <!-- Image Placeholder -->
+            <div class="image-placeholder" style="margin-top: var(--space-2xl);" title="Photo: Our volunteers">
+                👥<br><small>Our wonderful volunteers</small>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
 
-    <!-- Footer -->
-    <footer class="footer-bg py-12">
-        <div class="container mx-auto px-4">
-            <div class="max-w-4xl mx-auto">
-                <div class="grid md:grid-cols-3 gap-8 mb-8">
-                    <div>
-                        <h3 class="text-xl font-bold mb-4 footer-text">Basingstoke Repair Network</h3>
-                        <p class="footer-text">Building sustainable communities through repair and reuse</p>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-bold mb-4 footer-text">Quick Links</h3>
-                        <ul class="space-y-2">
-                            <li><a href="#chineham" class="footer-text hover:text-blue-300 transition">Chineham</a></li>
-                            <li><a href="#hatch-warren" class="footer-text hover:text-blue-300 transition">Hatch Warren</a></li>
-                            <li><a href="#kings-furlong" class="footer-text hover:text-blue-300 transition">Kings Furlong</a></li>
-                            <li><a href="#get-involved" class="footer-text hover:text-blue-300 transition">Get Involved</a></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h3 class="text-xl font-bold mb-4 footer-text">Contact</h3>
-                        <ul class="space-y-2 footer-text">
-                            <li>
-                                <a href="mailto:info@chinehamrepair.org.uk" class="hover:text-blue-300 transition">
-                                    <i class="fas fa-envelope mr-2"></i>info@chinehamrepair.org.uk
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+    <!-- Supporters Section -->
+    <section id="supporters" class="supporters-section">
+        <div class="container">
+            <h2>Our Supporters</h2>
+            <p class="section-intro">We're grateful to the following organizations and funders who help keep our Repair
+                Cafés running.</p>
 
-                <div class="border-t border-blue-400 pt-8 text-center footer-text">
-                    <p class="mb-2 font-semibold">UK Charity Registration Underway</p>
-                    <p>&copy; 2025 Basingstoke Repair Network. All rights reserved.</p>
-                </div>
+            <div class="supporters-grid">
+                <a href="https://www.basingstoke.gov.uk/" target="_blank" class="supporter-logo">
+                    <img src="https://basingstoke.repair/assets/images/supporters/basingstoke-council.png"
+                        alt="Basingstoke & Deane Council">
+                    <div class="supporter-name">Basingstoke & Deane Council</div>
+                </a>
+                <a href="https://fourlanestrust.org.uk/" target="_blank" class="supporter-logo">
+                    <img src="https://basingstoke.repair/assets/images/supporters/four-lanes-trust.png"
+                        alt="Four Lanes Trust">
+                    <div class="supporter-name">Four Lanes Trust</div>
+                </a>
+                <a href="https://restarters.net/" target="_blank" class="supporter-logo">
+                    <img src="https://basingstoke.repair/assets/images/supporters/restarters.png" alt="Restarters.net">
+                    <div class="supporter-name">Restarters.net</div>
+                </a>
+                <a href="https://www.repaircafe.org/" target="_blank" class="supporter-logo">
+                    <img src="https://basingstoke.repair/assets/images/supporters/repair-cafe-international.png"
+                        alt="Repair Café International">
+                    <div class="supporter-name">Repair Café International</div>
+                </a>
+                <a href="https://greenerbasingstoke.org/" target="_blank" class="supporter-logo">
+                    <img src="https://basingstoke.repair/assets/images/supporters/greener-basingstoke.png"
+                        alt="Greener Basingstoke">
+                    <div class="supporter-name">Greener Basingstoke</div>
+                </a>
+                <a href="https://www.tnlcommunityfund.org.uk/" target="_blank" class="supporter-logo">
+                    <img src="https://basingstoke.repair/assets/images/supporters/national-lottery.png"
+                        alt="National Lottery Community Fund">
+                    <div class="supporter-name">National Lottery Community Fund</div>
+                </a>
+                <a href="https://www.veolia.co.uk/" target="_blank" class="supporter-logo">
+                    <img src="https://basingstoke.repair/assets/images/supporters/veolia.png" alt="Veolia">
+                    <div class="supporter-name">Veolia</div>
+                </a>
+                <a href="https://www.oakleystitchers.org.uk/" target="_blank" class="supporter-logo">
+                    <img src="https://basingstoke.repair/assets/images/supporters/oakley-stitchers.jpg"
+                        alt="Oakley Stitchers CIC">
+                    <div class="supporter-name">Oakley Stitchers CIC</div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer / Contact -->
+    <footer id="contact">
+        <div class="container">
+            <h2 style="color: var(--color-white);">Get In Touch</h2>
+
+            <div class="footer-links">
+                <a href="mailto:info@basingstoke.repair">📧 info@basingstoke.repair</a>
+                <a href="https://basingstoke.repair" target="_blank">🌐 basingstoke.repair</a>
+            </div>
+
+            <p>Part of the <a href="https://therestartproject.org" target="_blank">Restart Project</a> network</p>
+
+            <div class="charity-info">
+                <p>Basingstoke Repair Network is a volunteer-run not-for-profit community organization.</p>
+                <p style="margin-top: var(--space-sm);">© 2026 Basingstoke Repair Network. All rights reserved.</p>
             </div>
         </div>
     </footer>
+    <script>
+        // Burger menu toggle
+        const burger = document.querySelector('.burger-menu');
+        const nav = document.querySelector('.nav-menu');
 
-    <!-- Image Lightbox Modal -->
-    <div id="image-lightbox" class="lightbox hidden" role="dialog" aria-modal="true" aria-label="Image viewer">
-        <div class="lightbox-backdrop"></div>
-        <div class="lightbox-content">
-            <button class="lightbox-close" aria-label="Close image viewer">
-                <i class="fas fa-times"></i>
-            </button>
-            <img class="lightbox-image" src="" alt="">
-        </div>
-    </div>
+        burger.addEventListener('click', () => {
+            const isOpen = nav.classList.toggle('is-open');
+            burger.classList.toggle('is-active');
+            burger.setAttribute('aria-expanded', isOpen);
+        });
 
-    <!-- Swiper JS for carousel -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+        // Close menu when clicking a link
+        nav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('is-open');
+                burger.classList.remove('is-active');
+                burger.setAttribute('aria-expanded', 'false');
+            });
+        });
 
-    <!-- Custom JavaScript -->
-    <script src="assets/js/main.js"></script>
+        // Close when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!nav.contains(e.target) && !burger.contains(e.target)) {
+                nav.classList.remove('is-open');
+                burger.classList.remove('is-active');
+                burger.setAttribute('aria-expanded', 'false');
+            }
+        });
+    </script>
 </body>
+
 </html>
