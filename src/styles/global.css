@@ -244,59 +244,65 @@ img {
 }
 
 /* =========================================================
-   Hero section
+   Hero carousel
    ========================================================= */
 
-.hero-section {
-  background: linear-gradient(
-    135deg,
-    var(--color-primary-dark) 0%,
-    var(--color-primary) 100%
-  );
-  color: var(--color-white);
-  padding: var(--space-3xl) var(--space-md);
-  text-align: center;
+.hero-carousel-section {
   position: relative;
   overflow: hidden;
 }
 
-.hero-section::before {
-  content: "🔧 ✂️ 🔌";
-  position: absolute;
-  top: 10%;
-  right: 5%;
-  font-size: clamp(2rem, 6vw, 4rem);
-  opacity: 0.15;
-  pointer-events: none;
-  user-select: none;
+.hero-swiper {
+  width: 100%;
+  height: clamp(420px, 60vh, 700px);
 }
 
-.hero-section::after {
-  content: "🧵 🪑 🚲";
-  position: absolute;
-  bottom: 10%;
-  left: 5%;
-  font-size: clamp(2rem, 6vw, 4rem);
-  opacity: 0.15;
-  pointer-events: none;
-  user-select: none;
+.hero-slide {
+  background-size: cover;
+  background-position: center;
+  background-color: var(--color-primary-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
 }
 
-.hero-section h1 {
+.hero-slide-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(26, 24, 80, 0.72) 0%,
+    rgba(40, 39, 111, 0.55) 100%
+  );
+}
+
+.hero-slide-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: var(--color-white);
+  padding-top: var(--space-2xl);
+  padding-bottom: var(--space-2xl);
+}
+
+.hero-slide-content h1 {
   color: var(--color-white);
   margin-bottom: var(--space-lg);
+  text-shadow: 0 2px 8px rgba(2, 1, 26, 0.4);
 }
 
-.hero-section h1::after {
+.hero-slide-content h1::after {
   display: none;
 }
 
 .hero-tagline {
-  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
   max-width: 700px;
   margin: 0 auto var(--space-lg);
   font-weight: 300;
   color: var(--color-white);
+  text-shadow: 0 1px 4px rgba(2, 1, 26, 0.5);
 }
 
 .hero-cta {
@@ -304,6 +310,28 @@ img {
   gap: var(--space-md);
   flex-wrap: wrap;
   justify-content: center;
+}
+
+/* Swiper colour overrides — BRN brand blue */
+.hero-swiper .swiper-pagination-bullet {
+  background: var(--color-white);
+  opacity: 0.6;
+}
+
+.hero-swiper .swiper-pagination-bullet-active {
+  background: var(--color-white);
+  opacity: 1;
+}
+
+.hero-swiper .swiper-button-prev,
+.hero-swiper .swiper-button-next {
+  color: var(--color-white);
+  text-shadow: 0 1px 4px rgba(2, 1, 26, 0.5);
+}
+
+.hero-swiper .swiper-button-prev:hover,
+.hero-swiper .swiper-button-next:hover {
+  color: var(--color-gray);
 }
 
 /* Buttons */
@@ -703,11 +731,6 @@ button:focus-visible {
     text-align: center;
   }
 
-  .hero-section::before,
-  .hero-section::after {
-    display: none;
-  }
-
   .map-container {
     height: 250px;
   }
@@ -769,10 +792,6 @@ button:focus-visible {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  .hero-section {
-    padding: var(--space-3xl) var(--space-xl);
-  }
-
   .supporters-grid {
     grid-template-columns: repeat(4, 1fr);
   }
@@ -831,13 +850,8 @@ button:focus-visible {
     box-shadow: none;
   }
 
-  .hero-section {
-    background: white;
-    color: black;
-  }
-
-  .hero-section h1 {
-    color: black;
+  .hero-carousel-section {
+    display: none;
   }
 
   .btn {
