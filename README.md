@@ -1,5 +1,5 @@
 <!--
-SPDX-FileCopyrightText: 2025 Basingstoke Repair Network
+SPDX-FileCopyrightText: 2025--2026 Basingstoke Repair Network
 SPDX-License-Identifier: MIT
 -->
 
@@ -239,7 +239,7 @@ MIT License - See LICENSE file for details
 
 ## Changelog
 
-### Version 1.0.0 (2025)
+### Version 1.0.0 (2025--2026)
 - Initial release
 - Full responsive design
 - Hero carousel

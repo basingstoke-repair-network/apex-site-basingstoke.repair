@@ -1,5 +1,5 @@
 /*
- * SPDX-FileCopyrightText: 2025 Basingstoke Repair Network
+ * SPDX-FileCopyrightText: 2025--2026 Basingstoke Repair Network
  * SPDX-License-Identifier: MIT
  */
 
@@ -321,15 +321,51 @@ img {
   opacity: 1;
 }
 
+/* Arrows: hidden by default, revealed on hover / keyboard focus / touch */
 .hero-swiper .swiper-button-prev,
 .hero-swiper .swiper-button-next {
   color: var(--color-white);
   text-shadow: 0 1px 4px rgba(2, 1, 26, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease, color 0.2s ease;
+}
+
+/* Desktop hover */
+.hero-swiper:hover .swiper-button-prev,
+.hero-swiper:hover .swiper-button-next {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Keyboard focus — covers Tab → button and arrow-key navigation */
+.hero-swiper:focus-within .swiper-button-prev,
+.hero-swiper:focus-within .swiper-button-next {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Touch-triggered reveal (class added by JS on touchstart) */
+.hero-swiper.arrows-visible .swiper-button-prev,
+.hero-swiper.arrows-visible .swiper-button-next {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .hero-swiper .swiper-button-prev:hover,
-.hero-swiper .swiper-button-next:hover {
+.hero-swiper .swiper-button-next:hover,
+.hero-swiper .swiper-button-prev:focus-visible,
+.hero-swiper .swiper-button-next:focus-visible {
   color: var(--color-gray);
+  outline: none;
+}
+
+/* On mobile, remove arrows entirely — swipe + dots is the right gesture */
+@media (max-width: 639px) {
+  .hero-swiper .swiper-button-prev,
+  .hero-swiper .swiper-button-next {
+    display: none;
+  }
 }
 
 /* Buttons */
