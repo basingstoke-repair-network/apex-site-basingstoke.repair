@@ -3,18 +3,67 @@ SPDX-FileCopyrightText: 2025 Basingstoke Repair Network
 SPDX-License-Identifier: MIT
 -->
 ---
+import { getCollection } from 'astro:content';
+
+const allSlides = await getCollection('hero-slides');
+const slides = allSlides
+  .filter((s) => s.data.isActive !== false)
+  .sort((a, b) => a.data.order - b.data.order);
 ---
 
-<section class="hero-section" aria-label="Welcome to Basingstoke Repair Network">
-  <div class="brn-container">
-    <h1>Fix It, Don't Bin It!</h1>
-    <p class="hero-tagline">
-      Our Repair Cafés are here to help fix your broken things, saving you
-      money, and keeping them out of landfill.
-    </p>
-    <div class="hero-cta">
-      <a href="#locations" class="btn btn-primary">Find a Repair Café</a>
-      <a href="#volunteer" class="btn btn-secondary">Volunteer With Us</a>
+<section class="hero-carousel-section" aria-label="Welcome to Basingstoke Repair Network">
+  <div class="swiper hero-swiper">
+    <div class="swiper-wrapper">
+      {slides.map(({ data }) => (
+        <div
+          class="swiper-slide hero-slide"
+          style={`background-image: url('${data.backgroundImage}')`}
+        >
+          <div class="hero-slide-overlay" aria-hidden="true"></div>
+          <div class="brn-container hero-slide-content">
+            <h1>{data.title}</h1>
+            <p class="hero-tagline">{data.subtitle}</p>
+            {data.ctaText && data.ctaLink && (
+              <div class="hero-cta">
+                <a href={data.ctaLink} class="btn btn-primary">{data.ctaText}</a>
+              </div>
+            )}
+          </div>
+        </div>
+      ))}
     </div>
+
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-prev" aria-label="Previous slide"></div>
+    <div class="swiper-button-next" aria-label="Next slide"></div>
   </div>
 </section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    if (typeof window.Swiper !== 'undefined') {
+      new window.Swiper('.hero-swiper', {
+        loop: true,
+        autoplay: {
+          delay: 5000,
+          disableOnInteraction: false,
+          pauseOnMouseEnter: true,
+        },
+        effect: 'fade',
+        fadeEffect: { crossFade: true },
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+        a11y: {
+          prevSlideMessage: 'Previous slide',
+          nextSlideMessage: 'Next slide',
+        },
+      });
+    }
+  });
+</script>
