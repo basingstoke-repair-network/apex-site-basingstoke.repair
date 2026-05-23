@@ -1,0 +1,41 @@
+# SPDX-FileCopyrightText: 2025 Basingstoke Repair Network
+# SPDX-License-Identifier: MIT
+
+name: Deploy Production
+
+on:
+  push:
+    branches:
+      - live
+
+jobs:
+  deploy:
+    name: Build and deploy to production
+    runs-on: ubuntu-latest
+    permissions:
+      deployments: write
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - run: npm run build
+
+      - uses: nwtgck/actions-netlify@v3
+        with:
+          publish-dir: './dist'
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          production-deploy: true
+          deploy-message: "Production deploy ${{ github.sha }}"
+          enable-pull-request-comment: false
+          enable-commit-comment: true
+          enable-github-deployment: true
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
