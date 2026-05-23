@@ -1,0 +1,43 @@
+<!--
+SPDX-FileCopyrightText: 2025 Basingstoke Repair Network
+SPDX-License-Identifier: MIT
+-->
+---
+import { getCollection } from 'astro:content';
+
+const allSupporters = await getCollection('supporters');
+const supporters = allSupporters
+  .filter((s) => s.data.isActive !== false)
+  .sort((a, b) => a.data.order - b.data.order);
+---
+
+<section id="supporters" class="page-section">
+  <div class="brn-container">
+    <h2>Our Supporters</h2>
+    <p class="section-intro">
+      We're grateful to the following organisations and funders who help keep
+      our Repair Cafés running.
+    </p>
+
+    <div class="supporters-grid">
+      {supporters.map(({ data }) => (
+        <a
+          href={data.websiteUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="supporter-tile"
+          aria-label={`Visit ${data.name} website`}
+        >
+          <img
+            src={data.logo}
+            alt={data.name}
+            loading="lazy"
+            decoding="async"
+            onerror="this.style.display='none'"
+          />
+          <p class="supporter-name">{data.name}</p>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
