@@ -1,0 +1,9 @@
+{
+  "title": "Fix It, Don't Bin It!",
+  "subtitle": "Our Repair Cafés are here to help fix your broken things, saving you money, and keeping them out of landfill.",
+  "backgroundImage": "/assets/images/hero/fix-it-dont-bin-it.jpg",
+  "ctaText": "Find a Repair Café",
+  "ctaLink": "#locations",
+  "order": 1,
+  "isActive": true
+}
