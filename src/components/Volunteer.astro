@@ -1,0 +1,61 @@
+<!--
+SPDX-FileCopyrightText: 2025 Basingstoke Repair Network
+SPDX-License-Identifier: MIT
+-->
+---
+const skills = [
+  { icon: '👋', label: 'People' },
+  { icon: '☕', label: 'Refreshments' },
+  { icon: '🔌', label: 'Electronics' },
+  { icon: '🧵', label: 'Sewing' },
+  { icon: '🔍', label: 'Fault finding' },
+  { icon: '🔧', label: 'Soldering' },
+  { icon: '🪵', label: 'Woodworking' },
+  { icon: '✂️', label: 'Sharpening' },
+  { icon: '⚡', label: 'Electrics' },
+  { icon: '🛋️', label: 'Upholstery' },
+  { icon: '🦺', label: 'Safety' },
+  { icon: '📱', label: 'Social media' },
+  { icon: '📝', label: 'Record keeping' },
+];
+---
+
+<section id="volunteer" class="page-section section-alt">
+  <div class="brn-container">
+    <h2>We need you!</h2>
+    <p class="section-intro">
+      We're always looking for friendly people to join our volunteer team. We've
+      learned that running a successful and sustainable Café takes many different
+      skills and personalities.
+    </p>
+
+    <h3>🙋 What sorts of skills?</h3>
+    <p>There's probably a place for you if you're good with:</p>
+    <div class="skills-grid" role="list">
+      {skills.map(({ icon, label }) => (
+        <span class="skill-tag" role="listitem">
+          <span aria-hidden="true">{icon}</span> {label}
+        </span>
+      ))}
+    </div>
+    <p>…and any other repair skills you might have.</p>
+
+    <h3>🤔 Not sure if you can help?</h3>
+    <p>
+      If you've got time to give and enthusiasm to share, we'd love to chat.
+      No formal qualifications needed — just a willingness to learn and help
+      others.
+    </p>
+
+    <div class="email-cta">
+      <h3>Ready to Get Involved?</h3>
+      <p>To explore volunteering with our friendly team:</p>
+      <p style="margin-top: var(--space-md);">
+        📧 <a href="mailto:info@basingstoke.repair">info@basingstoke.repair</a>
+      </p>
+      <p style="margin-top: var(--space-md); font-size: 0.9rem;">
+        Or just come along to one of our sessions and say hello.
+      </p>
+    </div>
+  </div>
+</section>

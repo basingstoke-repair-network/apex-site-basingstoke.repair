@@ -1,0 +1,21 @@
+{
+  "name": "Chineham Repair Café",
+  "slug": "chineham",
+  "status": "active",
+  "schedule": {
+    "dayOfWeek": "Saturday",
+    "weekOfMonth": "3rd",
+    "startTime": "10:00",
+    "endTime": "13:00"
+  },
+  "address": {
+    "venue": "Christ Church Chineham",
+    "street": "Reading Road (next to Surgery)",
+    "postcode": "RG24 8LT",
+    "googleMapsEmbed": "https://maps.google.com/maps?q=Christ+Church+Chineham,+Reading+Road,+Chineham,+Basingstoke+RG24+8LT,+UK&output=embed&hl=en"
+  },
+  "description": "Our flagship repair café serving the Chineham community. Expert volunteers ready to help fix electrical items, textiles, bikes, and more.",
+  "teamImage": "/assets/images/locations/chineham-team.jpg",
+  "accentColor": "#28276f",
+  "order": 1
+}

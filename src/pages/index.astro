@@ -1,0 +1,31 @@
+<!--
+SPDX-FileCopyrightText: 2025 Basingstoke Repair Network
+SPDX-License-Identifier: MIT
+-->
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import HowItWorks from '../components/HowItWorks.astro';
+import WhyRepair from '../components/WhyRepair.astro';
+import Locations from '../components/Locations.astro';
+import Volunteer from '../components/Volunteer.astro';
+import Supporters from '../components/Supporters.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<BaseLayout
+  title="Basingstoke Repair Network — Fix It, Don't Bin It!"
+  description="Volunteer-run repair cafés across Basingstoke helping fix broken things, saving you money and keeping items out of landfill. Chineham, Hatch Warren, and more."
+>
+  <Header />
+  <main>
+    <Hero />
+    <HowItWorks />
+    <WhyRepair />
+    <Locations />
+    <Volunteer />
+    <Supporters />
+  </main>
+  <Footer />
+</BaseLayout>
