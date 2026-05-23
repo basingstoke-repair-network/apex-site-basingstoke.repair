@@ -1,0 +1,114 @@
+<!--
+SPDX-FileCopyrightText: 2025 Basingstoke Repair Network
+SPDX-License-Identifier: MIT
+-->
+---
+import { getCollection } from 'astro:content';
+
+const allLocations = await getCollection('locations');
+const locations = allLocations.sort((a, b) => a.data.order - b.data.order);
+
+function formatTime(t: string) {
+  const [h, m] = t.split(':').map(Number);
+  const period = h >= 12 ? 'pm' : 'am';
+  const hour = h > 12 ? h - 12 : h === 0 ? 12 : h;
+  return m === 0 ? `${hour}${period}` : `${hour}:${m.toString().padStart(2, '0')}${period}`;
+}
+---
+
+<section id="locations" class="page-section">
+  <div class="brn-container">
+    <h2>Our Repair Cafés</h2>
+    <p class="section-intro">
+      We run regular Repair Cafés across Basingstoke. Find your nearest
+      location and pop in.
+    </p>
+
+    <div class="location-grid">
+      {locations
+        .filter((loc) => loc.data.status !== 'coming-soon')
+        .map((loc) => {
+          const { name, schedule, address, teamImage, description } = loc.data;
+          const scheduleText = schedule
+            ? `${schedule.weekOfMonth} ${schedule.dayOfWeek} of each month`
+            : null;
+          const timeText = schedule
+            ? `${formatTime(schedule.startTime)} – ${formatTime(schedule.endTime)}`
+            : null;
+
+          return (
+            <div class="location-card">
+              <h3>{name}</h3>
+
+              {teamImage && (
+                <img
+                  src={teamImage}
+                  alt={`${name} team`}
+                  class="location-image"
+                  loading="lazy"
+                  decoding="async"
+                  onerror="this.style.display='none'"
+                />
+              )}
+
+              {(scheduleText || timeText) && (
+                <div class="location-meta">
+                  {scheduleText && <span>📅 {scheduleText}</span>}
+                  {timeText && <span>🕐 {timeText}</span>}
+                </div>
+              )}
+
+              {address && (
+                <p>
+                  <strong>{address.venue}</strong>
+                  {address.street && <><br />{address.street}</>}
+                  <br />{address.postcode}
+                </p>
+              )}
+
+              {address?.googleMapsEmbed && (
+                <div class="map-container">
+                  <iframe
+                    src={address.googleMapsEmbed}
+                    allowfullscreen
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    title={`Map showing ${address.venue} location`}
+                  ></iframe>
+                </div>
+              )}
+            </div>
+          );
+        })}
+    </div>
+
+    {/* Coming soon locations */}
+    {locations
+      .filter((loc) => loc.data.status === 'coming-soon')
+      .map((loc) => (
+        <div class="location-card" style="margin-top: var(--space-xl);">
+          <h3>Coming Soon: {loc.data.name}</h3>
+          <p>{loc.data.description}</p>
+          <p><a href="#contact">Contact us</a> to register your interest.</p>
+        </div>
+      ))}
+
+    <h2 style="margin-top: var(--space-2xl);">Other local Repair Cafés</h2>
+    <p class="section-intro">
+      Looking for a Repair Café outside Basingstoke? Here's another option in
+      the local area:
+    </p>
+
+    <div class="location-card">
+      <h3>North Hampshire Repair Café</h3>
+      <p>
+        North Hampshire Repair Café (NHRC) rotates around different locations
+        in North Hampshire. Visit their website for details on dates, times, and
+        location.
+      </p>
+      <p>
+        🌐 <a href="https://nhrc.uk" target="_blank" rel="noopener noreferrer">nhrc.uk</a>
+      </p>
+    </div>
+  </div>
+</section>
