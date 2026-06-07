@@ -24,9 +24,10 @@ jobs:
     name: Build the website
     steps:
       - uses: actions/checkout@v6
+      - uses: withastro/action@v6
       - uses: nwtgck/actions-netlify@v4.0.0
         with:
-          publish-dir: './public'
+          publish-dir: './dist'
           production-branch: live
           production-deploy: ${{ github.ref == 'refs/heads/live' }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
