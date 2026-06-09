@@ -6,11 +6,13 @@ name: Build site
 
 on:
   push:
+  pull_request:
+  workflow_dispatch:
 
 permissions:
   contents: write
-  pages: write
-  id-token: write
+  pull-requests: write
+  deployments: write
 
 concurrency:
   group: 'pages'
@@ -20,18 +22,20 @@ jobs:
   build-deploy:
     runs-on: ubuntu-latest
     name: Build the website
-
     steps:
       - uses: actions/checkout@v6
-      - name: Install, build your site
-        if: false
-        run: |
-          npm install --legacy-peer-deps
-          npm run build
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v4 
+      - uses: nwtgck/actions-netlify@v4.0.0
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./public
-          force_oprhan: true
-          cname: basingstoke.repair
+          publish-dir: './public'
+          production-branch: live
+          production-deploy: ${{ github.ref == 'refs/heads/live' }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: "Deploy from GitHub Actions"
+          enable-pull-request-comment: true
+          enable-commit-comment: true
+          enable-commit-status: true
+          enable-github-deployment: true
+          overwrites-pull-request-comment: true
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
