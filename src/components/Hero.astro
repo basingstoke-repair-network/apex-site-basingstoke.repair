@@ -41,29 +41,51 @@ const slides = allSlides
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    if (typeof window.Swiper !== 'undefined') {
-      new window.Swiper('.hero-swiper', {
-        loop: true,
-        autoplay: {
-          delay: 5000,
-          disableOnInteraction: false,
-          pauseOnMouseEnter: true,
-        },
-        effect: 'fade',
-        fadeEffect: { crossFade: true },
-        pagination: {
-          el: '.swiper-pagination',
-          clickable: true,
-        },
-        navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
-        },
-        a11y: {
-          prevSlideMessage: 'Previous slide',
-          nextSlideMessage: 'Next slide',
-        },
-      });
-    }
+    if (typeof window.Swiper === 'undefined') return;
+
+    new window.Swiper('.hero-swiper', {
+      loop: true,
+      autoplay: {
+        delay: 5000,
+        disableOnInteraction: false,
+        pauseOnMouseEnter: true,
+      },
+      effect: 'fade',
+      fadeEffect: { crossFade: true },
+      keyboard: {
+        enabled: true,
+        onlyInViewport: true,
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      a11y: {
+        prevSlideMessage: 'Previous slide',
+        nextSlideMessage: 'Next slide',
+        enabled: true,
+      },
+    });
+
+    // On touch devices, briefly reveal arrows so users know they exist,
+    // then hide them again after 2.5 s of inactivity.
+    const swiperEl = document.querySelector('.hero-swiper');
+    if (!swiperEl) return;
+
+    let hideTimer: ReturnType<typeof setTimeout> | null = null;
+
+    const showArrows = () => {
+      swiperEl.classList.add('arrows-visible');
+      if (hideTimer) clearTimeout(hideTimer);
+      hideTimer = setTimeout(() => {
+        swiperEl.classList.remove('arrows-visible');
+      }, 2500);
+    };
+
+    swiperEl.addEventListener('touchstart', showArrows, { passive: true });
   });
 </script>
