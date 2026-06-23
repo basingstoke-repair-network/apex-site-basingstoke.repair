@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2025 Basingstoke Repair Network
+// SPDX-FileCopyrightText: 2025--2026 Basingstoke Repair Network
 // SPDX-License-Identifier: MIT
 
 import { defineCollection, z } from 'astro:content';
