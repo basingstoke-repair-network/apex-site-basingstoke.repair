@@ -43,18 +43,23 @@ const cannotFix = [
   'Electric blankets',
   'Petrol-driven items',
   'Microwaves',
-  'Fridges &amp; freezers',
+  'Fridges & freezers',
+];
+
+const photos = [
+  { icon: '📸', caption: 'Team in action' },
+  { icon: '🔧', caption: 'Repairs underway' },
+  { icon: '😊', caption: 'Happy fix!' },
 ];
 ---
 
-<section id="about" class="page-section">
+<section id="about" class="page-section section-alt section-compact">
   <div class="brn-container">
-    <h2>How It Works</h2>
+    <h2>How it works</h2>
     <p class="section-intro">
       Come along to one of our Repair Café sessions, bring your broken items,
-      and sit with our friendly volunteers while they try to fix them. It's
-      completely free, though donations are welcome (however, please note
-      replacement parts are the responsibility of the customer).
+      and sit with a cuppa while our friendly volunteers try to fix them. It's
+      free, though donations are welcome.
     </p>
 
     <div class="card-grid">
@@ -66,7 +71,7 @@ const cannotFix = [
       ))}
     </div>
 
-    <h3>💡 How You Can Help Us Help You</h3>
+    <h3>💡 How you can help us help you</h3>
     <ul>
       <li><strong>Clean your item</strong> — it's much nicer for our volunteers to work on.</li>
       <li><strong>Bring all the bits</strong> — leads, chargers, manuals, broken parts, screws.</li>
@@ -82,7 +87,7 @@ const cannotFix = [
       </p>
     </div>
 
-    <h3>✅ What We Can Try to Fix</h3>
+    <h3>✅ What we can try to fix</h3>
     <p>Our volunteers have recently fixed:</p>
     <div class="skills-grid" role="list">
       {canFix.map(({ icon, label }) => (
@@ -99,17 +104,17 @@ const cannotFix = [
       </p>
     </div>
 
-    <h3>❌ What We Can't Fix</h3>
+    <h3>❌ What we can't fix</h3>
     <p>
-      Unfortunately, for safety reasons, we cannot repair items where we
-      can't test whether they'll be safe to use afterwards, including:
+      Unfortunately, for safety reasons, we <strong>cannot</strong> repair items
+      where we can't test whether they'll be safe to use afterwards:
     </p>
-    <ul>
+    <div class="skills-grid" role="list">
       {cannotFix.map((item) => (
-        <li set:html={item} />
+        <span class="skill-tag skill-tag-negative" role="listitem">{item}</span>
       ))}
-    </ul>
-    <p>Or anything our volunteers feel unsafe to work on.</p>
+    </div>
+    <p>Or anything our volunteers consider unsafe to work on.</p>
 
     <div class="notice">
       <p>
@@ -117,6 +122,15 @@ const cannotFix = [
         <a href="mailto:info@basingstoke.repair">Email us beforehand</a> with
         brief details of your item and we'll let you know if we can help.
       </p>
+    </div>
+
+    <div class="image-grid">
+      {photos.map(({ icon, caption }) => (
+        <div class="image-placeholder">
+          <span aria-hidden="true">{icon}</span>
+          <small>{caption}</small>
+        </div>
+      ))}
     </div>
   </div>
 </section>

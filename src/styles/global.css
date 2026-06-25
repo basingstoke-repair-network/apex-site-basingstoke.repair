@@ -14,6 +14,7 @@
   --color-bg: #eeeeee;
   --color-white: #ffffff;
   --color-gray: #c6c8c9;
+  --color-negative: #b35c5c;
 
   --font-heading: Georgia, "Times New Roman", serif;
   --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
@@ -35,6 +36,17 @@
 /* =========================================================
    Base reset & typography
    ========================================================= */
+
+/* Without border-box, .brn-container's width:100% + side padding overflows
+   its parent, which pushes content against the right edge and stops the
+   sticky header spanning the viewport on mobile and tablet. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
 html {
   scroll-behavior: smooth;
@@ -391,13 +403,11 @@ img {
 .btn-primary {
   background: var(--color-primary);
   color: var(--color-white);
-  border-color: var(--color-white);
 }
 
 .btn-primary:hover,
 .btn-primary:focus {
-  background: var(--color-white);
-  color: var(--color-primary);
+  background: var(--color-primary);
   transform: translateY(-2px);
 }
 
@@ -422,6 +432,15 @@ img {
 
 .section-alt {
   background: var(--color-white);
+}
+
+.section-compact {
+  padding-top: var(--space-xl);
+  padding-bottom: var(--space-xl);
+}
+
+.bg-white {
+  background: var(--color-white) !important;
 }
 
 .section-intro {
@@ -552,6 +571,10 @@ img {
   font-weight: 500;
 }
 
+.skill-tag-negative {
+  background: var(--color-negative);
+}
+
 /* =========================================================
    Notice boxes
    ========================================================= */
@@ -567,6 +590,37 @@ img {
 .notice p {
   margin: 0;
   color: var(--color-text);
+}
+
+/* =========================================================
+   Image placeholders
+   ========================================================= */
+
+.image-placeholder {
+  background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  text-align: center;
+  color: var(--color-white);
+  font-size: 3rem;
+  min-height: 200px;
+  margin: var(--space-lg) 0;
+  padding: var(--space-md);
+}
+
+.image-placeholder small {
+  font-size: 1rem;
+}
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-md);
+  margin: var(--space-xl) 0;
 }
 
 /* =========================================================
@@ -692,7 +746,7 @@ img {
 .charity-info {
   margin-top: var(--space-lg);
   padding-top: var(--space-lg);
-  border-top: 1px solid rgba(238, 238, 238, 0.2);
+  border-top: 1px solid var(--color-primary-dark);
   font-size: 0.9rem;
   opacity: 0.9;
 }
@@ -801,6 +855,15 @@ button:focus-visible {
 @media (min-width: 1024px) {
   body {
     font-size: 18px;
+  }
+
+  .header-inner {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .site-logo img {
+    max-width: 560px;
   }
 
   .burger-btn {
