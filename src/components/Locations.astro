@@ -16,9 +16,9 @@ function formatTime(t: string) {
 }
 ---
 
-<section id="locations" class="page-section">
+<section id="locations" class="page-section section-compact">
   <div class="brn-container">
-    <h2>Our Repair Cafés</h2>
+    <h2>Our repair cafés</h2>
     <p class="section-intro">
       We run regular Repair Cafés across Basingstoke. Find your nearest
       location and pop in.
@@ -87,7 +87,7 @@ function formatTime(t: string) {
       .filter((loc) => loc.data.status === 'coming-soon')
       .map((loc) => (
         <div class="location-card" style="margin-top: var(--space-xl);">
-          <h3>Coming Soon: {loc.data.name}</h3>
+          <h3>Coming soon</h3>
           <p>{loc.data.description}</p>
           <p><a href="#contact">Contact us</a> to register your interest.</p>
         </div>
