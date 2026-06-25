@@ -5,7 +5,7 @@
   "schedule": {
     "dayOfWeek": "Saturday",
     "weekOfMonth": "1st",
-    "startTime": "10:30",
+    "startTime": "10:00",
     "endTime": "13:00"
   },
   "address": {
