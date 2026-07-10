@@ -9,10 +9,20 @@
     "preview": "astro preview",
     "astro": "astro"
   },
-  "keywords": ["repair", "cafe", "community", "basingstoke", "astro"],
+  "keywords": [
+    "repair",
+    "cafe",
+    "community",
+    "basingstoke",
+    "astro"
+  ],
   "author": "Basingstoke Repair Network",
   "license": "MIT",
   "dependencies": {
     "astro": "^4.16.18"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "@types/node": "^26.0.1"
   }
 }
