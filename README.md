@@ -119,6 +119,13 @@ npm start
    - `hatch-warren-team.jpg`
    - Recommended size: 800x600px
 
+> **Note (Astro V2):** the locations grid itself now lives in
+> `src/components/Locations.astro` / `src/styles/global.css` rather than
+> `public/index.html`. Its `.location-address` block has a min-height sized
+> for a 3-line address (venue, street, postcode) so map iframes stay aligned
+> when cards sit side-by-side — check that value if a new location's address
+> needs more lines.
+
 4. **Supporter Logos** (`public/assets/images/supporters/`)
    - Individual logo files for each supporter
    - Transparent PNG recommended
