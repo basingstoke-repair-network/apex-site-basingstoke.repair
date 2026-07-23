@@ -58,8 +58,13 @@ function formatTime(t: string) {
                 </div>
               )}
 
+              {/* .location-address has a min-height (see global.css) sized for
+                 a 3-line address (venue + street + postcode) so the map below
+                 stays aligned across cards on multi-column layouts. If a new
+                 location's address needs a 4th line, that min-height must
+                 grow too. */}
               {address && (
-                <p>
+                <p class="location-address">
                   <strong>{address.venue}</strong>
                   {address.street && <><br />{address.street}</>}
                   <br />{address.postcode}

@@ -102,6 +102,14 @@ apex-site-basingstoke.repair/
 3. **Kings Furlong Repair Café**
    - Status: Coming Later in 2025
 
+**When adding a new location**: check its address (in `src/content/locations/`)
+against the number of lines rendered by `.location-address` in
+`src/components/Locations.astro`. The card grid uses a shared min-height
+(defined in `src/styles/global.css`, currently sized for a 3-line address —
+venue, street, postcode) so map iframes stay aligned across cards on
+multi-column layouts. An address needing a 4th line requires bumping that
+min-height too.
+
 ### Contact Information
 - Email: info@chinehamrepair.org.uk
 
