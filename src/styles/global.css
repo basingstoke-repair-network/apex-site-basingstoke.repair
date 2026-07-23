@@ -535,6 +535,14 @@ img {
   font-size: 0.9rem;
 }
 
+/* Reserves height for a 3-line address (venue + street + postcode) — the
+   longest an address currently gets (see Chineham). Only applied once
+   .location-grid goes multi-column (>=640px, see media query below), so
+   shorter addresses (e.g. Hatch Warren, which has no street line) don't
+   leave the map iframe below misaligned between cards on the same row.
+   MIN_LOCATION_ADDRESS_HEIGHT_REM: bump this (and the comment) if a future
+   location's address needs more than 3 lines. */
+
 .map-container {
   width: 100%;
   height: 300px;
@@ -845,6 +853,14 @@ button:focus-visible {
 
   .location-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* 3 lines x 1.6 line-height, sized for this breakpoint's largest body
+     font-size (18px at >=1024px) so the address block covers the tallest
+     rendered address rather than the 16px/root rem basis. See the
+     MIN_LOCATION_ADDRESS_HEIGHT_REM comment above .location-meta span. */
+  .location-address {
+    min-height: 5.4rem;
   }
 }
 
