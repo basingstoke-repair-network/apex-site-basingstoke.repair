@@ -435,8 +435,8 @@ img {
 }
 
 .section-compact {
-  padding-top: var(--space-xl);
-  padding-bottom: var(--space-xl);
+  padding-top: var(--space-lg);
+  padding-bottom: var(--space-lg);
 }
 
 .bg-white {
@@ -884,7 +884,8 @@ button:focus-visible {
   }
 
   .page-section {
-    padding: var(--space-3xl) var(--space-xl);
+    padding-left: var(--space-xl);
+    padding-right: var(--space-xl);
   }
 
   .card-grid {
