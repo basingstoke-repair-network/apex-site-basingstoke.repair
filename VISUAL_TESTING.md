@@ -13,7 +13,7 @@ Instead of comparing the site to its own previous version, this test compares th
 
 ## How it Works
 
-1.  **Golden Master Generation**: A specialized test (`tests/visual-baseline.spec.js`) navigates to the design reference HTML and captures a high-resolution screenshot for each configured viewport (Mobile, Tablet, Desktop, Wide Desktop).
+1.  **Golden Master Generation**: A specialized test (`tests/visual-baseline.spec.js`) navigates to the design reference HTML and captures a high-resolution screenshot for each configured viewport (Mobile, Tablet, Desktop, Wide Desktop). Alternatively, run the comarison test with --update-snapshots.
 2.  **Comparison**: The main test (`tests/visual-comparison.spec.js`) navigates to the local dev server and compares the current state against the corresponding Golden Master snapshot.
 3.  **Flakiness Mitigation**: Dynamic elements, such as Google Maps iframes, are automatically masked during both capture and comparison to prevent false positives.
 4.  **Tolerance**: The test is configured to allow up to **1,000 differing pixels** to account for minor rendering variations.
@@ -37,6 +37,8 @@ This is in addition to npm install.
 
 ### 3. Generate or Update Baselines
 
+When the design reference changes copy the design HTML file to the design folder and rename to index.html.
+
 When the design reference changes or when first setting up the tests, generate the Golden Master snapshots:
 
 ```bash
@@ -45,14 +47,17 @@ npx playwright test tests/visual-baseline.spec.js --update-snapshots
 
 When snapshotting the current development:
 
-````bash
+```bash
 npx playwright test tests/visual-comparison.spec.js --update-snapshots
+```
 
 ### 4. Run the Comparison Test
+
 Execute the visual comparison spec to compare the current snapshot:
+
 ```bash
 npx playwright test tests/visual-comparison.spec.js
-````
+```
 
 ## Interpreting Results
 
