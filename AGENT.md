@@ -155,6 +155,31 @@ Co-Authored-By: Claude <noreply@anthropic.com>
 4. Styling
 5. CMS configuration
 6. Documentation
+7. Tests (Playwright specs, snapshot updates)
+
+### Development-Phase Workflow: Small Commits, Then Squash
+
+While actively developing a feature or fix on a branch:
+- Commit early and often, in small isolated units per the pattern above — each
+  commit must still be conventional-commits-formatted and buildable in isolation
+  where practical.
+- Do not wait until a feature is "finished" to make the first commit — checkpoint
+  progress so work is never at risk of being lost and history shows the actual
+  path taken.
+
+Once the feature/fix is complete and ready to merge:
+- **Squash the development-phase commits into a single commit** (interactive
+  rebase, e.g. `git rebase -i <base>`) before opening/updating a PR into a shared
+  branch, wherever the branch's history is still local/unpublished and squashing
+  is safe to do.
+- The squashed commit message must still follow the Conventional Commits format
+  below and summarize the net change — not a list of the intermediate WIP steps.
+- Never squash commits that have already been pushed to a shared branch other
+  collaborators may have based work on, without explicit user confirmation —
+  rewriting shared history is a destructive operation.
+- Never use `git rebase -i` non-interactively or with `--no-edit`; if a squash
+  requires resolving conflicts or editing the message, do so explicitly and
+  confirm the resulting diff/message with the user before pushing.
 
 ### HEREDOC for Commit Messages
 
@@ -318,15 +343,28 @@ The static output is also compatible with:
 
 ## Coding Standards
 
-### Astro Components
-- Keep components small and single-purpose
-- Pass data via props; avoid global state
-- Use Astro's `<slot>` for composable layouts
-- Prefer `.astro` files; use framework components (React, etc.) only if essential and never for static content
+### Astro Best Practices
+- Keep components small and single-purpose; one responsibility per `.astro` file
+- Pass data via `Astro.props` (typed with a `Props` interface); avoid global state
+- Use `<slot>` / named slots for composable layouts instead of duplicating markup
+- Prefer `.astro` files for everything static; only reach for a framework component
+  (React, etc.) when genuine client-side interactivity is required, and hydrate it
+  with the narrowest directive that works (`client:visible` / `client:idle` over
+  `client:load`)
+- Content collections (`src/content/`) are the source of truth for CMS-managed data
+  (locations, supporters) — never hardcode content that already has a collection entry
+- Use `getStaticPaths` for any dynamic routes; the site remains `output: 'static'` —
+  no SSR, no API routes, no adapters that imply a server runtime
+- Co-locate a component's styles in its own `<style>` block unless the rule is a
+  shared token/utility that belongs in `src/styles/global.css`
+- Run `npx astro check` before considering a change complete — treat new type errors
+  as blocking
 
 ### CSS / TailwindCSS
-- Use CSS custom properties for brand colors
-- Mobile-first utility classes
+- Use CSS custom properties for brand colors — never hardcode hex values that
+  duplicate `--header-bg`, `--footer-bg`, etc.
+- Mobile-first utility classes; match the breakpoints already defined in
+  `design/index.html` (640px tablet, 1024px desktop, 1440px large desktop)
 - Avoid arbitrary Tailwind values where a design token or custom property suffices
 
 ### JavaScript
@@ -335,10 +373,49 @@ The static output is also compatible with:
 - ES6+ syntax; always `addEventListener`, never inline handlers
 - Graceful degradation — check for feature support
 
-### Astro-specific
-- Use `Astro.props` typing for components
-- Content collections for CMS-managed data
-- Static paths (`getStaticPaths`) for dynamic routes
+## Visual Design Fidelity (STRICT)
+
+`design/index.html` is the **golden master**. It is the single source of truth for
+layout, spacing, color, typography, and interaction behaviour (including the burger
+menu). This is not a mood board — every visual detail implemented in Astro must match
+it pixel-for-pixel within the tolerance enforced by the Playwright visual tests.
+
+- **Never deviate** from `design/index.html` unless the user explicitly requests a
+  visual change. If a component seems to need a different layout, treat that as a
+  signal to re-read the design file, not license to improvise.
+- CSS custom properties, breakpoints, spacing scale (`--space-*`), and component
+  class names (`.card`, `.location-card`, `.hero`, `.notice`, etc.) in
+  `src/styles/global.css` should mirror `design/index.html`'s `<style>` block —
+  don't invent parallel naming schemes.
+- Content differences are expected (Astro renders from content collections rather
+  than the static placeholder text/images in the design file) but structural and
+  stylistic differences are not.
+- Any change touching layout or styling **must** be verified against the golden
+  master via the Playwright visual regression tests (see below) before being
+  considered done — do not rely on eyeballing a screenshot.
+- If `design/index.html` itself changes, regenerate the baseline
+  (`tests/visual-baseline.spec.js`) deliberately and call this out in the commit —
+  never let the baseline drift silently out of sync with the design file.
+
+## Testing with Playwright
+
+Tests live in `tests/` and are configured in `playwright.config.js`.
+
+- **`tests/visual-baseline.spec.js`** — generates the golden-master screenshots
+  directly from `design/index.html`, per viewport project (`mobile`, `tablet`,
+  `desktop`, `wide-desktop`). Run with `--update-snapshots` only when the design
+  file has intentionally changed.
+- **`tests/visual-comparison.spec.js`** — renders the live Astro dev server
+  (`http://localhost:4321`) and diffs it against the golden master
+  (`maxDiffPixels: 1000`), masking dynamic elements like the Google Maps iframe.
+- Run the full suite with `npx playwright test` before treating any visual/layout
+  change as complete; investigate every failed diff instead of bumping
+  `maxDiffPixels` or masking new elements to make a failure disappear.
+- Add new Playwright specs under `tests/` for any new interactive behaviour
+  (e.g. burger menu open/close, keyboard navigation, anchor scrolling) — don't
+  rely on visual diffing alone to catch functional regressions.
+- All new/modified spec files need SPDX headers, matching the existing files in
+  `tests/`.
 
 ## Important Directives
 
@@ -369,13 +446,18 @@ Before committing changes:
 - [ ] No `\u` escape sequences in any files
 - [ ] All files have SPDX headers
 - [ ] `npm run build` completes without errors
-- [ ] Responsive design works on mobile/tablet/desktop
+- [ ] `npx astro check` passes with no new type errors
+- [ ] `npx playwright test` passes — implementation matches `design/index.html`
+      within the configured diff tolerance
+- [ ] Responsive design works on mobile/tablet/desktop (matches golden master
+      at each breakpoint)
 - [ ] All links work correctly
 - [ ] Images have appropriate alt text
 - [ ] Browser console has no errors
 - [ ] Accessibility: keyboard navigation works
 - [ ] Git commit messages follow conventional commits format
-- [ ] Changes are in isolated, logical commits
+- [ ] Changes are in isolated, logical commits during development, squashed to
+      one before merge (see Git Workflow above)
 
 ## Future Considerations
 
@@ -415,9 +497,11 @@ Before committing changes:
 - Added Decap CMS for content management
 - Hosted on Netlify with Git Gateway
 - Maintained CDN-first philosophy for external runtime libraries
+- Added Playwright visual regression testing against `design/index.html` as the
+  golden master, plus a squash-before-merge git workflow
 
 ---
 
-**Last Updated**: 2026-05-23
-**Claude Version**: Claude Sonnet 4.6
+**Last Updated**: 2026-07-28
+**Claude Version**: Claude Sonnet 5
 **Project Status**: V2 in active development
