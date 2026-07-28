@@ -34,6 +34,10 @@ export default defineConfig({
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
+
+    /* Disable CSS animations/transitions and the hero carousel's autoplay so
+     * full-page screenshots are stable instead of racing an in-progress fade. */
+    reducedMotion: 'reduce',
   },
 
   /* Configure projects for major browsers */

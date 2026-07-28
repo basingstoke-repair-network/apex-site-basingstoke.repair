@@ -16,5 +16,6 @@ test('Visual comparison between implementation and Golden Master', async ({ page
     fullPage: true,
     mask: [mapContainer],
     maxDiffPixels: 1000,
+    animations: 'disabled',
   });
 });
