@@ -535,6 +535,23 @@ img {
   font-size: 0.9rem;
 }
 
+.location-next-date {
+  margin-bottom: var(--space-md);
+}
+
+.next-date-tbd {
+  font-style: italic;
+  /* var(--color-gray) is too light against --color-bg to meet WCAG AA
+     contrast for text; --color-primary is the palette's accessible
+     secondary-text color (see .section-intro). */
+  color: var(--color-primary);
+}
+
+.location-last-items {
+  font-size: 0.9rem;
+  color: var(--color-primary);
+}
+
 /* Reserves height for a 3-line address (venue + street + postcode) — the
    longest an address currently gets (see Chineham). Only applied once
    .location-grid goes multi-column (>=640px, see media query below), so

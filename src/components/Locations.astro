@@ -4,6 +4,7 @@ SPDX-License-Identifier: MIT
 -->
 ---
 import { getCollection } from 'astro:content';
+import NextDate from './NextDate.astro';
 
 const allLocations = await getCollection('locations');
 const locations = allLocations.sort((a, b) => a.data.order - b.data.order);
@@ -56,6 +57,19 @@ function formatTime(t: string) {
                   {scheduleText && <span>📅 {scheduleText}</span>}
                   {timeText && <span>🕐 {timeText}</span>}
                 </div>
+              )}
+
+              <p class="location-next-date" hidden={!!schedule}>
+                <strong>Next date:</strong> <NextDate schedule={schedule} />
+              </p>
+
+              {/* Same cutoff every occurrence, so — unlike the next date
+                 above — this doesn't need the visitor's clock and can be
+                 rendered statically; it must not be hidden pending JS. */}
+              {schedule?.lastItemsTime && (
+                <p class="location-last-items">
+                <strong>Best arrived before::</strong> {formatTime(schedule.lastItemsTime)}
+                </p>
               )}
 
               {/* .location-address has a min-height (see global.css) sized for
