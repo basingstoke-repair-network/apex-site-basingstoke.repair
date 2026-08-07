@@ -1,0 +1,55 @@
+# SPDX-FileCopyrightText: 2025--2026 Basingstoke Repair Network
+#
+# SPDX-License-Identifier: MIT
+
+# Classic pre-commit config, compatible with both pre-commit
+# (https://pre-commit.com) and prek (https://github.com/j178/prek).
+exclude: ^(design|public)/
+
+default_install_hook_types:
+  - pre-commit
+  - commit-msg
+
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: mixed-line-ending
+      - id: check-yaml
+      - id: check-json
+      - id: check-toml
+      - id: check-merge-conflict
+      - id: check-added-large-files
+
+  - repo: https://github.com/compilerla/conventional-pre-commit
+    rev: v4.4.0
+    hooks:
+      - id: conventional-pre-commit
+        stages: [commit-msg]
+        args: []
+
+  - repo: https://github.com/fsfe/reuse-tool
+    rev: v5.0.2
+    hooks:
+      - id: reuse
+
+  # eslint and prettier run against this repo's own node_modules
+  # (via `npm ci`) rather than pre-commit-managed environments, since
+  # eslint's flat config loads eslint-plugin-astro as a real ESM import.
+  - repo: local
+    hooks:
+      - id: eslint
+        name: eslint
+        entry: npx --no-install eslint --max-warnings=0
+        language: system
+        files: \.(js|mjs|cjs|astro)$
+        types: [file]
+
+      - id: prettier-html
+        name: prettier (HTML formatting check)
+        entry: npx --no-install prettier --check
+        language: system
+        files: \.html$
+        types: [file]
