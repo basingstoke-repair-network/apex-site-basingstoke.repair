@@ -24,10 +24,22 @@ const locations = defineCollection({
     status: z.enum(['active', 'coming-soon', 'closed']),
     schedule: z
       .object({
-        dayOfWeek: z.string(),
-        weekOfMonth: z.string(),
-        startTime: z.string(),
-        endTime: z.string(),
+        dayOfWeek: z.enum([
+          'Sunday',
+          'Monday',
+          'Tuesday',
+          'Wednesday',
+          'Thursday',
+          'Friday',
+          'Saturday',
+        ]),
+        weekOfMonth: z.enum(['1st', '2nd', '3rd', '4th', '5th', 'last']),
+        startTime: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/, 'Expected 24-hour HH:MM'),
+        lastItemsTime: z
+          .string()
+          .regex(/^([01]\d|2[0-3]):[0-5]\d$/, 'Expected 24-hour HH:MM')
+          .optional(),
+        endTime: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/, 'Expected 24-hour HH:MM'),
       })
       .optional(),
     address: z

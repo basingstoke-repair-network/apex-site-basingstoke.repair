@@ -1,0 +1,46 @@
+---
+// SPDX-FileCopyrightText: 2025--2026 Basingstoke Repair Network
+// SPDX-License-Identifier: MIT
+
+import type { RepairCafeSchedule } from '../utils/nextOccurrence';
+
+interface Props {
+  schedule?: RepairCafeSchedule;
+}
+
+const { schedule } = Astro.props;
+---
+
+{schedule ? (
+  // No server-rendered date: the schedule can only be trusted once
+  // evaluated against the visitor's own clock. Left empty, this is filled
+  // in by the script below; without JS the enclosing .location-next-date
+  // line stays hidden (see the `hidden` attribute set in Locations.astro)
+  // rather than showing an empty "Next date:" label.
+  <span
+    class="next-date"
+    data-next-date
+    data-day-of-week={schedule.dayOfWeek}
+    data-week-of-month={schedule.weekOfMonth}
+    data-start-time={schedule.startTime}
+    data-end-time={schedule.endTime}
+  ></span>
+) : (
+  <span class="next-date next-date-tbd">TBD</span>
+)}
+
+<script>
+  import { getNextOccurrence, formatNextDateLabel, type RepairCafeSchedule } from '../utils/nextOccurrence';
+
+  document.querySelectorAll<HTMLElement>('[data-next-date]').forEach((el) => {
+    const schedule: RepairCafeSchedule = {
+      dayOfWeek: el.dataset.dayOfWeek ?? '',
+      weekOfMonth: el.dataset.weekOfMonth ?? '',
+      startTime: el.dataset.startTime ?? '',
+      endTime: el.dataset.endTime ?? '',
+    };
+
+    el.textContent = formatNextDateLabel(getNextOccurrence(schedule));
+    el.closest<HTMLElement>('.location-next-date')?.removeAttribute('hidden');
+  });
+</script>
