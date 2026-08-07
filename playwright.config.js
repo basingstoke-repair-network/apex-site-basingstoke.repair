@@ -70,5 +70,3 @@ export default defineConfig({
   },
   snapshotPathTemplate: 'tests/visual-snapshots/{projectName}/{arg}-{platform}.png',
 });
-
-
