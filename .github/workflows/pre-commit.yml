@@ -32,18 +32,6 @@ jobs:
           extra-args: --all-files --stage pre-commit
 
       - name: Enforce Conventional Commits on each commit in range
-        env:
-          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
-          HEAD_SHA: ${{ github.event.pull_request.head.sha || github.event.after }}
-        run: |
-          if [ -z "$BASE_SHA" ] || [ "$BASE_SHA" = "0000000000000000000000000000000000000000" ]; then
-            commits="$HEAD_SHA"
-          else
-            commits=$(git rev-list "$BASE_SHA..$HEAD_SHA")
-          fi
-
-          for sha in $commits; do
-            echo "Checking commit $sha"
-            git log -1 --format=%B "$sha" > /tmp/commit-msg.txt
-            prek run --stage commit-msg --commit-msg-filename /tmp/commit-msg.txt
-          done
+        uses: compilerla/conventional-pre-commit@v4.4.0
+        with:
+          checkout: false
