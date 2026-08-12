@@ -19,19 +19,18 @@ jobs:
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0
-
       - uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: 'npm'
-
       - run: npm ci
-
       - uses: j178/prek-action@v3.0.0
         with:
           extra-args: --all-files --stage pre-commit
 
-      - name: Enforce Conventional Commits on each commit in range
-        uses: compilerla/conventional-pre-commit@v4.4.0
-        with:
-          checkout: false
+  commit-check:
+    runs-on: ubuntu-latest
+    name: Check commit message
+    steps:
+      - uses: actions/checkout@v7
+      - uses: webiny/action-conventional-commits@v1.4.2
