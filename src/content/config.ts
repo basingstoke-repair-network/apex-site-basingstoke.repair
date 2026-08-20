@@ -7,7 +7,7 @@ const heroSlides = defineCollection({
   type: 'data',
   schema: z.object({
     title: z.string(),
-    subtitle: z.string(),
+    subtitle: z.string().optional(),
     backgroundImage: z.string(),
     ctaText: z.string().optional(),
     ctaLink: z.string().optional(),
