@@ -39,16 +39,6 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://basingst
 
     <!-- Preconnect for maps (lazy loaded) -->
     <link rel="preconnect" href="https://maps.google.com" />
-
-    <!-- Swiper.js carousel (CDN) -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
-    />
-    <script
-      src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"
-      defer
-    ></script>
   </head>
   <body>
     <slot />
