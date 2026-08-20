@@ -1,7 +1,6 @@
 {
-  "title": "Textile & Clothing Repairs",
-  "subtitle": "From split seams to broken zips — our volunteer repairers can breathe new life into your favourite clothes.",
+  "title": "Fix It, Don't Bin It!",
   "backgroundImage": "/assets/images/hero/textile-repairs.jpg",
-  "order": 2,
+  "order": 1,
   "isActive": true
 }
