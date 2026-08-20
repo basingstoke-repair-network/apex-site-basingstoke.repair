@@ -3,19 +3,6 @@
 
 import { defineCollection, z } from 'astro:content';
 
-const heroSlides = defineCollection({
-  type: 'data',
-  schema: z.object({
-    title: z.string(),
-    subtitle: z.string().optional(),
-    backgroundImage: z.string(),
-    ctaText: z.string().optional(),
-    ctaLink: z.string().optional(),
-    order: z.number().int(),
-    isActive: z.boolean().default(true),
-  }),
-});
-
 const locations = defineCollection({
   type: 'data',
   schema: z.object({
@@ -69,7 +56,6 @@ const supporters = defineCollection({
 });
 
 export const collections = {
-  'hero-slides': heroSlides,
   locations,
   supporters,
 };
