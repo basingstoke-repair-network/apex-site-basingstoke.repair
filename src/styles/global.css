@@ -256,20 +256,17 @@ img {
 }
 
 /* =========================================================
-   Hero carousel
+   Hero
    ========================================================= */
 
-.hero-carousel-section {
+.hero-section {
   position: relative;
   overflow: hidden;
 }
 
-.hero-swiper {
+.hero-slide {
   width: 100%;
   height: clamp(420px, 60vh, 700px);
-}
-
-.hero-slide {
   background-size: cover;
   background-position: center;
   background-color: var(--color-primary-dark);
@@ -279,13 +276,15 @@ img {
   position: relative;
 }
 
+/* Kept light so the photo reads clearly — just enough of a scrim for
+   text contrast, not the darker wash a rotating carousel needed. */
 .hero-slide-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(
     135deg,
-    rgba(26, 24, 80, 0.72) 0%,
-    rgba(40, 39, 111, 0.55) 100%
+    rgba(26, 24, 80, 0.42) 0%,
+    rgba(40, 39, 111, 0.28) 100%
   );
 }
 
@@ -301,7 +300,7 @@ img {
 .hero-slide-content h1 {
   color: var(--color-white);
   margin-bottom: var(--space-lg);
-  text-shadow: 0 2px 8px rgba(2, 1, 26, 0.4);
+  text-shadow: 0 2px 10px rgba(2, 1, 26, 0.7);
 }
 
 .hero-slide-content h1::after {
@@ -322,64 +321,6 @@ img {
   gap: var(--space-md);
   flex-wrap: wrap;
   justify-content: center;
-}
-
-/* Swiper colour overrides — BRN brand blue */
-.hero-swiper .swiper-pagination-bullet {
-  background: var(--color-white);
-  opacity: 0.6;
-}
-
-.hero-swiper .swiper-pagination-bullet-active {
-  background: var(--color-white);
-  opacity: 1;
-}
-
-/* Arrows: hidden by default, revealed on hover / keyboard focus / touch */
-.hero-swiper .swiper-button-prev,
-.hero-swiper .swiper-button-next {
-  color: var(--color-white);
-  text-shadow: 0 1px 4px rgba(2, 1, 26, 0.5);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease, color 0.2s ease;
-}
-
-/* Desktop hover */
-.hero-swiper:hover .swiper-button-prev,
-.hero-swiper:hover .swiper-button-next {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* Keyboard focus — covers Tab → button and arrow-key navigation */
-.hero-swiper:focus-within .swiper-button-prev,
-.hero-swiper:focus-within .swiper-button-next {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-/* Touch-triggered reveal (class added by JS on touchstart) */
-.hero-swiper.arrows-visible .swiper-button-prev,
-.hero-swiper.arrows-visible .swiper-button-next {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.hero-swiper .swiper-button-prev:hover,
-.hero-swiper .swiper-button-next:hover,
-.hero-swiper .swiper-button-prev:focus-visible,
-.hero-swiper .swiper-button-next:focus-visible {
-  color: var(--color-gray);
-  outline: none;
-}
-
-/* On mobile, remove arrows entirely — swipe + dots is the right gesture */
-@media (max-width: 639px) {
-  .hero-swiper .swiper-button-prev,
-  .hero-swiper .swiper-button-next {
-    display: none;
-  }
 }
 
 /* Buttons */
@@ -983,7 +924,7 @@ button:focus-visible {
     box-shadow: none;
   }
 
-  .hero-carousel-section {
+  .hero-section {
     display: none;
   }
 
