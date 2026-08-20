@@ -3,25 +3,15 @@ SPDX-FileCopyrightText: 2025--2026 Basingstoke Repair Network
 SPDX-License-Identifier: MIT
 -->
 ---
-import { getCollection } from 'astro:content';
-
-const allSlides = await getCollection('hero-slides');
-const [slide] = allSlides
-  .filter((s) => s.data.isActive !== false)
-  .sort((a, b) => a.data.order - b.data.order);
+const title = "Fix It, Don't Bin It!";
+const backgroundImage = '/assets/images/hero/textile-repairs.jpg';
 ---
 
 <section class="hero-section" aria-label="Welcome to Basingstoke Repair Network">
-  <div class="hero-slide" style={`background-image: url('${slide.data.backgroundImage}')`}>
+  <div class="hero-slide" style={`background-image: url('${backgroundImage}')`}>
     <div class="hero-slide-overlay" aria-hidden="true"></div>
     <div class="brn-container hero-slide-content">
-      <h1>{slide.data.title}</h1>
-      {slide.data.subtitle && <p class="hero-tagline">{slide.data.subtitle}</p>}
-      {slide.data.ctaText && slide.data.ctaLink && (
-        <div class="hero-cta">
-          <a href={slide.data.ctaLink} class="btn btn-primary">{slide.data.ctaText}</a>
-        </div>
-      )}
+      <h1>{title}</h1>
     </div>
   </div>
 </section>
