@@ -1,0 +1,42 @@
+<!--
+SPDX-FileCopyrightText: 2025--2026 Basingstoke Repair Network
+SPDX-License-Identifier: MIT
+-->
+---
+const reasons = [
+  {
+    icon: '🌍',
+    title: 'Reduce waste',
+    body: 'Keep items out of landfills and reduce environmental impact. Every item repaired is one less in the bin.',
+  },
+  {
+    icon: '🤝',
+    title: 'Build community',
+    body: 'Connect with neighbours and share skills. Repair Cafés are social spaces where people come together.',
+  },
+  {
+    icon: '🛠️',
+    title: 'Learn skills',
+    body: 'Discover how things work and gain repair confidence. Watch, learn, and try it yourself next time.',
+  },
+];
+---
+
+<section id="why-repair" class="page-section section-alt section-compact">
+  <div class="brn-container">
+    <h2>Why repair matters</h2>
+    <p class="section-intro">
+      Repairing instead of replacing helps create a more sustainable, connected,
+      and skilful community. Here's why repair matters:
+    </p>
+
+    <div class="card-grid">
+      {reasons.map(({ icon, title, body }) => (
+        <div class="card">
+          <h3><span class="card-icon" aria-hidden="true">{icon}</span> {title}</h3>
+          <p>{body}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

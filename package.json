@@ -1,16 +1,34 @@
 {
   "name": "basingstoke-repair-network",
-  "version": "1.0.0",
-  "description": "Basingstoke Repair Network Website",
-  "main": "index.html",
+  "version": "2.0.0",
+  "description": "Basingstoke Repair Network Website - V2 Astro.js",
+  "type": "module",
   "scripts": {
-    "dev": "npx serve public -l 3000",
-    "start": "npx serve public -l 3000"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "lint": "eslint .",
+    "format:check": "prettier --check \"**/*.html\""
   },
-  "keywords": ["repair", "cafe", "community", "basingstoke"],
+  "keywords": [
+    "repair",
+    "cafe",
+    "community",
+    "basingstoke",
+    "astro"
+  ],
   "author": "Basingstoke Repair Network",
   "license": "MIT",
+  "dependencies": {
+    "astro": "^4.16.18"
+  },
   "devDependencies": {
-    "serve": "^14.2.6"
+    "@playwright/test": "^1.61.1",
+    "@types/node": "^26.0.1",
+    "@typescript-eslint/parser": "^8.66.0",
+    "eslint": "^10.8.1",
+    "eslint-plugin-astro": "^2.1.1",
+    "prettier": "^3.9.6"
   }
 }

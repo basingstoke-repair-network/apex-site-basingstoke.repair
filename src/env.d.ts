@@ -1,0 +1,4 @@
+// SPDX-FileCopyrightText: 2025--2026 Basingstoke Repair Network
+// SPDX-License-Identifier: MIT
+
+/// <reference path="../.astro/types.d.ts" />

@@ -1,0 +1,157 @@
+<!--
+SPDX-FileCopyrightText: 2025--2026 Basingstoke Repair Network
+SPDX-License-Identifier: MIT
+-->
+---
+import GalleryCarousel from './GalleryCarousel.astro';
+
+const steps = [
+  {
+    icon: '🚶',
+    title: 'Come Along',
+    body: 'Find your nearest Repair Café from our list below. Just drop in during our opening hours — no appointment needed.',
+  },
+  {
+    icon: '👀',
+    title: 'Stay & Watch',
+    body: 'We work on a first-come, first-served basis. Sit with our volunteer repairers and see how your item gets fixed.',
+  },
+  {
+    icon: '☕',
+    title: 'Enjoy a Cuppa',
+    body: 'While you wait, enjoy a cup of tea or coffee, chat with other visitors, and learn something new.',
+  },
+];
+
+const canFix = [
+  { icon: '🌱', label: 'Garden tools' },
+  { icon: '🍳', label: 'Kitchen tools' },
+  { icon: '🧸', label: 'Toys' },
+  { icon: '🚲', label: 'Bikes' },
+  { icon: '💡', label: 'Lights' },
+  { icon: '👕', label: 'Clothes' },
+  { icon: '💻', label: 'Laptops' },
+  { icon: '🖥️', label: 'PCs' },
+  { icon: '🌬️', label: 'Vacuum cleaners' },
+  { icon: '🪑', label: 'Chairs' },
+  { icon: '💍', label: 'Jewellery' },
+  { icon: '✂️', label: 'Sharpening' },
+  { icon: '🛋️', label: 'Upholstery' },
+  { icon: '…', label: 'and more' },
+];
+
+const cannotFix = [
+  'Cane furniture',
+  'Electric blankets',
+  'Petrol-driven items',
+  'Microwaves',
+  'Fridges & freezers',
+];
+
+const happyFixImages = Array.from(
+  { length: 11 },
+  (_, i) => `/assets/images/gallery/happy-fix/happy-fix-${String(i + 1).padStart(2, '0')}.jpg`
+);
+
+const photos = [
+  { icon: '📸', caption: 'Team in action', swiperClass: 'swiper-team-in-action', images: null },
+  {
+    icon: '🔧',
+    caption: 'Repairs underway',
+    swiperClass: 'swiper-repairs-underway',
+    images: null,
+  },
+  {
+    icon: '😊',
+    caption: 'Happy fix!',
+    swiperClass: 'swiper-happy-fix',
+    images: happyFixImages,
+  },
+];
+---
+
+<section id="about" class="page-section section-compact">
+  <div class="brn-container">
+    <h2>How it works</h2>
+    <p class="section-intro">
+      Come along to one of our Repair Café sessions, bring your broken items,
+      and sit with a cuppa while our friendly volunteers try to fix them. It's
+      free, though donations are welcome.
+    </p>
+
+    <div class="card-grid">
+      {steps.map(({ icon, title, body }) => (
+        <div class="card">
+          <h3><span class="card-icon" aria-hidden="true">{icon}</span> {title}</h3>
+          <p>{body}</p>
+        </div>
+      ))}
+    </div>
+
+    <h3>💡 How you can help us help you</h3>
+    <ul>
+      <li><strong>Clean your item</strong> — it's much nicer for our volunteers to work on.</li>
+      <li><strong>Bring all the bits</strong> — leads, chargers, manuals, broken parts, screws.</li>
+      <li><strong>Bring batteries</strong> if your item needs them.</li>
+      <li><strong>Arrive early</strong> — we work on a first-come, first-served basis.</li>
+    </ul>
+
+    <div class="notice">
+      <p>
+        <strong>Note:</strong> We do our very best, but repairs are offered on a
+        best-endeavours basis. We can't guarantee everything will be fixable or
+        perfect afterwards, but we'll always try our hardest.
+      </p>
+    </div>
+
+    <h3>✅ What we can try to fix</h3>
+    <p>Our volunteers have recently fixed:</p>
+    <div class="skills-grid" role="list">
+      {canFix.map(({ icon, label }) => (
+        <span class="skill-tag" role="listitem">
+          <span aria-hidden="true">{icon}</span> {label}
+        </span>
+      ))}
+    </div>
+
+    <div class="notice">
+      <p>
+        Sharpening and upholstery are not always available —{' '}
+        <a href="mailto:info@basingstoke.repair">email us beforehand</a> to check.
+      </p>
+    </div>
+
+    <h3>❌ What we can't fix</h3>
+    <p>
+      Unfortunately, for safety reasons, we <strong>cannot</strong> repair items
+      where we can't test whether they'll be safe to use afterwards:
+    </p>
+    <div class="skills-grid" role="list">
+      {cannotFix.map((item) => (
+        <span class="skill-tag skill-tag-negative" role="listitem">{item}</span>
+      ))}
+    </div>
+    <p>Or anything our volunteers consider unsafe to work on.</p>
+
+    <div class="notice">
+      <p>
+        <strong>Not sure?</strong>{' '}
+        <a href="mailto:info@basingstoke.repair">Email us beforehand</a> with
+        brief details of your item and we'll let you know if we can help.
+      </p>
+    </div>
+
+    <div class="image-grid">
+      {photos.map(({ icon, caption, swiperClass, images }) =>
+        images ? (
+          <GalleryCarousel images={images} altPrefix={caption} swiperClass={swiperClass} />
+        ) : (
+          <div class="image-placeholder">
+            <span aria-hidden="true">{icon}</span>
+            <small>{caption}</small>
+          </div>
+        )
+      )}
+    </div>
+  </div>
+</section>

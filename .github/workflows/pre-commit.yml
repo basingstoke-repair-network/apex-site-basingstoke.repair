@@ -1,0 +1,36 @@
+# SPDX-FileCopyrightText: 2025--2026 Basingstoke Repair Network
+#
+# SPDX-License-Identifier: MIT
+
+name: Pre-commit checks
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  pre-commit:
+    runs-on: ubuntu-latest
+    name: Run pre-commit hooks
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: 'npm'
+      - run: npm ci
+      - uses: j178/prek-action@v3.0.0
+        with:
+          extra-args: --all-files --stage pre-commit
+
+  commit-check:
+    runs-on: ubuntu-latest
+    name: Check commit message
+    steps:
+      - uses: actions/checkout@v7
+      - uses: webiny/action-conventional-commits@v1.4.2

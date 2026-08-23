@@ -1,0 +1,58 @@
+<!--
+SPDX-FileCopyrightText: 2025--2026 Basingstoke Repair Network
+SPDX-License-Identifier: MIT
+-->
+---
+interface Props {
+  images: string[];
+  altPrefix: string;
+  swiperClass: string;
+}
+
+const { images, altPrefix, swiperClass } = Astro.props;
+---
+
+<div class={`swiper gallery-swiper ${swiperClass}`} aria-label={altPrefix}>
+  <div class="swiper-wrapper">
+    {images.map((src, i) => (
+      <div class="swiper-slide">
+        <img src={src} alt={`${altPrefix} — photo ${i + 1}`} loading="lazy" />
+      </div>
+    ))}
+  </div>
+
+  <div class="swiper-pagination"></div>
+  <div class="swiper-button-prev" aria-label="Previous photo"></div>
+  <div class="swiper-button-next" aria-label="Next photo"></div>
+</div>
+
+<script define:vars={{ swiperClass }}>
+  document.addEventListener('DOMContentLoaded', () => {
+    if (typeof window.Swiper === 'undefined') return;
+
+    const prefersReducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+
+    new window.Swiper(`.${swiperClass}`, {
+      loop: true,
+      autoplay: prefersReducedMotion
+        ? false
+        : { delay: 4000, disableOnInteraction: false, pauseOnMouseEnter: true },
+      keyboard: { enabled: true, onlyInViewport: true },
+      pagination: {
+        el: `.${swiperClass} .swiper-pagination`,
+        clickable: true,
+      },
+      navigation: {
+        nextEl: `.${swiperClass} .swiper-button-next`,
+        prevEl: `.${swiperClass} .swiper-button-prev`,
+      },
+      a11y: {
+        prevSlideMessage: 'Previous photo',
+        nextSlideMessage: 'Next photo',
+        enabled: true,
+      },
+    });
+  });
+</script>

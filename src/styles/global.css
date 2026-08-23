@@ -1,0 +1,1005 @@
+/*
+ * SPDX-FileCopyrightText: 2025 Basingstoke Repair Network
+ * SPDX-License-Identifier: MIT
+ */
+
+/* =========================================================
+   BRN Design System — CSS custom properties
+   ========================================================= */
+
+:root {
+  --color-primary: #28276f;
+  --color-primary-dark: #1a1850;
+  --color-text: #02011a;
+  --color-bg: #eeeeee;
+  --color-white: #ffffff;
+  --color-gray: #c6c8c9;
+  --color-negative: #b35c5c;
+
+  --font-heading: Georgia, "Times New Roman", serif;
+  --font-body:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
+    sans-serif;
+
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+}
+
+/* =========================================================
+   Base reset & typography
+   ========================================================= */
+
+/* Without border-box, .brn-container's width:100% + side padding overflows
+   its parent, which pushes content against the right edge and stops the
+   sticky header spanning the viewport on mobile and tablet. */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.6;
+  font-size: 16px;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--color-primary);
+}
+
+h1 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  margin-bottom: var(--space-md);
+}
+
+h2 {
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  margin-bottom: var(--space-md);
+  position: relative;
+}
+
+h2::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: var(--color-primary);
+  margin-top: var(--space-sm);
+  border-radius: 2px;
+}
+
+h3 {
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  margin-bottom: var(--space-sm);
+  color: var(--color-primary);
+}
+
+p {
+  margin-bottom: var(--space-md);
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.2s ease;
+  cursor: pointer;
+}
+
+a:hover,
+a:focus {
+  border-bottom-color: var(--color-primary);
+}
+
+ul,
+ol {
+  margin-left: var(--space-lg);
+  margin-bottom: var(--space-md);
+}
+
+li {
+  margin-bottom: var(--space-sm);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* =========================================================
+   Layout container
+   ========================================================= */
+
+.brn-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--space-md);
+}
+
+/* =========================================================
+   Header & navigation
+   ========================================================= */
+
+.site-header {
+  background: var(--color-gray);
+  padding: var(--space-md) 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(2, 1, 26, 0.08);
+}
+
+.header-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.site-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: none;
+}
+
+.site-logo:hover,
+.site-logo:focus {
+  border-bottom: none;
+}
+
+.site-logo img {
+  max-height: clamp(70px, 12vw, 120px);
+  width: 100%;
+  max-width: 360px;
+  height: auto;
+  display: block;
+}
+
+.logo-fallback {
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.site-nav ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-sm) var(--space-lg);
+  margin: 0;
+  padding: 0;
+}
+
+.site-nav li {
+  margin: 0;
+}
+
+.site-nav a {
+  color: var(--color-primary);
+  font-weight: 500;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-md);
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+  border-bottom: none;
+  display: block;
+}
+
+.site-nav a:hover,
+.site-nav a:focus {
+  background: var(--color-primary);
+  color: var(--color-white);
+  border-bottom-color: transparent;
+}
+
+/* Burger menu */
+.burger-btn {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  gap: 6px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.burger-line {
+  display: block;
+  width: 24px;
+  height: 2px;
+  background: var(--color-text);
+  border-radius: 2px;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+}
+
+.burger-btn.is-active .burger-line:nth-child(1) {
+  transform: translateY(8px) rotate(45deg);
+}
+
+.burger-btn.is-active .burger-line:nth-child(2) {
+  opacity: 0;
+}
+
+.burger-btn.is-active .burger-line:nth-child(3) {
+  transform: translateY(-8px) rotate(-45deg);
+}
+
+/* =========================================================
+   Hero
+   ========================================================= */
+
+.hero-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-slide {
+  width: 100%;
+  height: clamp(420px, 60vh, 700px);
+  background-size: cover;
+  background-position: center;
+  background-color: var(--color-primary-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* Kept light so the photo reads clearly — just enough of a scrim for
+   text contrast, not the darker wash a rotating carousel needed. */
+.hero-slide-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(26, 24, 80, 0.42) 0%,
+    rgba(40, 39, 111, 0.28) 100%
+  );
+}
+
+.hero-slide-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: var(--color-white);
+  padding-top: var(--space-2xl);
+  padding-bottom: var(--space-2xl);
+}
+
+.hero-slide-content h1 {
+  color: var(--color-white);
+  margin-bottom: var(--space-lg);
+  text-shadow: 0 2px 10px rgba(2, 1, 26, 0.7);
+}
+
+.hero-slide-content h1::after {
+  display: none;
+}
+
+.hero-tagline {
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  max-width: 700px;
+  margin: 0 auto var(--space-lg);
+  font-weight: 300;
+  color: var(--color-white);
+  text-shadow: 0 1px 4px rgba(2, 1, 26, 0.5);
+}
+
+.hero-cta {
+  display: inline-flex;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: var(--space-sm) var(--space-xl);
+  border-radius: var(--radius-lg);
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+  border: 2px solid transparent;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+}
+
+.btn:hover,
+.btn:focus {
+  border-bottom-color: transparent;
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: var(--color-white);
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background: var(--color-primary);
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background: var(--color-white);
+  color: var(--color-primary);
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus {
+  background: var(--color-bg);
+  transform: translateY(-2px);
+}
+
+/* =========================================================
+   Page sections
+   ========================================================= */
+
+.page-section {
+  padding: var(--space-3xl) var(--space-md);
+}
+
+.section-alt {
+  background: var(--color-white);
+}
+
+.section-compact {
+  padding-top: var(--space-lg);
+  padding-bottom: var(--space-lg);
+}
+
+.bg-white {
+  background: var(--color-white) !important;
+}
+
+.section-intro {
+  font-size: 1.1rem;
+  max-width: 700px;
+  color: var(--color-primary);
+  margin-bottom: var(--space-xl);
+}
+
+/* =========================================================
+   Cards
+   ========================================================= */
+
+.card-grid {
+  display: grid;
+  gap: var(--space-lg);
+  margin-top: var(--space-xl);
+  margin-bottom: var(--space-xl);
+}
+
+.card {
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  border-left: 4px solid var(--color-primary-dark);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.section-alt .card {
+  background: var(--color-bg);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(2, 1, 26, 0.1);
+}
+
+.card h3 {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.card-icon {
+  font-size: 1.5em;
+}
+
+/* =========================================================
+   Locations
+   ========================================================= */
+
+.location-grid {
+  display: grid;
+  gap: var(--space-xl);
+  margin-top: var(--space-xl);
+}
+
+.location-card {
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  border: 2px solid var(--color-primary-dark);
+}
+
+.location-card h3 {
+  color: var(--color-primary);
+  margin-bottom: var(--space-md);
+}
+
+.location-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-md);
+}
+
+.location-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-md);
+  margin-bottom: var(--space-md);
+}
+
+.location-meta span {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  background: var(--color-bg);
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  font-size: 0.9rem;
+}
+
+.location-next-date {
+  margin-bottom: var(--space-md);
+}
+
+.next-date-tbd {
+  font-style: italic;
+  /* var(--color-gray) is too light against --color-bg to meet WCAG AA
+     contrast for text; --color-primary is the palette's accessible
+     secondary-text color (see .section-intro). */
+  color: var(--color-primary);
+}
+
+.location-last-items {
+  font-size: 0.9rem;
+  color: var(--color-primary);
+}
+
+/* Reserves height for a 3-line address (venue + street + postcode) — the
+   longest an address currently gets (see Chineham). Only applied once
+   .location-grid goes multi-column (>=640px, see media query below), so
+   shorter addresses (e.g. Hatch Warren, which has no street line) don't
+   leave the map iframe below misaligned between cards on the same row.
+   MIN_LOCATION_ADDRESS_HEIGHT_REM: bump this (and the comment) if a future
+   location's address needs more than 3 lines. */
+
+.map-container {
+  width: 100%;
+  height: 300px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-top: var(--space-md);
+  border: 2px solid var(--color-primary-dark);
+}
+
+.map-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+/* =========================================================
+   Skills & tags
+   ========================================================= */
+
+.skills-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  margin: var(--space-md) 0;
+}
+
+.skill-tag {
+  background: var(--color-primary);
+  color: var(--color-white);
+  padding: var(--space-xs) var(--space-md);
+  border-radius: var(--radius-lg);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.skill-tag-negative {
+  background: var(--color-negative);
+}
+
+/* =========================================================
+   Notice boxes
+   ========================================================= */
+
+.notice {
+  background: linear-gradient(135deg, #fff9e6 0%, #fff5d6 100%);
+  border-left: 4px solid var(--color-gray);
+  padding: var(--space-md);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  margin: var(--space-lg) 0;
+}
+
+.notice p {
+  margin: 0;
+  color: var(--color-text);
+}
+
+/* =========================================================
+   Image placeholders
+   ========================================================= */
+
+.image-placeholder {
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-dark) 0%,
+    var(--color-primary) 100%
+  );
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  text-align: center;
+  color: var(--color-white);
+  font-size: 3rem;
+  min-height: 200px;
+  margin: var(--space-lg) 0;
+  padding: var(--space-md);
+}
+
+.image-placeholder small {
+  font-size: 1rem;
+}
+
+.image-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-md);
+  margin: var(--space-xl) 0;
+}
+
+/* =========================================================
+   Gallery carousels (Team in Action / Repairs Underway / Happy Fix)
+   ========================================================= */
+
+.gallery-swiper {
+  width: 100%;
+  height: clamp(220px, 28vw, 320px);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-gray);
+}
+
+.gallery-swiper .swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery-swiper .swiper-pagination-bullet {
+  background: var(--color-white);
+  opacity: 0.6;
+}
+
+.gallery-swiper .swiper-pagination-bullet-active {
+  background: var(--color-white);
+  opacity: 1;
+}
+
+.gallery-swiper .swiper-button-prev,
+.gallery-swiper .swiper-button-next {
+  color: var(--color-white);
+  text-shadow: 0 1px 4px rgba(2, 1, 26, 0.5);
+  transform: scale(0.7);
+}
+
+@media (max-width: 639px) {
+  .gallery-swiper .swiper-button-prev,
+  .gallery-swiper .swiper-button-next {
+    display: none;
+  }
+}
+
+/* =========================================================
+   Volunteer email CTA
+   ========================================================= */
+
+.email-cta {
+  background: var(--color-primary);
+  color: var(--color-white);
+  padding: var(--space-lg);
+  border-radius: var(--radius-lg);
+  text-align: center;
+  margin-top: var(--space-xl);
+}
+
+.email-cta h3 {
+  color: var(--color-white);
+}
+
+.email-cta p {
+  color: var(--color-white);
+}
+
+.email-cta a {
+  color: var(--color-bg);
+  font-weight: 600;
+  border-bottom-color: rgba(238, 238, 238, 0.5);
+}
+
+.email-cta a:hover,
+.email-cta a:focus {
+  border-bottom-color: var(--color-bg);
+}
+
+/* =========================================================
+   Supporters
+   ========================================================= */
+
+.supporters-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--space-lg);
+  margin-top: var(--space-xl);
+  align-items: center;
+}
+
+.supporter-tile {
+  background: var(--color-white);
+  padding: var(--space-md);
+  border-radius: var(--radius-md);
+  border: 2px solid var(--color-primary-dark);
+  text-align: center;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  display: block;
+  border-bottom: 2px solid var(--color-primary-dark);
+}
+
+.supporter-tile:hover,
+.supporter-tile:focus {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(2, 1, 26, 0.1);
+  border-bottom-color: var(--color-primary-dark);
+}
+
+.supporter-tile img {
+  max-width: 100%;
+  height: 80px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
+.supporter-name {
+  font-size: 0.85rem;
+  color: var(--color-primary);
+  margin-top: var(--space-sm);
+  margin-bottom: 0;
+}
+
+/* =========================================================
+   Footer
+   ========================================================= */
+
+.site-footer {
+  background: var(--color-primary);
+  color: var(--color-bg);
+  padding: var(--space-2xl) var(--space-md);
+  text-align: center;
+}
+
+.site-footer h2 {
+  color: var(--color-white);
+}
+
+.site-footer h2::after {
+  background: rgba(238, 238, 238, 0.4);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.site-footer p {
+  color: var(--color-bg);
+}
+
+.site-footer a {
+  color: var(--color-bg);
+  border-bottom-color: transparent;
+}
+
+.site-footer a:hover,
+.site-footer a:focus {
+  border-bottom-color: var(--color-bg);
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-lg);
+  margin-bottom: var(--space-lg);
+}
+
+.charity-info {
+  margin-top: var(--space-lg);
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--color-primary-dark);
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+/* =========================================================
+   Accessibility
+   ========================================================= */
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.site-footer a:focus-visible {
+  outline-color: var(--color-bg);
+}
+
+/* =========================================================
+   Responsive — Mobile burger (max 639px)
+   ========================================================= */
+
+@media (max-width: 639px) {
+  .header-inner {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .burger-btn {
+    display: flex;
+    flex-shrink: 0;
+  }
+
+  .nav-drawer {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--color-gray);
+    box-shadow: 0 4px 12px rgba(2, 1, 26, 0.1);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition:
+      opacity 0.3s ease,
+      visibility 0.3s ease,
+      transform 0.3s ease;
+    z-index: 99;
+  }
+
+  .nav-drawer.is-open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .nav-drawer ul {
+    flex-direction: column;
+    gap: 0;
+    padding: var(--space-md);
+  }
+
+  .nav-drawer li {
+    border-bottom: 1px solid var(--color-bg);
+  }
+
+  .nav-drawer li:last-child {
+    border-bottom: none;
+  }
+
+  .nav-drawer a {
+    display: block;
+    padding: var(--space-md);
+    text-align: center;
+  }
+
+  .map-container {
+    height: 250px;
+  }
+}
+
+/* =========================================================
+   Responsive — Tablet (min 640px)
+   ========================================================= */
+
+@media (min-width: 640px) {
+  body {
+    font-size: 17px;
+  }
+
+  .site-logo img {
+    max-width: 480px;
+  }
+
+  .card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .location-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* 3 lines x 1.6 line-height, sized for this breakpoint's largest body
+     font-size (18px at >=1024px) so the address block covers the tallest
+     rendered address rather than the 16px/root rem basis. See the
+     MIN_LOCATION_ADDRESS_HEIGHT_REM comment above .location-meta span. */
+  .location-address {
+    min-height: 5.4rem;
+  }
+}
+
+/* =========================================================
+   Responsive — Desktop (min 1024px)
+   ========================================================= */
+
+@media (min-width: 1024px) {
+  body {
+    font-size: 18px;
+  }
+
+  .header-inner {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .site-logo img {
+    max-width: 560px;
+  }
+
+  .burger-btn {
+    display: none;
+  }
+
+  .nav-drawer {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    box-shadow: none;
+    background: transparent;
+  }
+
+  .brn-container {
+    padding: 0 var(--space-xl);
+  }
+
+  .page-section {
+    padding-left: var(--space-xl);
+    padding-right: var(--space-xl);
+  }
+
+  .card-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .supporters-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .section-intro {
+    max-width: 900px;
+  }
+}
+
+/* =========================================================
+   Responsive — Large desktop (min 1440px)
+   ========================================================= */
+
+@media (min-width: 1440px) {
+  :root {
+    --space-3xl: 5rem;
+  }
+
+  .brn-container {
+    max-width: 1400px;
+  }
+
+  .section-intro {
+    max-width: 1100px;
+  }
+}
+
+/* =========================================================
+   Reduced motion
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .card:hover,
+  .btn:hover,
+  .supporter-tile:hover {
+    transform: none;
+  }
+
+  .burger-line,
+  .nav-drawer {
+    transition: none;
+  }
+}
+
+/* =========================================================
+   Print
+   ========================================================= */
+
+@media print {
+  .site-header {
+    position: static;
+    box-shadow: none;
+  }
+
+  .hero-section {
+    display: none;
+  }
+
+  .btn {
+    border: 2px solid black;
+    color: black;
+  }
+
+  .map-container {
+    display: none;
+  }
+
+  .burger-btn {
+    display: none;
+  }
+}
