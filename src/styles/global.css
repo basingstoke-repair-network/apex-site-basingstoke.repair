@@ -607,6 +607,19 @@ img {
    Gallery carousels (Team in Action / Repairs Underway / Happy Fix)
    ========================================================= */
 
+.image-grid-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs);
+}
+
+.image-grid-label {
+  margin: 0;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--color-primary-dark);
+}
+
 .gallery-swiper {
   width: 100%;
   height: clamp(220px, 28vw, 320px);

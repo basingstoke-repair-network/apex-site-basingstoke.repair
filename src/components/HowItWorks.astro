@@ -161,7 +161,10 @@ const photos = [
     <div class="image-grid">
       {photos.map(({ icon, caption, swiperClass, images }) =>
         images ? (
-          <GalleryCarousel images={images} altPrefix={caption} swiperClass={swiperClass} />
+          <div class="image-grid-item">
+            <p class="image-grid-label">{caption}</p>
+            <GalleryCarousel images={images} altPrefix={caption} swiperClass={swiperClass} />
+          </div>
         ) : (
           <div class="image-placeholder">
             <span aria-hidden="true">{icon}</span>
