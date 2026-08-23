@@ -17,8 +17,9 @@
   --color-negative: #b35c5c;
 
   --font-heading: Georgia, "Times New Roman", serif;
-  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-    Ubuntu, sans-serif;
+  --font-body:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu,
+    sans-serif;
 
   --space-xs: 0.5rem;
   --space-sm: 0.75rem;
@@ -205,7 +206,9 @@ img {
   font-weight: 500;
   padding: var(--space-xs) var(--space-sm);
   border-radius: var(--radius-md);
-  transition: background 0.2s ease, color 0.2s ease;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
   border-bottom: none;
   display: block;
 }
@@ -240,7 +243,9 @@ img {
   height: 2px;
   background: var(--color-text);
   border-radius: 2px;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
 }
 
 .burger-btn.is-active .burger-line:nth-child(1) {
@@ -330,7 +335,10 @@ img {
   border-radius: var(--radius-lg);
   font-weight: 600;
   text-decoration: none;
-  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
   border: 2px solid transparent;
   border-bottom: 2px solid transparent;
   cursor: pointer;
@@ -407,7 +415,9 @@ img {
   border-radius: var(--radius-lg);
   padding: var(--space-lg);
   border-left: 4px solid var(--color-primary-dark);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .section-alt .card {
@@ -563,7 +573,11 @@ img {
    ========================================================= */
 
 .image-placeholder {
-  background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+  background: linear-gradient(
+    135deg,
+    var(--color-primary-dark) 0%,
+    var(--color-primary) 100%
+  );
   border-radius: var(--radius-lg);
   display: flex;
   flex-direction: column;
@@ -587,6 +601,49 @@ img {
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: var(--space-md);
   margin: var(--space-xl) 0;
+}
+
+/* =========================================================
+   Gallery carousels (Team in Action / Repairs Underway / Happy Fix)
+   ========================================================= */
+
+.gallery-swiper {
+  width: 100%;
+  height: clamp(220px, 28vw, 320px);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-gray);
+}
+
+.gallery-swiper .swiper-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery-swiper .swiper-pagination-bullet {
+  background: var(--color-white);
+  opacity: 0.6;
+}
+
+.gallery-swiper .swiper-pagination-bullet-active {
+  background: var(--color-white);
+  opacity: 1;
+}
+
+.gallery-swiper .swiper-button-prev,
+.gallery-swiper .swiper-button-next {
+  color: var(--color-white);
+  text-shadow: 0 1px 4px rgba(2, 1, 26, 0.5);
+  transform: scale(0.7);
+}
+
+@media (max-width: 639px) {
+  .gallery-swiper .swiper-button-prev,
+  .gallery-swiper .swiper-button-next {
+    display: none;
+  }
 }
 
 /* =========================================================
@@ -639,7 +696,9 @@ img {
   border-radius: var(--radius-md);
   border: 2px solid var(--color-primary-dark);
   text-align: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
   display: block;
   border-bottom: 2px solid var(--color-primary-dark);
 }
@@ -757,7 +816,10 @@ button:focus-visible {
     opacity: 0;
     visibility: hidden;
     transform: translateY(-10px);
-    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+    transition:
+      opacity 0.3s ease,
+      visibility 0.3s ease,
+      transform 0.3s ease;
     z-index: 99;
   }
 
