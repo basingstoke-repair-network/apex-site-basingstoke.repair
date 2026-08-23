@@ -3,6 +3,8 @@ SPDX-FileCopyrightText: 2025--2026 Basingstoke Repair Network
 SPDX-License-Identifier: MIT
 -->
 ---
+import GalleryCarousel from './GalleryCarousel.astro';
+
 const steps = [
   {
     icon: '🚶',
@@ -46,10 +48,25 @@ const cannotFix = [
   'Fridges & freezers',
 ];
 
+const happyFixImages = Array.from(
+  { length: 10 },
+  (_, i) => `/assets/images/gallery/happy-fix/happy-fix-${String(i + 1).padStart(2, '0')}.jpg`
+);
+
 const photos = [
-  { icon: '📸', caption: 'Team in action' },
-  { icon: '🔧', caption: 'Repairs underway' },
-  { icon: '😊', caption: 'Happy fix!' },
+  { icon: '📸', caption: 'Team in action', swiperClass: 'swiper-team-in-action', images: null },
+  {
+    icon: '🔧',
+    caption: 'Repairs underway',
+    swiperClass: 'swiper-repairs-underway',
+    images: null,
+  },
+  {
+    icon: '😊',
+    caption: 'Happy fix!',
+    swiperClass: 'swiper-happy-fix',
+    images: happyFixImages,
+  },
 ];
 ---
 
@@ -125,12 +142,16 @@ const photos = [
     </div>
 
     <div class="image-grid">
-      {photos.map(({ icon, caption }) => (
-        <div class="image-placeholder">
-          <span aria-hidden="true">{icon}</span>
-          <small>{caption}</small>
-        </div>
-      ))}
+      {photos.map(({ icon, caption, swiperClass, images }) =>
+        images ? (
+          <GalleryCarousel images={images} altPrefix={caption} swiperClass={swiperClass} />
+        ) : (
+          <div class="image-placeholder">
+            <span aria-hidden="true">{icon}</span>
+            <small>{caption}</small>
+          </div>
+        )
+      )}
     </div>
   </div>
 </section>
