@@ -53,13 +53,19 @@ const happyFixImages = Array.from(
   (_, i) => `/assets/images/gallery/happy-fix/happy-fix-${String(i + 1).padStart(2, '0')}.jpg`
 );
 
+const repairsUnderwayImages = Array.from(
+  { length: 10 },
+  (_, i) =>
+    `/assets/images/gallery/repairs-underway/repairs-underway-${String(i + 1).padStart(2, '0')}.jpg`
+);
+
 const photos = [
   { icon: '📸', caption: 'Team in action', swiperClass: 'swiper-team-in-action', images: null },
   {
     icon: '🔧',
     caption: 'Repairs underway',
     swiperClass: 'swiper-repairs-underway',
-    images: null,
+    images: repairsUnderwayImages,
   },
   {
     icon: '😊',
