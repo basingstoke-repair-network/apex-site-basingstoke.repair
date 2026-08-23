@@ -22,10 +22,13 @@ jobs:
   build-deploy:
     runs-on: ubuntu-latest
     name: Build the website
+    outputs:
+      deploy-url: ${{ steps.netlify-deploy.outputs.deploy-url }}
     steps:
       - uses: actions/checkout@v7
       - uses: withastro/action@v6
       - uses: nwtgck/actions-netlify@v4.0.0
+        id: netlify-deploy
         with:
           publish-dir: './dist'
           production-branch: live
@@ -40,3 +43,16 @@ jobs:
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+
+  lighthouse-audit:
+    runs-on: ubuntu-latest
+    name: Lighthouse accessibility & QA audit
+    needs: build-deploy
+    if: needs.build-deploy.outputs.deploy-url != ''
+    steps:
+      - uses: actions/checkout@v7
+      - uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: ${{ needs.build-deploy.outputs.deploy-url }}
+          configPath: './lighthouserc.json'
+          uploadArtifacts: true
