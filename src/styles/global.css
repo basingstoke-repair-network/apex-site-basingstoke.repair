@@ -882,6 +882,23 @@ button:focus-visible {
   .location-address {
     min-height: 5.4rem;
   }
+
+  /* .location-grid is 2 columns from here on (see above), so a long café
+     name (e.g. "Hatch Warren & Beggarwood Repair Café") can wrap onto a
+     second line while its row-mate stays on one, pushing that card's photo
+     and content down relative to its neighbour. Reserve height for 2 lines
+     at the h3 clamp's max size (1.4rem * 1.3 line-height) so every card in
+     a row starts its photo at the same offset regardless of name length. */
+  .location-card h3 {
+    min-height: 3.7rem;
+  }
+
+  /* Cards are wider at this 2-column layout than the single-column mobile
+     view, so the fixed 200px image height (sized for narrower mobile
+     cards) crops team photos (800x600, 4:3) more aggressively. */
+  .location-image {
+    height: 240px;
+  }
 }
 
 /* =========================================================
@@ -934,6 +951,14 @@ button:focus-visible {
 
   .section-intro {
     max-width: 900px;
+  }
+
+  /* .location-grid stays 2 columns at this breakpoint (no override above),
+     but .brn-container grows wider, so cards — and thus the fixed-height
+     team photos — get wider still, cropping team photos (800x600, 4:3)
+     more than at tablet width. */
+  .location-image {
+    height: 300px;
   }
 }
 
