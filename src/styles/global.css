@@ -461,6 +461,10 @@ img {
   margin-bottom: var(--space-md);
 }
 
+.location-card p a {
+  text-decoration: underline;
+}
+
 .location-image {
   width: 100%;
   height: 200px;
