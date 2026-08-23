@@ -59,8 +59,19 @@ const repairsUnderwayImages = Array.from(
     `/assets/images/gallery/repairs-underway/repairs-underway-${String(i + 1).padStart(2, '0')}.jpg`
 );
 
+const teamInActionImages = Array.from(
+  { length: 18 },
+  (_, i) =>
+    `/assets/images/gallery/team-in-action/team-in-action-${String(i + 1).padStart(2, '0')}.jpg`
+);
+
 const photos = [
-  { icon: '📸', caption: 'Team in action', swiperClass: 'swiper-team-in-action', images: null },
+  {
+    icon: '📸',
+    caption: 'Team in action',
+    swiperClass: 'swiper-team-in-action',
+    images: teamInActionImages,
+  },
   {
     icon: '🔧',
     caption: 'Repairs underway',
