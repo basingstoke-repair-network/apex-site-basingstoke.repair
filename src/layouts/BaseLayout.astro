@@ -40,12 +40,21 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://basingst
     <!-- Preconnect for maps (lazy loaded) -->
     <link rel="preconnect" href="https://maps.google.com" />
 
-    <!-- Swiper.js carousel (CDN) — not used by the hero, kept for
-         upcoming gallery carousels (see issue #127) -->
+    <!-- Swiper.js carousel (CDN), powers the below-the-fold gallery
+         carousels. Stylesheet is loaded non-render-blocking since it
+         isn't needed for the initial paint. -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+      media="print"
+      onload="this.media='all'"
     />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+      />
+    </noscript>
     <script
       src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"
       defer
