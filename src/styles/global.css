@@ -640,6 +640,9 @@ img {
 }
 
 .gallery-swiper .swiper-pagination-bullet {
+  width: 24px;
+  height: 24px;
+  margin: 0 6px;
   background: var(--color-white);
   opacity: 0.6;
 }
