@@ -626,10 +626,16 @@ img {
 
 .gallery-swiper {
   width: 100%;
-  height: clamp(220px, 28vw, 320px);
+  height: 330px;
   border-radius: var(--radius-lg);
   overflow: hidden;
   background: var(--color-gray);
+}
+
+@media (min-width: 1024px) {
+  .gallery-swiper {
+    height: 500px;
+  }
 }
 
 .gallery-swiper .swiper-slide img {
