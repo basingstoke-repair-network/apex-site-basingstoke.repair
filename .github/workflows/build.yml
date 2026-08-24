@@ -40,6 +40,7 @@ jobs:
           enable-commit-status: false
           enable-github-deployment: true
           overwrites-pull-request-comment: true
+          github-deployment-environment: ${{ github.ref == 'refs/heads/live' && 'production' || github.event.number != null && format('pr-{0}', github.event.number) || format('branch-{0}', github.ref_name) }}
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
