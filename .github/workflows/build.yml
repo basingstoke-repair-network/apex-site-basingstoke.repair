@@ -38,7 +38,7 @@ jobs:
           enable-pull-request-comment: true
           enable-commit-comment: false
           enable-commit-status: false
-          enable-github-deployment: true
+          enable-github-deployment: false
           overwrites-pull-request-comment: true
           github-deployment-environment: ${{ github.ref == 'refs/heads/live' && 'production' || github.event.number != null && format('pr-{0}', github.event.number) || format('branch-{0}', github.ref_name) }}
         env:
