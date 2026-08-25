@@ -28,12 +28,21 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://basingst
     <link rel="canonical" href={canonicalURL} />
 
     <!-- Hero background is a CSS background-image, so the LCP element
-         won't be fetched at high priority without this preload hint. -->
+         won't be fetched at high priority without this preload hint.
+         Matches the mobile/desktop split in .hero-slide (global.css). -->
+    <link
+      rel="preload"
+      as="image"
+      href="/assets/images/hero/textile-repairs-mobile.jpg"
+      fetchpriority="high"
+      media="(max-width: 639px)"
+    />
     <link
       rel="preload"
       as="image"
       href="/assets/images/hero/textile-repairs.jpg"
       fetchpriority="high"
+      media="(min-width: 640px)"
     />
 
     <!-- Open Graph -->
