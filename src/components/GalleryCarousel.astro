@@ -16,7 +16,11 @@ const { images, altPrefix, swiperClass } = Astro.props;
   <div class="swiper-wrapper">
     {images.map((src, i) => (
       <div class="swiper-slide">
-        <img data-src={src} alt={`${altPrefix} — photo ${i + 1}`} />
+        <picture>
+          <source data-srcset={src.replace(/\.jpg$/, '.avif')} type="image/avif" />
+          <source data-srcset={src.replace(/\.jpg$/, '.webp')} type="image/webp" />
+          <img data-src={src} alt={`${altPrefix} — photo ${i + 1}`} />
+        </picture>
         <div class="swiper-lazy-preloader"></div>
       </div>
     ))}
@@ -40,6 +44,10 @@ const { images, altPrefix, swiperClass } = Astro.props;
         if (Math.abs(index - swiper.activeIndex) > 1) return;
         const img = slideEl.querySelector('img[data-src]');
         if (!img) return;
+        slideEl.querySelectorAll('source[data-srcset]').forEach((source) => {
+          source.srcset = source.dataset.srcset;
+          source.removeAttribute('data-srcset');
+        });
         img.src = img.dataset.src;
         img.removeAttribute('data-src');
         img.addEventListener(
