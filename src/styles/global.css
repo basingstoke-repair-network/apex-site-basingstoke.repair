@@ -272,6 +272,7 @@ img {
 .hero-slide {
   width: 100%;
   height: clamp(420px, 60vh, 700px);
+  background-image: var(--hero-bg-mobile);
   background-size: cover;
   background-position: center;
   background-color: var(--color-primary-dark);
@@ -279,6 +280,12 @@ img {
   align-items: center;
   justify-content: center;
   position: relative;
+}
+
+@media (min-width: 640px) {
+  .hero-slide {
+    background-image: var(--hero-bg-desktop);
+  }
 }
 
 /* Kept light so the photo reads clearly — just enough of a scrim for
