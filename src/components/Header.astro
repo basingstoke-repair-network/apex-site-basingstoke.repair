@@ -16,15 +16,18 @@ const navLinks = [
 <header class="site-header">
   <div class="brn-container header-inner">
     <a href="#" class="site-logo" aria-label="Basingstoke Repair Network — back to top">
-      <img
-        src="/assets/images/logos/brn-logo.png"
-        alt="Basingstoke Repair Network — Fix It, Don't Bin It!"
-        width="360"
-        height="120"
-        loading="eager"
-        decoding="async"
-        onerror="this.style.display='none';this.nextElementSibling.style.display='block'"
-      />
+      <picture>
+        <source srcset="/assets/images/logos/brn-logo.webp" type="image/webp" />
+        <img
+          src="/assets/images/logos/brn-logo.png"
+          alt="Basingstoke Repair Network — Fix It, Don't Bin It!"
+          width="360"
+          height="120"
+          loading="eager"
+          decoding="async"
+          onerror="this.closest('picture').style.display='none';this.closest('picture').nextElementSibling.style.display='block'"
+        />
+      </picture>
       <span class="logo-fallback" style="display:none">Basingstoke Repair Network</span>
     </a>
 
