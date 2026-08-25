@@ -27,6 +27,15 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://basingst
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
 
+    <!-- Hero background is a CSS background-image, so the LCP element
+         won't be fetched at high priority without this preload hint. -->
+    <link
+      rel="preload"
+      as="image"
+      href="/assets/images/hero/textile-repairs.jpg"
+      fetchpriority="high"
+    />
+
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
