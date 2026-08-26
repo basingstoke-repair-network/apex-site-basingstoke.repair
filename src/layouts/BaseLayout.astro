@@ -27,6 +27,24 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://basingst
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
 
+    <!-- Hero background is a CSS background-image, so the LCP element
+         won't be fetched at high priority without this preload hint.
+         Matches the mobile/desktop split in .hero-slide (global.css). -->
+    <link
+      rel="preload"
+      as="image"
+      href="/assets/images/hero/textile-repairs-mobile.jpg"
+      fetchpriority="high"
+      media="(max-width: 639px)"
+    />
+    <link
+      rel="preload"
+      as="image"
+      href="/assets/images/hero/textile-repairs.jpg"
+      fetchpriority="high"
+      media="(min-width: 640px)"
+    />
+
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
@@ -37,15 +55,21 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://basingst
     <!-- Favicon -->
     <link rel="icon" type="image/png" href="/assets/images/logos/brn-logo.png" />
 
-    <!-- Preconnect for maps (lazy loaded) -->
-    <link rel="preconnect" href="https://maps.google.com" />
-
-    <!-- Swiper.js carousel (CDN) — not used by the hero, kept for
-         upcoming gallery carousels (see issue #127) -->
+    <!-- Swiper.js carousel (CDN), powers the below-the-fold gallery
+         carousels. Stylesheet is loaded non-render-blocking since it
+         isn't needed for the initial paint. -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+      media="print"
+      onload="this.media='all'"
     />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+      />
+    </noscript>
     <script
       src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"
       defer

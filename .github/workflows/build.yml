@@ -57,3 +57,7 @@ jobs:
           urls: ${{ needs.build-deploy.outputs.deploy-url }}
           configPath: './lighthouserc.json'
           uploadArtifacts: true
+          # LHCI has no persistent-GCS upload target — temporaryPublicStorage
+          # is Google's own managed Cloud Storage, the only GCS-backed option
+          # LHCI exposes.
+          temporaryPublicStorage: true
