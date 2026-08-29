@@ -626,9 +626,11 @@ img {
 
 .image-grid-label {
   margin: 0;
-  font-weight: 700;
-  font-size: 0.95rem;
-  color: var(--color-primary-dark);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  text-align: center;
+  color: var(--color-primary);
 }
 
 .gallery-swiper {
