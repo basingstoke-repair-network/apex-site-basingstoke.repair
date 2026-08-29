@@ -751,6 +751,7 @@ img {
 }
 
 .supporter-tile img {
+  width: 120px;
   max-width: 100%;
   height: 80px;
   object-fit: contain;
