@@ -1,6 +1,6 @@
 <!--
-SPDX-FileCopyrightText: 2025 Basingstoke Repair Network
-SPDX-License-Identifier: MIT
+SPDX-FileCopyrightText: 2024-2026 Basingstoke Repair Network
+SPDX-License-Identifier: CC0-1.0
 -->
 
 # Claude Context & Directives
@@ -177,45 +177,68 @@ EOF
 
 ### Licensing Standard
 
-**ALL files must include SPDX licensing headers:**
+**ALL files must include SPDX licensing headers.** The identifier depends on
+the kind of file:
 
-#### Astro/HTML/Markdown files:
+- **Code** (Astro/HTML components, CSS, JS/TS, config files such as
+  TOML/YAML): `SPDX-License-Identifier: MIT`
+- **Documentation, other Markdown, and images** (README/CLAUDE.md/docs,
+  `.md` files generally, and image assets under `public/assets/images/`
+  and test snapshots): `SPDX-License-Identifier: CC0-1.0`
+
+#### Astro/HTML files (code):
 ```html
 <!--
-SPDX-FileCopyrightText: 2025 Basingstoke Repair Network
+SPDX-FileCopyrightText: 2024-2026 Basingstoke Repair Network
 SPDX-License-Identifier: MIT
+-->
+```
+
+#### Markdown/documentation files:
+```html
+<!--
+SPDX-FileCopyrightText: 2024-2026 Basingstoke Repair Network
+SPDX-License-Identifier: CC0-1.0
 -->
 ```
 
 #### CSS files:
 ```css
 /*
- * SPDX-FileCopyrightText: 2025 Basingstoke Repair Network
+ * SPDX-FileCopyrightText: 2024-2026 Basingstoke Repair Network
  * SPDX-License-Identifier: MIT
  */
 ```
 
 #### JavaScript/TypeScript files:
 ```javascript
-// SPDX-FileCopyrightText: 2025 Basingstoke Repair Network
+// SPDX-FileCopyrightText: 2024-2026 Basingstoke Repair Network
 // SPDX-License-Identifier: MIT
 ```
 
 #### Configuration files (TOML, YAML, etc.):
 ```toml
-# SPDX-FileCopyrightText: 2025 Basingstoke Repair Network
+# SPDX-FileCopyrightText: 2024-2026 Basingstoke Repair Network
 # SPDX-License-Identifier: MIT
 ```
 
 #### JSON files:
 Create a companion `.license` file:
 ```
-SPDX-FileCopyrightText: 2025 Basingstoke Repair Network
+SPDX-FileCopyrightText: 2024-2026 Basingstoke Repair Network
 SPDX-License-Identifier: MIT
 ```
 
+#### Image files:
+Create a companion `.license` file:
+```
+SPDX-FileCopyrightText: 2024-2026 Basingstoke Repair Network
+SPDX-License-Identifier: CC0-1.0
+```
+
 ### License
-This project uses the **MIT License**. See LICENSE file for details.
+This project's code is licensed under the **MIT License**; documentation and
+images are licensed under **CC0-1.0**. See LICENSE file for details.
 
 ## Character Encoding
 

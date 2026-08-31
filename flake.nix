@@ -1,6 +1,6 @@
-# SPDX-FileCopyrightText: 2025--2026 Basingstoke Repair Network <dev@basingstoke.repair>
+# SPDX-FileCopyrightText: 2024-2026 Basingstoke Repair Network <dev@basingstoke.repair>
 #
-# SPDX-License-Identifier: CC0-1.0
+# SPDX-License-Identifier: MIT
 {
   description = "Astro site for Basingstoke Repair Network";
 
