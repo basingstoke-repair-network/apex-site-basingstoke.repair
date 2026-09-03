@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2025 Basingstoke Repair Network <dev@basingstoke.repair>
+# SPDX-FileCopyrightText: 2024-2026 Basingstoke Repair Network <dev@basingstoke.repair>
 #
 # SPDX-License-Identifier: MIT
 {

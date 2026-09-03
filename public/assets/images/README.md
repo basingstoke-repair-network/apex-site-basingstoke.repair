@@ -1,6 +1,6 @@
 <!--
-SPDX-FileCopyrightText: 2025 Basingstoke Repair Network
-SPDX-License-Identifier: MIT
+SPDX-FileCopyrightText: 2024-2026 Basingstoke Repair Network
+SPDX-License-Identifier: CC0-1.0
 -->
 
 # Image Assets Directory

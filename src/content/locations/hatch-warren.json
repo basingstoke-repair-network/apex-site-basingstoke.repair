@@ -1,0 +1,21 @@
+{
+  "name": "Hatch Warren & Beggarwood Repair Café",
+  "slug": "hatch-warren",
+  "status": "active",
+  "schedule": {
+    "dayOfWeek": "Saturday",
+    "weekOfMonth": "1st",
+    "startTime": "10:00",
+    "lastItemsTime": "12:30",
+    "endTime": "13:00"
+  },
+  "address": {
+    "venue": "Hatch Warren Community Centre",
+    "postcode": "RG22 4XF",
+    "googleMapsEmbed": "https://maps.google.com/maps?q=Hatch+Warren+Community+Centre,+Basingstoke+RG22+4XF,+UK&output=embed&hl=en"
+  },
+  "description": "Bringing repair expertise to the Hatch Warren and Beggarwood communities. Join us for free repairs and a warm welcome.",
+  "teamImage": "/assets/images/locations/hatch-warren-team.jpg",
+  "accentColor": "#28276f",
+  "order": 2
+}

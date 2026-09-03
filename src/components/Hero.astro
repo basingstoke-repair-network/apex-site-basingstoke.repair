@@ -1,0 +1,21 @@
+<!--
+SPDX-FileCopyrightText: 2024-2026 Basingstoke Repair Network
+SPDX-License-Identifier: MIT
+-->
+---
+const title = "Fix It, Don't Bin It!";
+const backgroundImageMobile = '/assets/images/hero/textile-repairs-mobile.jpg';
+const backgroundImageDesktop = '/assets/images/hero/textile-repairs.jpg';
+---
+
+<section class="hero-section" aria-label="Welcome to Basingstoke Repair Network">
+  <div
+    class="hero-slide"
+    style={`--hero-bg-mobile: url('${backgroundImageMobile}'); --hero-bg-desktop: url('${backgroundImageDesktop}')`}
+  >
+    <div class="hero-slide-overlay" aria-hidden="true"></div>
+    <div class="brn-container hero-slide-content">
+      <h1>{title}</h1>
+    </div>
+  </div>
+</section>

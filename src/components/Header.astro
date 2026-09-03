@@ -1,0 +1,93 @@
+<!--
+SPDX-FileCopyrightText: 2024-2026 Basingstoke Repair Network
+SPDX-License-Identifier: MIT
+-->
+---
+const navLinks = [
+  { href: '#about', label: 'About' },
+  { href: '#why-repair', label: 'Why Repair' },
+  { href: '#locations', label: 'Locations' },
+  { href: '#volunteer', label: 'Volunteer' },
+  { href: '#supporters', label: 'Supporters' },
+  { href: '#contact', label: 'Contact' },
+];
+---
+
+<header class="site-header">
+  <div class="brn-container header-inner">
+    <a href="#" class="site-logo" aria-label="Basingstoke Repair Network — back to top">
+      <picture>
+        <source srcset="/assets/images/logos/brn-logo.webp" type="image/webp" />
+        <img
+          src="/assets/images/logos/brn-logo.png"
+          alt="Basingstoke Repair Network — Fix It, Don't Bin It!"
+          width="360"
+          height="120"
+          loading="eager"
+          decoding="async"
+          onerror="this.closest('picture').style.display='none';this.closest('picture').nextElementSibling.style.display='block'"
+        />
+      </picture>
+      <span class="logo-fallback" style="display:none">Basingstoke Repair Network</span>
+    </a>
+
+    <button
+      class="burger-btn"
+      id="burger-btn"
+      aria-label="Toggle navigation menu"
+      aria-expanded="false"
+      aria-controls="nav-drawer"
+    >
+      <span class="burger-line"></span>
+      <span class="burger-line"></span>
+      <span class="burger-line"></span>
+    </button>
+
+    <nav id="nav-drawer" class="site-nav nav-drawer" aria-label="Main navigation">
+      <ul>
+        {navLinks.map(({ href, label }) => (
+          <li><a href={href}>{label}</a></li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const burger = document.getElementById('burger-btn') as HTMLButtonElement;
+  const drawer = document.getElementById('nav-drawer') as HTMLElement;
+
+  if (burger && drawer) {
+    burger.addEventListener('click', () => {
+      const isOpen = drawer.classList.toggle('is-open');
+      burger.classList.toggle('is-active');
+      burger.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    drawer.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        drawer.classList.remove('is-open');
+        burger.classList.remove('is-active');
+        burger.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      const target = e.target as Node;
+      if (!drawer.contains(target) && !burger.contains(target)) {
+        drawer.classList.remove('is-open');
+        burger.classList.remove('is-active');
+        burger.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && drawer.classList.contains('is-open')) {
+        drawer.classList.remove('is-open');
+        burger.classList.remove('is-active');
+        burger.setAttribute('aria-expanded', 'false');
+        burger.focus();
+      }
+    });
+  }
+</script>

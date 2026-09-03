@@ -1,0 +1,1153 @@
+<!--
+SPDX-FileCopyrightText: 2024-2026 Basingstoke Repair Network
+SPDX-License-Identifier: MIT
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basingstoke Repair Network - Fix It, Don't Bin It!</title>
+    <meta name="description"
+        content="Basingstoke Repair Network - Volunteer-run repair cafés helping fix broken things, saving you money and keeping items out of landfill.">
+    <style>
+        /* CSS Reset and Base Styles */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            /* Colors from https://basingstoke.repair */
+            --color-primary: #28276f;
+            --color-primary-dark: #1a1850;
+            --color-text: #02011A;
+            --color-bg: #eeeeee;
+            --color-white: #ffffff;
+            --color-gray: #c6c8c9;
+            --color-negative: #b35c5c;
+
+            /* Typography */
+            --font-heading: Georgia, 'Times New Roman', serif;
+            --font-body: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+
+            /* Spacing scale */
+            --space-xs: 0.5rem;
+            --space-sm: 0.75rem;
+            --space-md: 1rem;
+            --space-lg: 1.5rem;
+            --space-xl: 2rem;
+            --space-2xl: 3rem;
+            --space-3xl: 4rem;
+
+            /* Border radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+            font-size: 16px;
+        }
+
+        /* Typography */
+        h1,
+        h2,
+        h3 {
+            font-family: var(--font-heading);
+            font-weight: 600;
+            line-height: 1.3;
+            color: var(--color-primary);
+        }
+
+        h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: var(--space-md);
+        }
+
+        h2 {
+            font-size: clamp(1.5rem, 4vw, 2.25rem);
+            margin-bottom: var(--space-md);
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 3px;
+            background: var(--color-primary);
+            margin-top: var(--space-sm);
+            border-radius: 2px;
+        }
+
+        h3 {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            margin-bottom: var(--space-sm);
+            color: var(--color-primary);
+        }
+
+        p {
+            margin-bottom: var(--space-md);
+        }
+
+        a {
+            color: var(--color-primary);
+            text-decoration: none;
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s ease;
+            cursor: pointer;
+        }
+
+        a:hover,
+        a:focus {
+            border-bottom-color: var(--color-primary);
+        }
+
+        /* Layout Container */
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-md);
+        }
+
+        /* Header & Navigation */
+        header {
+            background: var(--color-gray);
+            padding: var(--space-md) 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(2, 1, 26, 0.08);
+        }
+
+        .header-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo img {
+            max-height: clamp(70px, 12vw, 120px);
+            width: 100%;
+            max-width: 360px;
+            height: auto;
+            display: block;
+        }
+
+        @media (min-width: 640px) {
+            .logo img {
+                max-width: 480px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .logo img {
+                max-width: 560px;
+            }
+        }
+
+        .logo-text {
+            font-family: var(--font-heading);
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            color: var(--color-primary);
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .logo-text span {
+            display: block;
+            font-size: 0.6em;
+            color: var(--color-primary);
+            font-weight: 400;
+            letter-spacing: 0.05em;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: var(--space-sm) var(--space-lg);
+        }
+
+        nav a {
+            color: var(--color-primary);
+            font-weight: 500;
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--radius-md);
+            transition: all 0.2s ease;
+        }
+
+        nav a:hover,
+        nav a:focus {
+            background: var(--color-primary);
+            color: var(--color-white);
+            border-bottom-color: transparent;
+        }
+
+        /* Burger Menu */
+        .burger-menu {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 44px;
+            height: 44px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            gap: 6px;
+        }
+
+        .burger-line {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: var(--color-text);
+            border-radius: 2px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .burger-menu.is-active .burger-line:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+
+        .burger-menu.is-active .burger-line:nth-child(2) {
+            opacity: 0;
+        }
+
+        .burger-menu.is-active .burger-line:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
+        /* Mobile Navigation */
+        @media (max-width: 639px) {
+            .burger-menu {
+                display: flex;
+                position: absolute;
+                right: var(--space-md);
+                top: 50%;
+                transform: translateY(-50%);
+            }
+
+            .header-content {
+                position: relative;
+                padding-right: 60px;
+            }
+
+            .nav-menu {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: var(--color-gray);
+                box-shadow: 0 4px 12px rgba(2, 1, 26, 0.1);
+                opacity: 0;
+                visibility: hidden;
+                transform: translateY(-10px);
+                transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+                z-index: 99;
+            }
+
+            .nav-menu.is-open {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+            }
+
+            .nav-menu ul {
+                flex-direction: column;
+                gap: 0;
+                padding: var(--space-md);
+            }
+
+            .nav-menu li {
+                border-bottom: 1px solid var(--color-bg);
+            }
+
+            .nav-menu li:last-child {
+                border-bottom: none;
+            }
+
+            .nav-menu a {
+                display: block;
+                padding: var(--space-md);
+                text-align: center;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .burger-line,
+            .nav-menu {
+                transition: none;
+            }
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+            color: var(--color-white);
+            padding: var(--space-3xl) var(--space-md);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '🔧 ✂️ 🔌';
+            position: absolute;
+            top: 10%;
+            right: 5%;
+            font-size: clamp(2rem, 6vw, 4rem);
+            opacity: 0.15;
+        }
+
+        .hero::after {
+            content: '🧵 🪑 🚲';
+            position: absolute;
+            bottom: 10%;
+            left: 5%;
+            font-size: clamp(2rem, 6vw, 4rem);
+            opacity: 0.15;
+        }
+
+        .hero h1 {
+            color: var(--color-white);
+            margin-bottom: var(--space-lg);
+        }
+
+        .hero h1::after {
+            display: none;
+        }
+
+        .hero-tagline {
+            font-size: clamp(1.25rem, 3vw, 1.75rem);
+            max-width: 700px;
+            margin: 0 auto var(--space-lg);
+            font-weight: 300;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            gap: var(--space-md);
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: var(--space-sm) var(--space-xl);
+            border-radius: var(--radius-lg);
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border: 2px solid transparent;
+        }
+
+        .btn-primary {
+            background: var(--color-primary);
+            color: var(--color-white);
+        }
+
+        .btn-primary:hover {
+            background: var(--color-primary);
+            border-bottom-color: transparent;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: var(--color-white);
+            color: var(--color-primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--color-bg);
+            border-bottom-color: transparent;
+            transform: translateY(-2px);
+        }
+
+        /* Sections */
+        section {
+            padding: var(--space-3xl) var(--space-md);
+        }
+
+        section:nth-child(even) {
+            background: var(--color-white);
+        }
+
+        .section-compact {
+            padding-top: var(--space-xl);
+            padding-bottom: var(--space-xl);
+        }
+
+        .bg-white {
+            background: var(--color-white) !important;
+        }
+
+        .section-intro {
+            font-size: 1.1rem;
+            max-width: 700px;
+            color: var(--color-primary);
+            margin-bottom: var(--space-xl);
+        }
+
+        /* Cards */
+        .card-grid {
+            display: grid;
+            gap: var(--space-lg);
+            margin-top: var(--space-xl);
+            margin-bottom: var(--space-xl);
+        }
+
+        .card {
+            background: var(--color-bg);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            border-left: 4px solid var(--color-primary-dark);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(74, 63, 53, 0.1);
+        }
+
+        .card h3 {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+
+        .card-icon {
+            font-size: 1.5em;
+        }
+
+        /* Location & Map Section */
+        .location-grid {
+            display: grid;
+            gap: var(--space-xl);
+            margin-top: var(--space-xl);
+        }
+
+        .location-card {
+            background: var(--color-white);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            border: 2px solid var(--color-primary-dark);
+        }
+
+        .location-card h3 {
+            color: var(--color-primary);
+            margin-bottom: var(--space-md);
+        }
+
+        .location-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: var(--radius-md);
+            margin-bottom: var(--space-md);
+        }
+
+        .location-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-md);
+            margin-bottom: var(--space-md);
+        }
+
+        .location-meta span {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            background: var(--color-bg);
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 300px;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            margin-top: var(--space-md);
+            border: 2px solid var(--color-primary-dark);
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Lists */
+        ul,
+        ol {
+            margin-left: var(--space-lg);
+            margin-bottom: var(--space-md);
+        }
+
+        li {
+            margin-bottom: var(--space-sm);
+        }
+
+        /* Skills Grid */
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-sm);
+            margin: var(--space-md) 0;
+        }
+
+        .skill-tag {
+            background: var(--color-primary);
+            color: var(--color-white);
+            padding: var(--space-xs) var(--space-md);
+            border-radius: var(--radius-lg);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .skill-tag-negative {
+            background: var(--color-negative);
+        }
+
+        /* Notice/Disclaimer */
+        .notice {
+            background: linear-gradient(135deg, #fff9e6 0%, #fff5d6 100%);
+            border-left: 4px solid var(--color-gray);
+            padding: var(--space-md);
+            border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            margin: var(--space-lg) 0;
+        }
+
+        .notice p {
+            margin: 0;
+            color: var(--color-text);
+        }
+
+        /* Email Button */
+        .email-cta {
+            background: var(--color-primary);
+            color: var(--color-white);
+            padding: var(--space-lg);
+            border-radius: var(--radius-lg);
+            text-align: center;
+            margin-top: var(--space-xl);
+        }
+
+        .email-cta a {
+            color: var(--color-primary);
+            font-weight: 600;
+            border-bottom: 2px solid var(--color-primary);
+        }
+
+        .email-cta a:hover {
+            color: var(--color-white);
+            border-bottom-color: var(--color-white);
+        }
+
+        /* Supporters */
+        .supporters-section {
+            background: var(--color-white);
+        }
+
+        .supporters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: var(--space-lg);
+            margin-top: var(--space-xl);
+            align-items: center;
+        }
+
+        .supporter-logo {
+            background: white;
+            padding: var(--space-md);
+            border-radius: var(--radius-md);
+            border: 2px solid var(--color-primary-dark);
+            text-align: center;
+            transition: transform 0.2s ease;
+        }
+
+        .supporter-logo:hover {
+            transform: translateY(-4px);
+        }
+
+        .supporter-logo img {
+            max-width: 100%;
+            height: 80px;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .supporter-name {
+            font-size: 0.85rem;
+            color: var(--color-primary);
+            margin-top: var(--space-sm);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--color-primary);
+            color: var(--color-bg);
+            padding: var(--space-2xl) var(--space-md);
+            text-align: center;
+        }
+
+        footer a {
+            color: var(--color-primary);
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: var(--space-lg);
+            margin-bottom: var(--space-lg);
+        }
+
+        .charity-info {
+            margin-top: var(--space-lg);
+            padding-top: var(--space-lg);
+            border-top: 1px solid var(--color-primary-dark);
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Image Placeholders */
+        .image-placeholder {
+            background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-white);
+            font-size: 3rem;
+            min-height: 200px;
+            margin: var(--space-lg) 0;
+        }
+
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-md);
+            margin: var(--space-xl) 0;
+        }
+
+        /* Breakpoints */
+
+        /* Tablet: 640px and up */
+        @media (min-width: 640px) {
+            .card-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .location-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Desktop: 1024px and up */
+        @media (min-width: 1024px) {
+            .header-content {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+
+            .container {
+                padding: 0 var(--space-xl);
+            }
+
+            section {
+                padding: var(--space-3xl) var(--space-xl);
+            }
+
+            .card-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .hero {
+                padding: var(--space-3xl) var(--space-xl);
+            }
+
+            .supporters-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .section-intro {
+                max-width: 900px;
+            }
+        }
+
+        /* Large Desktop: 1440px and up */
+        @media (min-width: 1440px) {
+            :root {
+                --space-3xl: 5rem;
+            }
+
+            .container {
+                max-width: 1400px;
+            }
+
+            .section-intro {
+                max-width: 1100px;
+            }
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 639px) {
+
+            .hero::before,
+            .hero::after {
+                display: none;
+            }
+
+            .map-container {
+                height: 250px;
+            }
+        }
+
+        /* Print styles */
+        @media print {
+            header {
+                position: static;
+            }
+
+            .hero {
+                background: white;
+                color: black;
+            }
+
+            .hero h1 {
+                color: black;
+            }
+
+            .btn {
+                border: 2px solid black;
+            }
+
+            .map-container {
+                display: none;
+            }
+        }
+
+        /* Focus styles for accessibility */
+        a:focus-visible,
+        button:focus-visible {
+            outline: 3px solid var(--color-primary);
+            outline-offset: 2px;
+        }
+
+        /* Reduced motion preference */
+        @media (prefers-reduced-motion: reduce) {
+            html {
+                scroll-behavior: auto;
+            }
+
+            .card:hover,
+            .btn:hover {
+                transform: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header with Navigation -->
+    <header>
+        <div class="container header-content">
+            <a href="#" class="logo" aria-label="Back to top">
+                <img src="https://basingstoke.repair/assets/images/logos/brn-logo.png"
+                    alt="Basingstoke Repair Network - Fix It, Don't Bin It!">
+            </a>
+            <button class="burger-menu" aria-label="Toggle navigation menu" aria-expanded="false"
+                aria-controls="mobile-nav">
+                <span class="burger-line"></span>
+                <span class="burger-line"></span>
+                <span class="burger-line"></span>
+            </button>
+            <nav id="mobile-nav" class="nav-menu">
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#why-repair">Why Repair</a></li>
+                    <li><a href="#locations">Locations</a></li>
+                    <li><a href="#volunteer">Volunteer</a></li>
+                    <li><a href="#supporters">Supporters</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Fix It, Don't Bin It!</h1>
+            <p class="hero-tagline">Our Repair Cafés are here to help fix your broken things, saving you money, and
+                keeping them out of landfill</p>
+            <div class="hero-cta">
+                <a href="#locations" class="btn btn-primary">Find a Repair Café</a>
+                <a href="#volunteer" class="btn btn-secondary">Volunteer With Us</a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="bg-white section-compact">
+        <div class="container">
+            <h2>How it works</h2>
+            <p class="section-intro">Come along to one of our Repair Café sessions, bring your broken items, and sit
+                with a cuppa while our friendly volunteers try to fix them. It's free, though donations are
+                welcome.</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h3><span class="card-icon">🚶</span> Come Along</h3>
+                    <p>Find your nearest Repair Café from our list below. Just drop in during our opening hours — no
+                        appointment needed.</p>
+                </div>
+                <div class="card">
+                    <h3><span class="card-icon">👀</span> Stay & Watch</h3>
+                    <p>We work on a first-come, first-served basis. Sit with our volunteer repairers and see how your
+                        item gets fixed.</p>
+                </div>
+                <div class="card">
+                    <h3><span class="card-icon">☕</span> Enjoy a Cuppa</h3>
+                    <p>While you wait, enjoy a cup of tea or coffee, chat with other visitors, and learn something new
+                    </p>
+                </div>
+            </div>
+
+            <h3>💡 How you can help us help you</h3>
+            <ul>
+                <li><strong>Clean your item</strong> — it's much nicer for our volunteers to work on</li>
+                <li><strong>Bring all the bits</strong> — leads, chargers, manuals, broken parts, screws</li>
+                <li><strong>Bring batteries</strong> if your item needs them</li>
+                <li><strong>Arrive early</strong> — we work on a first-come, first-served basis</li>
+            </ul>
+
+            <div class="notice">
+                <p><strong>Note:</strong> We do our very best, but repairs are offered on a best-endeavours basis. We
+                    can't guarantee everything will be fixable or perfect afterwards, but we'll always try our hardest.
+                </p>
+            </div>
+
+            <h3>✅ What we can try to fix</h3>
+            <p>Our volunteers have recently fixed:</p>
+            <div class="skills-grid">
+                <span class="skill-tag">🌱 Garden tools</span>
+                <span class="skill-tag">🍳 Kitchen tools</span>
+                <span class="skill-tag">🧸 Toys</span>
+                <span class="skill-tag">🚲 Bikes</span>
+                <span class="skill-tag">💡 Lights</span>
+                <span class="skill-tag">👕 Clothes</span>
+                <span class="skill-tag">💻 Laptops</span>
+                <span class="skill-tag">🖥️ PCs</span>
+                <span class="skill-tag">🌬️ Vacuum cleaners</span>
+                <span class="skill-tag">🪑 Chairs</span>
+                <span class="skill-tag">💍 Jewellery</span>
+                <span class="skill-tag">✂️ Sharpening</span>
+                <span class="skill-tag">🛋️ Upholstery</span>
+                <span class="skill-tag">...and more</span>
+            </div>
+            <div class="notice">
+                <p>Sharpening and Upholstery are not always available <a href"mailto:info@basingsoke.reapir">Email us
+                        beforehand</a></p>
+            </div>
+            <h3>❌ What we can't fix</h3>
+            <p>Unfortunately, for safety reasons, we <strong>cannot</strong> repair items where we can't test whether
+                they'll be safe to use afterwards:</p>
+            <div class="skills-grid">
+                <span class="skill-tag skill-tag-negative">Cane Furniture</span>
+                <span class="skill-tag skill-tag-negative">Electric Blankets</span>
+                <span class="skill-tag skill-tag-negative">Petrol Driven items</span>
+                <span class="skill-tag skill-tag-negative">Microwaves</span>
+                <span class="skill-tag skill-tag-negative">Fridges & Freezers</span>
+            </div>
+            <p>Or anything our volunteers consider unsafe to work on.</p>
+
+            <div class="notice">
+                <p><strong>Not sure?</strong> <a href="mailto:info@basingstoke.repair">Email us beforehand</a> with
+                    brief details of your item and we'll let you know if we can help</p>
+            </div>
+
+            <!-- Image Placeholder -->
+            <div class="image-grid">
+                <div class="image-placeholder" title="Photo: Team in action">📸<br><small>Team in action</small></div>
+                <div class="image-placeholder" title="Photo: Repair work">🔧<br><small>Repairs underway</small></div>
+                <div class="image-placeholder" title="Photo: Happy customer">😊<br><small>Happy fix!</small></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Repair Matters Section -->
+    <section id="why-repair" class="bg-white section-compact">
+        <div class="container">
+            <h2>Why repair matters</h2>
+            <p class="section-intro">Repairing instead of replacing helps create a more sustainable, connected, and
+                skillful community. Here's why repair matters:</p>
+
+            <div class="card-grid">
+                <div class="card">
+                    <h3><span class="card-icon">🌍</span> Reduce waste</h3>
+                    <p>Keep items out of landfills and reduce environmental impact. Every item repaired is one less in
+                        the bin.</p>
+                </div>
+                <div class="card">
+                    <h3><span class="card-icon">🤝</span> Build community</h3>
+                    <p>Connect with neighbors and share skills. Repair Cafés are social spaces where people come
+                        together.</p>
+                </div>
+                <div class="card">
+                    <h3><span class="card-icon">🛠️</span> Learn skills</h3>
+                    <p>Discover how things work and gain repair confidence. Watch, learn, and try it yourself next time.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Locations Section -->
+    <section id="locations" class="section-compact">
+        <div class="container">
+            <h2>Our repair cafés</h2>
+            <p class="section-intro">We run regular Repair Cafés across Basingstoke. Find your nearest location and pop
+                in.</p>
+
+            <div class="location-grid">
+                <div class="location-card">
+                    <h3>Chineham Repair Café</h3>
+                    <img src="https://basingstoke.repair/assets/images/locations/chineham-team.jpg"
+                        alt="Chineham Repair Café Team" class="location-image">
+                    <div class="location-meta">
+                        <span>📅 3rd Saturday of each month</span>
+                        <span>🕐 10am - 1pm</span>
+                    </div>
+                    <p><strong>Christ Church Chineham</strong><br>Reading Road (next to Surgery)<br>RG24 8LT</p>
+                    <div class="map-container">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2495.456789012345!2d-1.078901!3d51.284567!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4874212345678901%3A0xabcdef1234567890!2sChrist%20Church%20Chineham!5e0!3m2!1sen!2suk!4v1234567890123!5m2!1sen!2suk"
+                            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                            title="Map showing Christ Church Chineham location">
+                        </iframe>
+                    </div>
+                </div>
+
+                <div class="location-card">
+                    <h3>Hatch Warren & Beggarwood Repair Café</h3>
+                    <img src="https://basingstoke.repair/assets/images/locations/hatch-warren-team.jpg"
+                        alt="Hatch Warren Repair Café Team" class="location-image">
+                    <div class="location-meta">
+                        <span>📅 1st Saturday of each month</span>
+                        <span>🕐 10:30am - 1pm</span>
+                    </div>
+                    <p><strong>Hatch Warren Community Centre</strong><br>RG22 4XF</p>
+                    <div class="map-container">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2495.456789012345!2d-1.078901!3d51.284567!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4874212345678901%3A0xabcdef1234567890!2sHatch%20Warren%20Community%20Centre!5e0!3m2!1sen!2suk!4v1234567890123!5m2!1sen!2suk"
+                            allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                            title="Map showing Hatch Warren Community Centre location">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+
+            <div class="location-card" style="margin-top: var(--space-xl);">
+                <h3>Coming soon</h3>
+                <p>We're hoping to start a new Repair Café in Kings Furlong/Brookvale/Black Dam area. Stay tuned for
+                    updates on dates and
+                    location.</p>
+                <p><a href="#contact">Contact us</a> to register your interest.</p>
+            </div>
+
+            <h2 style="margin-top: var(--space-2xl);">Other Local Repair Cafés</h2>
+            <p class="section-intro">Looking for a Repair Café outside Basingstoke? Here's another option in the local
+                area:</p>
+
+            <div class="location-card">
+                <h3>North Hampshire Repair Café</h3>
+                <p>North Hampshire Repair Café (NHRC) is another Repair Café that rotates around different locations in
+                    North Hampshire. Visit their website for
+                    details on dates, times, and location.</p>
+                <p>
+                    🌐 <a href="https://nhrc.uk" target="_blank" rel="noopener noreferrer">nhrc.uk</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Volunteer Section -->
+    <section id="volunteer">
+        <div class="container">
+            <h2>We need You!</h2>
+            <p class="section-intro">We're always looking for friendly people to join our volunteer team. We've learned
+                that to run a successful and sustainable Cafe takes many different skills and personalities.</p>
+
+            <h3>🙋 What sort of skills?</h3>
+            <p>There's probably a place for you if you're good with:</p>
+            <div class="skills-grid">
+                <span class="skill-tag">👋 People</span>
+                <span class="skill-tag">☕ Refreshments</span>
+                <span class="skill-tag">🔌 Electronics</span>
+                <span class="skill-tag">🧵 Sewing</span>
+                <span class="skill-tag">🔍 Fault finding</span>
+                <span class="skill-tag">🔧 Soldering</span>
+                <span class="skill-tag">🪵 Woodworking</span>
+                <span class="skill-tag">✂️ Sharpening</span>
+                <span class="skill-tag">⚡ Electrics</span>
+                <span class="skill-tag">🛋️ Upholstery</span>
+                <span class="skill-tag">🦺 Safety</span>
+                <span class="skill-tag">📱 Social media</span>
+                <span class="skill-tag">📝 Record keeping</span>
+            </div>
+            <p style="margin-top: var(--space-md);">...and any other repair skills you might have.</p>
+
+            <h3>🤔 Not sure if you can help?</h3>
+            <p>If you've got time to give and enthusiasm to share, we'd love to chat. No formal qualifications needed —
+                just a willingness to learn and help others.</p>
+
+            <div class="email-cta">
+                <h3>Ready to get involved?</h3>
+                <p>To explore volunteering with our friendly team:</p>
+                <p style="margin-top: var(--space-md);">
+                    📧 <a href="mailto:info@basingstoke.repair">info@basingstoke.repair</a><br><br>
+                    🌐 <a href="https://basingstoke.repair" target="_blank">basingstoke.repair</a>
+                </p>
+                <p style="margin-top: var(--space-md); font-size: 0.9rem;">Or just come along to one of our sessions and
+                    say hello.</p>
+            </div>
+
+            <!-- Image Placeholder -->
+            <div class="image-placeholder" style="margin-top: var(--space-2xl);" title="Photo: Our volunteers">
+                👥<br><small>Our wonderful volunteers</small>
+            </div>
+        </div>
+    </section>
+
+    <!-- Supporters Section -->
+    <section id="supporters" class="supporters-section">
+        <div class="container">
+            <h2>Our supporters</h2>
+            <p class="section-intro">We're grateful to the following organizations and funders who help keep our Repair
+                Cafés running.</p>
+
+            <div class="supporters-grid">
+                <a href="https://www.basingstoke.gov.uk/" target="_blank" class="supporter-logo">
+                    <img src="https://basingstoke.repair/assets/images/supporters/basingstoke-council.png"
+                        alt="Basingstoke & Deane Council">
+                    <div class="supporter-name">Basingstoke & Deane Council</div>
+                </a>
+                <a href="https://fourlanestrust.org.uk/" target="_blank" class="supporter-logo">
+                    <img src="https://basingstoke.repair/assets/images/supporters/four-lanes-trust.png"
+                        alt="Four Lanes Trust">
+                    <div class="supporter-name">Four Lanes Trust</div>
+                </a>
+                <a href="https://restarters.net/" target="_blank" class="supporter-logo">
+                    <img src="https://basingstoke.repair/assets/images/supporters/restarters.png" alt="Restarters.net">
+                    <div class="supporter-name">Restarters.net</div>
+                </a>
+                <a href="https://www.repaircafe.org/" target="_blank" class="supporter-logo">
+                    <img src="https://basingstoke.repair/assets/images/supporters/repair-cafe-international.png"
+                        alt="Repair Café International">
+                    <div class="supporter-name">Repair Café International</div>
+                </a>
+                <a href="https://greenerbasingstoke.org/" target="_blank" class="supporter-logo">
+                    <img src="https://basingstoke.repair/assets/images/supporters/greener-basingstoke.png"
+                        alt="Greener Basingstoke">
+                    <div class="supporter-name">Greener Basingstoke</div>
+                </a>
+                <a href="https://www.tnlcommunityfund.org.uk/" target="_blank" class="supporter-logo">
+                    <img src="https://basingstoke.repair/assets/images/supporters/national-lottery.png"
+                        alt="National Lottery Community Fund">
+                    <div class="supporter-name">National Lottery Community Fund</div>
+                </a>
+                <a href="https://www.veolia.co.uk/" target="_blank" class="supporter-logo">
+                    <img src="https://basingstoke.repair/assets/images/supporters/veolia.png" alt="Veolia">
+                    <div class="supporter-name">Veolia</div>
+                </a>
+                <a href="https://www.oakleystitchers.org.uk/" target="_blank" class="supporter-logo">
+                    <img src="https://basingstoke.repair/assets/images/supporters/oakley-stitchers.jpg"
+                        alt="Oakley Stitchers CIC">
+                    <div class="supporter-name">Oakley Stitchers CIC</div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer / Contact -->
+    <footer id="contact">
+        <div class="container">
+            <h2 style="color: var(--color-white);">Get in touch</h2>
+
+            <div class="footer-links">
+                <a href="mailto:info@basingstoke.repair">📧 info@basingstoke.repair</a>
+                <a href="https://basingstoke.repair" target="_blank">🌐 basingstoke.repair</a>
+            </div>
+
+            <p>Part of the <a href="https://therestartproject.org" target="_blank">Restart Project</a> network</p>
+
+            <div class="charity-info">
+                <p>Basingstoke Repair Network is a volunteer-run Charitable Incorporated Organisation (registation in
+                    progress).</p>
+                <p style="margin-top: var(--space-sm);">© 2026 Basingstoke Repair Network. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script>
+        // Burger menu toggle
+        const burger = document.querySelector('.burger-menu');
+        const nav = document.querySelector('.nav-menu');
+
+        burger.addEventListener('click', () => {
+            const isOpen = nav.classList.toggle('is-open');
+            burger.classList.toggle('is-active');
+            burger.setAttribute('aria-expanded', isOpen);
+        });
+
+        // Close menu when clicking a link
+        nav.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('is-open');
+                burger.classList.remove('is-active');
+                burger.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+        // Close when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!nav.contains(e.target) && !burger.contains(e.target)) {
+                nav.classList.remove('is-open');
+                burger.classList.remove('is-active');
+                burger.setAttribute('aria-expanded', 'false');
+            }
+        });
+    </script>
+</body>
+
+</html>

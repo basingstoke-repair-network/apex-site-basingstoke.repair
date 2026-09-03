@@ -1,4 +1,4 @@
-# SPDX-FileCopyrightText: 2025 Basingstoke Repair Network <dev@basingstoke.repair>
+# SPDX-FileCopyrightText: 2024-2026 Basingstoke Repair Network <dev@basingstoke.repair>
 #
 # SPDX-License-Identifier: MIT
 
@@ -15,27 +15,63 @@ permissions:
   deployments: write
 
 concurrency:
-  group: 'pages'
+  group: 'pages-${{ github.ref }}'
   cancel-in-progress: false
 
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
     name: Build the website
+    outputs:
+      deploy-url: ${{ steps.netlify-deploy.outputs.deploy-url }}
     steps:
       - uses: actions/checkout@v7
+      - uses: withastro/action@v6
       - uses: nwtgck/actions-netlify@v4.0.0
+        id: netlify-deploy
         with:
-          publish-dir: './public'
+          publish-dir: './dist'
           production-branch: live
           production-deploy: ${{ github.ref == 'refs/heads/live' }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message: "Deploy from GitHub Actions"
           enable-pull-request-comment: true
-          enable-commit-comment: true
-          enable-commit-status: true
-          enable-github-deployment: true
+          enable-commit-comment: false
+          enable-commit-status: false
+          enable-github-deployment: false
           overwrites-pull-request-comment: true
+          github-deployment-environment: ${{ github.ref == 'refs/heads/live' && 'production' || github.event.number != null && format('pr-{0}', github.event.number) || format('branch-{0}', github.ref_name) }}
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+
+  lighthouse-audit:
+    runs-on: ubuntu-latest
+    name: Lighthouse accessibility & QA audit
+    needs: build-deploy
+    if: needs.build-deploy.outputs.deploy-url != ''
+    steps:
+      - uses: actions/checkout@v7
+      - uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: ${{ needs.build-deploy.outputs.deploy-url }}
+          configPath: './lighthouserc.json'
+          # GitHub artifact upload is handled by the dedicated step below
+          # (so we can set a long retention period); this action's own
+          # uploadArtifacts only supports the default org/repo setting.
+          uploadArtifacts: false
+          # LHCI has no persistent-GCS upload target — temporaryPublicStorage
+          # is Google's own managed Cloud Storage, the only GCS-backed option
+          # LHCI exposes.
+          temporaryPublicStorage: true
+
+      # Long-term copy: LHCI's temporary-public-storage reports expire after
+      # a few weeks, so also keep the full HTML/JSON reports as a GitHub
+      # Actions artifact for 90 days (the max retention on the free plan).
+      - name: Upload Lighthouse report as a build artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-results
+          path: .lighthouseci
+          retention-days: 90

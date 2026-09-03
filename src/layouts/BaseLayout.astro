@@ -1,0 +1,81 @@
+<!--
+SPDX-FileCopyrightText: 2024-2026 Basingstoke Repair Network
+SPDX-License-Identifier: MIT
+-->
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Basingstoke Repair Network — Fix It, Don\'t Bin It!',
+  description = 'Volunteer-run repair cafés across Basingstoke helping fix broken things, saving you money and keeping items out of landfill.',
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://basingstoke.repair');
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Hero background is a CSS background-image, so the LCP element
+         won't be fetched at high priority without this preload hint.
+         Matches the mobile/desktop split in .hero-slide (global.css). -->
+    <link
+      rel="preload"
+      as="image"
+      href="/assets/images/hero/textile-repairs-mobile.jpg"
+      fetchpriority="high"
+      media="(max-width: 639px)"
+    />
+    <link
+      rel="preload"
+      as="image"
+      href="/assets/images/hero/textile-repairs.jpg"
+      fetchpriority="high"
+      media="(min-width: 640px)"
+    />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:locale" content="en_GB" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/assets/images/logos/brn-logo.png" />
+
+    <!-- Swiper.js carousel (CDN), powers the below-the-fold gallery
+         carousels. Stylesheet is loaded non-render-blocking since it
+         isn't needed for the initial paint. -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+      />
+    </noscript>
+    <script
+      src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"
+      defer
+    ></script>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

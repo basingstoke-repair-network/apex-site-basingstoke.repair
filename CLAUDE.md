@@ -1,6 +1,6 @@
 <!--
-SPDX-FileCopyrightText: 2025 Basingstoke Repair Network
-SPDX-License-Identifier: MIT
+SPDX-FileCopyrightText: 2024-2026 Basingstoke Repair Network
+SPDX-License-Identifier: CC0-1.0
 -->
 
 # Claude Context & Directives
@@ -9,15 +9,16 @@ This file contains context and directives for AI assistants working on the Basin
 
 ## Project Overview
 
-**Project Name**: Basingstoke Repair Network - Initial Website
-**Project Type**: Static HTML website for community repair cafés
+**Project Name**: Basingstoke Repair Network - Website (V2)
+**Project Type**: Astro.js static site with Decap CMS for community repair cafés
 **Repository**: apex-site-basingstoke.repair
-**Branch**: live-initial-page
-**Status**: Initial version completed
+**Branch**: astro-refactor/implement-astro-design
+**Status**: V2 in active development (rewrite of V1 static HTML site)
+**Hosted on**: Netlify
 
 ## Project Purpose
 
-Create a static HTML website to establish an online presence for the Basingstoke Repair Network, providing information about:
+Build a lightweight, performant static website to establish an online presence for the Basingstoke Repair Network, providing information about:
 - Three repair café locations (Chineham, Hatch Warren, Kings Furlong)
 - Repair café concept and environmental benefits
 - Volunteer opportunities
@@ -26,45 +27,52 @@ Create a static HTML website to establish an online presence for the Basingstoke
 ## Technology Stack
 
 ### Core Technologies
-- **HTML5**: Semantic markup with accessibility features
-- **TailwindCSS v3**: CDN-served utility-first CSS framework
-- **JavaScript**: Vanilla JS for interactivity (no build step)
-- **Node.js**: Development server only (using `serve` package)
+- **Astro.js**: Static site generator — component-based, outputs minimal HTML/CSS/JS
+- **TailwindCSS v3**: Utility-first CSS framework (integrated via Astro integration)
+- **Decap CMS**: Git-based headless CMS for content editing via Netlify Identity
+- **Node.js**: Build tooling and dev server
 
-### CDN Dependencies
-- TailwindCSS: https://cdn.tailwindcss.com
-- Font Awesome v6.5.1: Icons and visual elements
-- Swiper.js v11: Hero carousel functionality
+### Performance Philosophy
+- **Lightweight by default**: Prefer zero-JS pages; only ship JavaScript where genuinely required
+- **CDN for external resources**: Load third-party libraries (icons, fonts, carousels, etc.) from CDNs rather than bundling them — reduces build complexity and leverages CDN caching
+- **No unnecessary dependencies**: Evaluate each new package against its benefit; prefer native browser features or CDN-served micro-libraries over large npm dependencies
+- **Static output**: The site must build to fully static HTML — no server-side rendering at runtime
+
+### CDN Dependencies (preferred over npm installs)
+- Font Awesome: Icons and visual elements
+- Any carousel/slider library (e.g. Swiper.js) if needed
+- Any other runtime UI library should come from a CDN, not bundled
 
 ### Development Tools
-- `serve` package: Local development server
-- npm scripts: `dev` and `start` commands
+- `astro` CLI: dev server, build, preview
+- npm scripts: `dev`, `build`, `preview`
 
 ## File Structure
 
 ```
 apex-site-basingstoke.repair/
-├── public/                      # Static site files
-│   ├── index.html              # Main HTML file with full website
+├── src/
+│   ├── components/         # Reusable Astro components
+│   ├── layouts/            # Page layout templates
+│   ├── pages/              # File-based routing (each .astro = a page)
+│   └── content/            # Decap CMS managed content collections
+├── public/                 # Static assets served as-is
 │   └── assets/
-│       ├── css/
-│       │   └── styles.css      # Custom CSS with BRN brand colors
-│       ├── js/
-│       │   └── main.js         # Interactive features
-│       └── images/
-│           ├── logos/          # BRN logo
-│           ├── locations/      # Team photos
-│           ├── supporters/     # Supporter logos
-│           └── hero-*.jpg      # Carousel images (3)
-├── package.json                # Node.js configuration
-├── netlify.toml               # Netlify deployment config
-├── .gitignore                 # Git ignore patterns
-└── README.md                  # Project documentation
+│       ├── images/
+│       │   ├── logos/      # BRN logo
+│       │   ├── locations/  # Team photos
+│       │   ├── supporters/ # Supporter logos
+│       │   └── hero-*.jpg  # Hero images
+│       └── admin/          # Decap CMS config (config.yml)
+├── astro.config.mjs        # Astro configuration
+├── tailwind.config.mjs     # TailwindCSS configuration
+├── package.json            # Node.js dependencies
+├── netlify.toml            # Netlify deployment config
+├── .gitignore
+└── README.md
 ```
 
 ## Brand Colors (BRN Color Palette)
-
-Defined in `public/assets/css/styles.css`:
 
 ```css
 :root {
@@ -84,15 +92,23 @@ Defined in `public/assets/css/styles.css`:
 ### Location Information (DO NOT MODIFY without user request)
 
 1. **Chineham Repair Café**
-   - When: 3rd Saturday of each month, 10am-1pm
+   - When: 3rd Saturday of each month, 10am–1pm
    - Where: Christ Church Chineham, Reading Road (next to Surgery), RG24 8LT
 
 2. **Hatch Warren & Beggarwood Repair Café**
-   - When: 1st Saturday of each month, 10:30am-1pm
+   - When: 1st Saturday of each month, 10:30am–1pm
    - Where: Hatch Warren Community Centre, RG22 4XF
 
 3. **Kings Furlong Repair Café**
    - Status: Coming Later in 2025
+
+**When adding a new location**: check its address (in `src/content/locations/`)
+against the number of lines rendered by `.location-address` in
+`src/components/Locations.astro`. The card grid uses a shared min-height
+(defined in `src/styles/global.css`, currently sized for a 3-line address —
+venue, street, postcode) so map iframes stay aligned across cards on
+multi-column layouts. An address needing a 4th line requires bumping that
+min-height too.
 
 ### Contact Information
 - Email: info@chinehamrepair.org.uk
@@ -133,11 +149,12 @@ Co-Authored-By: Claude <noreply@anthropic.com>
 - Never mix unrelated changes in a single commit
 
 **Example Pattern:**
-1. Config files (package.json, netlify.toml)
-2. HTML structure
-3. CSS styling
-4. JavaScript functionality
-5. Documentation
+1. Config files (astro.config.mjs, netlify.toml, package.json)
+2. Layout/component structure
+3. Page content
+4. Styling
+5. CMS configuration
+6. Documentation
 
 ### HEREDOC for Commit Messages
 
@@ -160,45 +177,68 @@ EOF
 
 ### Licensing Standard
 
-**ALL files must include SPDX licensing headers:**
+**ALL files must include SPDX licensing headers.** The identifier depends on
+the kind of file:
 
-#### HTML/Markdown files:
+- **Code** (Astro/HTML components, CSS, JS/TS, config files such as
+  TOML/YAML): `SPDX-License-Identifier: MIT`
+- **Documentation, other Markdown, and images** (README/CLAUDE.md/docs,
+  `.md` files generally, and image assets under `public/assets/images/`
+  and test snapshots): `SPDX-License-Identifier: CC0-1.0`
+
+#### Astro/HTML files (code):
 ```html
 <!--
-SPDX-FileCopyrightText: 2025 Basingstoke Repair Network
+SPDX-FileCopyrightText: 2024-2026 Basingstoke Repair Network
 SPDX-License-Identifier: MIT
+-->
+```
+
+#### Markdown/documentation files:
+```html
+<!--
+SPDX-FileCopyrightText: 2024-2026 Basingstoke Repair Network
+SPDX-License-Identifier: CC0-1.0
 -->
 ```
 
 #### CSS files:
 ```css
 /*
- * SPDX-FileCopyrightText: 2025 Basingstoke Repair Network
+ * SPDX-FileCopyrightText: 2024-2026 Basingstoke Repair Network
  * SPDX-License-Identifier: MIT
  */
 ```
 
-#### JavaScript files:
+#### JavaScript/TypeScript files:
 ```javascript
-// SPDX-FileCopyrightText: 2025 Basingstoke Repair Network
+// SPDX-FileCopyrightText: 2024-2026 Basingstoke Repair Network
 // SPDX-License-Identifier: MIT
 ```
 
 #### Configuration files (TOML, YAML, etc.):
 ```toml
-# SPDX-FileCopyrightText: 2025 Basingstoke Repair Network
+# SPDX-FileCopyrightText: 2024-2026 Basingstoke Repair Network
 # SPDX-License-Identifier: MIT
 ```
 
 #### JSON files:
 Create a companion `.license` file:
 ```
-SPDX-FileCopyrightText: 2025 Basingstoke Repair Network
+SPDX-FileCopyrightText: 2024-2026 Basingstoke Repair Network
 SPDX-License-Identifier: MIT
 ```
 
+#### Image files:
+Create a companion `.license` file:
+```
+SPDX-FileCopyrightText: 2024-2026 Basingstoke Repair Network
+SPDX-License-Identifier: CC0-1.0
+```
+
 ### License
-This project uses the **MIT License**. See LICENSE file for details.
+This project's code is licensed under the **MIT License**; documentation and
+images are licensed under **CC0-1.0**. See LICENSE file for details.
 
 ## Character Encoding
 
@@ -207,10 +247,10 @@ This project uses the **MIT License**. See LICENSE file for details.
 **CRITICAL**: Always use proper UTF-8 characters, never escape sequences:
 
 ✅ **CORRECT**: `Café`, `cafés`
-❌ **WRONG**: `Caf\u00e9`, `caf\u00e9s`
+❌ **WRONG**: `Café`, `cafés`
 
 ✅ **CORRECT**: `❤️` (heart emoji)
-❌ **WRONG**: `\u2764\ufe0f`
+❌ **WRONG**: `❤️`
 
 ### Common Characters Used
 - é (U+00E9): Café, cafés
@@ -222,24 +262,22 @@ This project uses the **MIT License**. See LICENSE file for details.
 
 ## Image Requirements
 
-### Required Images (Not Yet Added)
+Images live in `public/assets/images/`:
 
-Images should be placed in `public/assets/images/`:
-
-1. **Logo**: `logos/brn-logo.png` (200x200px+, transparent PNG)
-2. **Hero Carousel**: `hero-1.jpg`, `hero-2.jpg`, `hero-3.jpg` (1920x1080px)
+1. **Logo**: `logos/brn-logo.png` (200×200px+, transparent PNG)
+2. **Hero Images**: `hero-1.jpg`, `hero-2.jpg`, `hero-3.jpg` (1920×1080px)
 3. **Team Photos**:
-   - `locations/chineham-team.jpg` (800x600px)
-   - `locations/hatch-warren-team.jpg` (800x600px)
-4. **Supporter Logos**: 8 PNG files in `supporters/` (max 80px height)
+   - `locations/chineham-team.jpg` (800×600px)
+   - `locations/hatch-warren-team.jpg` (800×600px)
+4. **Supporter Logos**: PNG files in `supporters/` (max 80px height)
 
 ### Fallback Behavior
-The website gracefully handles missing images:
-- Hero: Shows gradient background with text
-- Team photos: Shows placeholder via `via.placeholder.com`
-- Logos: Shows text labels
+The site should gracefully handle missing images:
+- Hero: gradient background with text overlay
+- Team photos: styled placeholder
+- Logos: text label fallback
 
-**Do not remove fallback handlers from HTML.**
+**Do not remove fallback handlers.**
 
 ## Development Commands
 
@@ -247,79 +285,83 @@ The website gracefully handles missing images:
 # Install dependencies
 npm install
 
-# Start development server (port 3000)
+# Start development server
 npm run dev
 
-# Production server
-npm start
+# Production build
+npm run build
+
+# Preview production build locally
+npm run preview
 ```
 
 ## Deployment
 
-### Netlify
-The site is configured for Netlify deployment via `netlify.toml`:
-- Publish directory: `public/`
-- No build command needed (static site)
-- Includes security headers and cache optimization
+### Netlify (primary host)
+Configured via `netlify.toml`:
+- Build command: `npm run build`
+- Publish directory: `dist/`
+- Decap CMS identity and Git Gateway enabled for content editing
+- Security headers and cache optimization included
 
-### Other Static Hosts
-Compatible with:
+### Compatibility
+The static output is also compatible with:
 - Vercel
-- GitHub Pages
 - Cloudflare Pages
-- AWS S3
+- GitHub Pages (with adapter if needed)
 - Any static file host
 
-## Key Features Implemented
+## Key Features
 
 ### Accessibility
-- Semantic HTML5 elements
-- ARIA labels for interactive elements
+- Semantic HTML5 elements (`<header>`, `<main>`, `<section>`, `<footer>`)
+- ARIA labels on interactive elements
 - Keyboard navigation support
-- Screen reader friendly
+- Screen reader friendly markup
 - High contrast text ratios
 - Focus indicators on all interactive elements
 
 ### Performance
-- CDN-served libraries for fast loading
-- Lazy loading for images (IntersectionObserver)
-- Optimized CSS and JavaScript
-- Proper cache headers in Netlify config
-- Responsive images support
+- Astro outputs zero JS by default — only hydrate what needs it
+- External libraries loaded via CDN (not bundled) to leverage caching
+- Lazy loading for images
+- Responsive image handling
+- Proper cache headers via Netlify config
 
 ### Responsive Design
 - Mobile-first approach
-- Hamburger menu for mobile devices
-- Breakpoints: sm (640px), md (768px), lg (1024px), xl (1280px)
+- Hamburger menu for small screens
+- TailwindCSS breakpoints: sm (640px), md (768px), lg (1024px), xl (1280px)
 - Touch-friendly navigation
 
-### Interactive Features
-- Auto-play hero carousel with manual controls
-- Smooth scroll for anchor navigation
-- Mobile menu toggle with animations
-- Header shadow on scroll
-- Fade-in animations for sections
+### Content Management
+- Decap CMS provides a browser-based editor for non-technical contributors
+- Content stored as Markdown/YAML in the repository
+- Edits go through Git — no separate database
 
 ## Coding Standards
 
-### HTML
-- Use semantic elements (`<header>`, `<main>`, `<section>`, `<footer>`)
-- Include alt text for all images
-- Use proper heading hierarchy (h1 → h2 → h3)
-- Add `rel="noopener noreferrer"` to external links
+### Astro Components
+- Keep components small and single-purpose
+- Pass data via props; avoid global state
+- Use Astro's `<slot>` for composable layouts
+- Prefer `.astro` files; use framework components (React, etc.) only if essential and never for static content
 
-### CSS
-- Use CSS custom properties for theme colors
-- Mobile-first media queries
-- BEM-like naming for custom classes
-- Leverage TailwindCSS utility classes
+### CSS / TailwindCSS
+- Use CSS custom properties for brand colors
+- Mobile-first utility classes
+- Avoid arbitrary Tailwind values where a design token or custom property suffices
 
 ### JavaScript
-- Vanilla JS (no frameworks)
-- ES6+ syntax
-- Event delegation where appropriate
-- Graceful degradation (check for feature support)
-- Always use `addEventListener`, never inline handlers
+- Ship JS only when necessary (interactivity, not decoration)
+- Vanilla JS or lightweight CDN libraries preferred over heavy npm packages
+- ES6+ syntax; always `addEventListener`, never inline handlers
+- Graceful degradation — check for feature support
+
+### Astro-specific
+- Use `Astro.props` typing for components
+- Content collections for CMS-managed data
+- Static paths (`getStaticPaths`) for dynamic routes
 
 ## Important Directives
 
@@ -328,40 +370,43 @@ Compatible with:
 2. Modify location information or schedules
 3. Change contact information
 4. Remove supporter organizations
-5. Add new dependencies or frameworks
-6. Change the project structure
+5. Add new npm dependencies without justification
+6. Introduce server-side rendering or API routes
 7. Remove accessibility features
 8. Remove SPDX headers
+9. Bundle libraries that should be CDN-served
 
 ### Always Do These:
 1. Commit changes in compartmentalized, isolated commits
 2. Add SPDX headers to all new files
 3. Use proper UTF-8 characters (no escape sequences)
 4. Follow conventional commit message format
-5. Test responsive design on multiple screen sizes
+5. Test responsive design on mobile/tablet/desktop
 6. Maintain accessibility standards
-7. Keep the site performant (no unnecessary dependencies)
+7. Keep the site lightweight — question every new dependency
+8. Prefer CDN delivery for external runtime libraries
 
 ## Testing Checklist
 
 Before committing changes:
 - [ ] No `\u` escape sequences in any files
 - [ ] All files have SPDX headers
+- [ ] `npm run build` completes without errors
 - [ ] Responsive design works on mobile/tablet/desktop
 - [ ] All links work correctly
 - [ ] Images have appropriate alt text
-- [ ] Console has no errors
+- [ ] Browser console has no errors
 - [ ] Accessibility: keyboard navigation works
-- [ ] Git commit messages follow format
+- [ ] Git commit messages follow conventional commits format
 - [ ] Changes are in isolated, logical commits
 
 ## Future Considerations
 
 ### Potential Enhancements (Not Implemented Yet)
-- Blog/news section
+- Blog/news section via Decap CMS content collections
 - Event calendar integration
 - Photo gallery
-- Contact form
+- Contact form (Netlify Forms)
 - Repair item booking system
 - Multi-language support
 - Progressive Web App (PWA) features
@@ -375,26 +420,27 @@ Before committing changes:
 - Repair Café International: https://www.repaircafe.org
 
 ### Development Resources
+- Astro Docs: https://docs.astro.build
 - TailwindCSS Docs: https://tailwindcss.com/docs
-- Swiper.js Docs: https://swiperjs.com
+- Decap CMS Docs: https://decapcms.org/docs
 - Font Awesome Icons: https://fontawesome.com/icons
 - REUSE Specification: https://reuse.software
 
-## Session History
+## Version History
 
-### Initial Creation (2025-12-07)
-- Created static HTML website for BRN
-- Implemented responsive design with TailwindCSS
-- Added hero carousel with Swiper.js
-- Created location sections for 3 repair cafés
-- Added volunteer/contact sections
-- Implemented REUSE compliance with SPDX headers
-- Fixed Unicode character encoding issues
-- Compartmentalized commits following conventional commits
-- Added Netlify deployment configuration
+### V1 — Initial Static Site (2025-12-07)
+- Plain HTML/CSS/JS with TailwindCSS via CDN
+- Hero carousel via Swiper.js (CDN)
+- No build step; served directly from `public/`
+
+### V2 — Astro Rewrite (in progress, 2026)
+- Migrated to Astro.js for component-based authoring
+- Added Decap CMS for content management
+- Hosted on Netlify with Git Gateway
+- Maintained CDN-first philosophy for external runtime libraries
 
 ---
 
-**Last Updated**: 2025-12-07
-**Claude Version**: Claude Sonnet 4.5
-**Project Status**: Initial version complete, ready for image assets
+**Last Updated**: 2026-05-23
+**Claude Version**: Claude Sonnet 4.6
+**Project Status**: V2 in active development

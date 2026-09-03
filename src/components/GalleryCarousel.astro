@@ -1,0 +1,86 @@
+<!--
+SPDX-FileCopyrightText: 2024-2026 Basingstoke Repair Network
+SPDX-License-Identifier: MIT
+-->
+---
+interface Props {
+  images: string[];
+  altPrefix: string;
+  swiperClass: string;
+}
+
+const { images, altPrefix, swiperClass } = Astro.props;
+---
+
+<div class={`swiper gallery-swiper ${swiperClass}`} aria-label={altPrefix}>
+  <div class="swiper-wrapper">
+    {images.map((src, i) => (
+      <div class="swiper-slide">
+        <picture>
+          <source data-srcset={src.replace(/\.jpg$/, '.avif')} type="image/avif" />
+          <source data-srcset={src.replace(/\.jpg$/, '.webp')} type="image/webp" />
+          <img data-src={src} alt={`${altPrefix} — photo ${i + 1}`} />
+        </picture>
+        <div class="swiper-lazy-preloader"></div>
+      </div>
+    ))}
+  </div>
+
+  <div class="swiper-pagination"></div>
+  <div class="swiper-button-prev" aria-label="Previous photo"></div>
+  <div class="swiper-button-next" aria-label="Next photo"></div>
+</div>
+
+<script define:vars={{ swiperClass }}>
+  document.addEventListener('DOMContentLoaded', () => {
+    if (typeof window.Swiper === 'undefined') return;
+
+    const prefersReducedMotion = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+
+    function loadNearbySlides(swiper) {
+      swiper.slides.forEach((slideEl, index) => {
+        if (Math.abs(index - swiper.activeIndex) > 1) return;
+        const img = slideEl.querySelector('img[data-src]');
+        if (!img) return;
+        slideEl.querySelectorAll('source[data-srcset]').forEach((source) => {
+          source.srcset = source.dataset.srcset;
+          source.removeAttribute('data-srcset');
+        });
+        img.src = img.dataset.src;
+        img.removeAttribute('data-src');
+        img.addEventListener(
+          'load',
+          () => slideEl.querySelector('.swiper-lazy-preloader')?.remove(),
+          { once: true }
+        );
+      });
+    }
+
+    new window.Swiper(`.${swiperClass}`, {
+      loop: true,
+      autoplay: prefersReducedMotion
+        ? false
+        : { delay: 4000, disableOnInteraction: false, pauseOnMouseEnter: true },
+      keyboard: { enabled: true, onlyInViewport: true },
+      pagination: {
+        el: `.${swiperClass} .swiper-pagination`,
+        clickable: true,
+      },
+      navigation: {
+        nextEl: `.${swiperClass} .swiper-button-next`,
+        prevEl: `.${swiperClass} .swiper-button-prev`,
+      },
+      a11y: {
+        prevSlideMessage: 'Previous photo',
+        nextSlideMessage: 'Next photo',
+        enabled: true,
+      },
+      on: {
+        init: loadNearbySlides,
+        slideChange: loadNearbySlides,
+      },
+    });
+  });
+</script>
