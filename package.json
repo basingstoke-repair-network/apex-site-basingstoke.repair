@@ -21,7 +21,7 @@
   "author": "Basingstoke Repair Network",
   "license": "MIT",
   "dependencies": {
-    "astro": "^4.16.18"
+    "astro": "^7.1.1"
   },
   "devDependencies": {
     "@playwright/test": "^1.61.1",
