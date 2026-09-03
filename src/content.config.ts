@@ -2,9 +2,10 @@
 // SPDX-License-Identifier: MIT
 
 import { defineCollection, z } from 'astro:content';
+import { glob } from 'astro/loaders';
 
 const locations = defineCollection({
-  type: 'data',
+  loader: glob({ pattern: '**/*.json', base: './src/content/locations' }),
   schema: z.object({
     name: z.string(),
     slug: z.string().optional(),
@@ -45,7 +46,7 @@ const locations = defineCollection({
 });
 
 const supporters = defineCollection({
-  type: 'data',
+  loader: glob({ pattern: '**/*.json', base: './src/content/supporters' }),
   schema: z.object({
     name: z.string(),
     websiteUrl: z.string().url(),
