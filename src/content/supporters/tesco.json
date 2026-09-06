@@ -1,0 +1,7 @@
+{
+  "name": "Tesco",
+  "websiteUrl": "https://www.tesco.com/",
+  "logo": "/assets/images/supporters/tesco.svg",
+  "order": 8,
+  "isActive": true
+}
