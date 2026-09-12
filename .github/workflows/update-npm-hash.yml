@@ -1,0 +1,60 @@
+# SPDX-FileCopyrightText: 2024-2026 Basingstoke Repair Network <dev@basingstoke.repair>
+#
+# SPDX-License-Identifier: MIT
+
+name: Update npm deps hash
+
+on:
+  schedule:
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: update-npm-hash
+  cancel-in-progress: false
+
+jobs:
+  update-hash:
+    runs-on: ubuntu-latest
+    name: Update npmDepsHash in flake.nix
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: live
+
+      - uses: DeterminateSystems/nix-installer-action@main
+
+      - name: Refresh npmDepsHash
+        run: nix run nixpkgs#nix-update -- --flake --version=skip site
+
+      - name: Open PR and auto-merge if the hash changed
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if git diff --quiet -- flake.nix; then
+            echo "npmDepsHash is already up to date"
+            exit 0
+          fi
+
+          branch="chore/update-npm-hash-$(date +%Y%m%d)"
+
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add flake.nix
+          git commit -m "chore: update npmDepsHash in flake.nix"
+          git push origin "$branch"
+
+          pr_url="$(gh pr create \
+            --base live \
+            --head "$branch" \
+            --title "chore: update npmDepsHash in flake.nix" \
+            --body "Automated daily refresh of the npm dependencies hash used by \`buildNpmPackage\` in \`flake.nix\`.")"
+
+          # Merges automatically as a merge commit once the other required
+          # checks (build, pre-commit, etc.) pass on this PR.
+          gh pr merge --auto --merge "$pr_url"
