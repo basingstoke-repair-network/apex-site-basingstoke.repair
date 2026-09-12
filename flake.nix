@@ -28,7 +28,7 @@
           src = ./.;
 
           # Hash of the npm dependencies. Refresh after `package-lock.json`
-          # changes by running `nix-update --flake --use-update-script site`.
+          # changes by running `nix-update --flake --version=skip site`.
           npmDepsHash = "sha256-bVlJhuo/u7z8G4KQxXf3DrM64+KrqJrHgFwe4LofBZI=";
 
           npmFlags = ["--legacy-peer-deps"];
@@ -54,14 +54,6 @@
           installPhase = ''
             cp -r dist $out
           '';
-
-          passthru.updateScript.command = [
-            (pkgs.lib.getExe (pkgs.writeShellApplication {
-              name = "update-deps-hash";
-              runtimeInputs = with pkgs; [prefetch-npm-deps git];
-              text = builtins.readFile ./nix/update-deps-hash.sh;
-            }))
-          ];
         };
     in {
       packages.site = site;
@@ -79,11 +71,6 @@
           '';
         in
           getExe server;
-      };
-
-      apps.update-deps-hash = {
-        type = "app";
-        program = pkgs.lib.getExe site.passthru.updateScript;
       };
     });
 }
