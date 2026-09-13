@@ -42,7 +42,7 @@ SPDX-License-Identifier: MIT
             --space-lg: 1.5rem;
             --space-xl: 2rem;
             --space-2xl: 3rem;
-            --space-3xl: 4rem;
+            --space-3xl: 7rem;
 
             /* Border radius */
             --radius-sm: 4px;
@@ -117,7 +117,7 @@ SPDX-License-Identifier: MIT
         }
 
         /* Layout Container */
-        .container {
+        .brn-container {
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
@@ -125,7 +125,7 @@ SPDX-License-Identifier: MIT
         }
 
         /* Header & Navigation */
-        header {
+        .site-header {
             background: var(--color-gray);
             padding: var(--space-md) 0;
             position: sticky;
@@ -134,20 +134,26 @@ SPDX-License-Identifier: MIT
             box-shadow: 0 2px 8px rgba(2, 1, 26, 0.08);
         }
 
-        .header-content {
+        .header-inner {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: var(--space-md);
         }
 
-        .logo {
+        .site-logo {
             display: flex;
             align-items: center;
             justify-content: center;
+            border-bottom: none;
         }
 
-        .logo img {
+        .site-logo:hover,
+        .site-logo:focus {
+            border-bottom: none;
+        }
+
+        .site-logo img {
             max-height: clamp(70px, 12vw, 120px);
             width: 100%;
             max-width: 360px;
@@ -156,13 +162,13 @@ SPDX-License-Identifier: MIT
         }
 
         @media (min-width: 640px) {
-            .logo img {
+            .site-logo img {
                 max-width: 480px;
             }
         }
 
         @media (min-width: 1024px) {
-            .logo img {
+            .site-logo img {
                 max-width: 560px;
             }
         }
@@ -183,31 +189,41 @@ SPDX-License-Identifier: MIT
             letter-spacing: 0.05em;
         }
 
-        nav ul {
+        .site-nav ul {
             list-style: none;
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: var(--space-sm) var(--space-lg);
+            margin: 0;
+            padding: 0;
         }
 
-        nav a {
+        @media (min-width: 1024px) {
+            .site-nav ul {
+                flex-wrap: nowrap;
+            }
+        }
+
+        .site-nav a {
             color: var(--color-primary);
             font-weight: 500;
             padding: var(--space-xs) var(--space-sm);
             border-radius: var(--radius-md);
             transition: all 0.2s ease;
+            display: block;
+            white-space: nowrap;
         }
 
-        nav a:hover,
-        nav a:focus {
+        .site-nav a:hover,
+        .site-nav a:focus {
             background: var(--color-primary);
             color: var(--color-white);
             border-bottom-color: transparent;
         }
 
         /* Burger Menu */
-        .burger-menu {
+        .burger-btn {
             display: none;
             flex-direction: column;
             justify-content: center;
@@ -230,21 +246,21 @@ SPDX-License-Identifier: MIT
             transition: transform 0.3s ease, opacity 0.3s ease;
         }
 
-        .burger-menu.is-active .burger-line:nth-child(1) {
+        .burger-btn.is-active .burger-line:nth-child(1) {
             transform: translateY(8px) rotate(45deg);
         }
 
-        .burger-menu.is-active .burger-line:nth-child(2) {
+        .burger-btn.is-active .burger-line:nth-child(2) {
             opacity: 0;
         }
 
-        .burger-menu.is-active .burger-line:nth-child(3) {
+        .burger-btn.is-active .burger-line:nth-child(3) {
             transform: translateY(-8px) rotate(-45deg);
         }
 
         /* Mobile Navigation */
         @media (max-width: 639px) {
-            .burger-menu {
+            .burger-btn {
                 display: flex;
                 position: absolute;
                 right: var(--space-md);
@@ -252,12 +268,12 @@ SPDX-License-Identifier: MIT
                 transform: translateY(-50%);
             }
 
-            .header-content {
+            .header-inner {
                 position: relative;
                 padding-right: 60px;
             }
 
-            .nav-menu {
+            .nav-drawer {
                 position: absolute;
                 top: 100%;
                 left: 0;
@@ -271,27 +287,27 @@ SPDX-License-Identifier: MIT
                 z-index: 99;
             }
 
-            .nav-menu.is-open {
+            .nav-drawer.is-open {
                 opacity: 1;
                 visibility: visible;
                 transform: translateY(0);
             }
 
-            .nav-menu ul {
+            .nav-drawer ul {
                 flex-direction: column;
                 gap: 0;
                 padding: var(--space-md);
             }
 
-            .nav-menu li {
+            .nav-drawer li {
                 border-bottom: 1px solid var(--color-bg);
             }
 
-            .nav-menu li:last-child {
+            .nav-drawer li:last-child {
                 border-bottom: none;
             }
 
-            .nav-menu a {
+            .nav-drawer a {
                 display: block;
                 padding: var(--space-md);
                 text-align: center;
@@ -307,39 +323,47 @@ SPDX-License-Identifier: MIT
         }
 
         /* Hero Section */
-        .hero {
+        .hero-section {
             background: linear-gradient(135deg, var(--color-primary-dark) 0%, var(--color-primary) 100%);
             color: var(--color-white);
-            padding: var(--space-3xl) var(--space-md);
+            padding: 0;
             text-align: center;
             position: relative;
             overflow: hidden;
         }
 
-        .hero::before {
-            content: '🔧 ✂️ 🔌';
-            position: absolute;
-            top: 10%;
-            right: 5%;
-            font-size: clamp(2rem, 6vw, 4rem);
-            opacity: 0.15;
+        .hero-slide {
+            height: clamp(420px, 60vh, 700px);
+            background-size: cover;
+            background-position: center;
+            background-color: var(--color-primary-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
         }
 
-        .hero::after {
-            content: '🧵 🪑 🚲';
+        .hero-slide-overlay {
             position: absolute;
-            bottom: 10%;
-            left: 5%;
-            font-size: clamp(2rem, 6vw, 4rem);
-            opacity: 0.15;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(26, 24, 80, 0.42) 0%, rgba(40, 39, 111, 0.28) 100%);
         }
 
-        .hero h1 {
+        .hero-slide-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: var(--color-white);
+            padding: var(--space-2xl) 0;
+        }
+
+        .hero-slide-content h1 {
             color: var(--color-white);
             margin-bottom: var(--space-lg);
+            text-shadow: 0 2px 10px rgba(2, 1, 26, 0.7);
         }
 
-        .hero h1::after {
+        .hero-slide-content h1::after {
             display: none;
         }
 
@@ -390,17 +414,18 @@ SPDX-License-Identifier: MIT
         }
 
         /* Sections */
-        section {
+        .page-section {
             padding: var(--space-3xl) var(--space-md);
         }
 
-        section:nth-child(even) {
+        .section-alt {
             background: var(--color-white);
         }
 
+
         .section-compact {
-            padding-top: var(--space-xl);
-            padding-bottom: var(--space-xl);
+            padding-top: var(--space-lg);
+            padding-bottom: var(--space-lg);
         }
 
         .bg-white {
@@ -423,11 +448,15 @@ SPDX-License-Identifier: MIT
         }
 
         .card {
-            background: var(--color-bg);
+            background: var(--color-white);
             border-radius: var(--radius-lg);
             padding: var(--space-lg);
             border-left: 4px solid var(--color-primary-dark);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .section-alt .card {
+            background: var(--color-bg);
         }
 
         .card:hover {
@@ -464,7 +493,8 @@ SPDX-License-Identifier: MIT
             margin-bottom: var(--space-md);
         }
 
-        .location-image {
+        .location-image,
+        .location-card .image-placeholder {
             width: 100%;
             height: 200px;
             object-fit: cover;
@@ -560,20 +590,24 @@ SPDX-License-Identifier: MIT
             margin-top: var(--space-xl);
         }
 
+        .email-cta h3 {
+            color: var(--color-white);
+        }
+
         .email-cta a {
-            color: var(--color-primary);
+            color: var(--color-white);
             font-weight: 600;
-            border-bottom: 2px solid var(--color-primary);
+            border-bottom: 2px solid var(--color-white);
         }
 
         .email-cta a:hover {
-            color: var(--color-white);
-            border-bottom-color: var(--color-white);
+            color: var(--color-bg);
+            border-bottom-color: var(--color-bg);
         }
 
         /* Supporters */
         .supporters-section {
-            background: var(--color-white);
+            background: var(--color-bg);
         }
 
         .supporters-grid {
@@ -591,6 +625,12 @@ SPDX-License-Identifier: MIT
             border: 2px solid var(--color-primary-dark);
             text-align: center;
             transition: transform 0.2s ease;
+        }
+
+        .supporter-logo .image-placeholder {
+            min-height: 80px;
+            font-size: 1.5rem;
+            margin: 0 0 var(--space-xs) 0;
         }
 
         .supporter-logo:hover {
@@ -620,7 +660,14 @@ SPDX-License-Identifier: MIT
         }
 
         footer a {
-            color: var(--color-primary);
+            color: var(--color-bg);
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.2s ease;
+        }
+
+        footer a:hover,
+        footer a:focus {
+            border-bottom-color: var(--color-bg);
         }
 
         .footer-links {
@@ -652,6 +699,11 @@ SPDX-License-Identifier: MIT
             margin: var(--space-lg) 0;
         }
 
+        .image-grid .image-placeholder {
+            min-height: 330px;
+            margin: 0;
+        }
+
         .image-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -659,13 +711,38 @@ SPDX-License-Identifier: MIT
             margin: var(--space-xl) 0;
         }
 
+        .image-grid-item {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-xs);
+        }
+
+        .image-grid-label {
+            margin: 0;
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            text-align: center;
+            color: var(--color-primary);
+        }
+
+
         /* Breakpoints */
 
         /* Tablet: 640px and up */
         @media (min-width: 640px) {
+            body {
+                font-size: 17px;
+            }
             .card-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
+            .location-image,
+            .location-card .image-placeholder {
+                height: 240px;
+            }
+
+
 
             .location-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -674,17 +751,27 @@ SPDX-License-Identifier: MIT
 
         /* Desktop: 1024px and up */
         @media (min-width: 1024px) {
-            .header-content {
+            body {
+                font-size: 18px;
+            }
+            .header-inner {
                 flex-direction: row;
                 justify-content: space-between;
             }
+            .location-image,
+            .location-card .image-placeholder {
+                height: 300px;
+            }
+            .image-grid .image-placeholder {
+                min-height: 500px;
+            }
 
-            .container {
-                padding: 0 var(--space-xl);
+            .brn-container {
+                padding: 0 var(--space-lg);
             }
 
             section {
-                padding: var(--space-3xl) var(--space-xl);
+                padding: var(--space-3xl) var(--space-lg);
             }
 
             .card-grid {
@@ -692,7 +779,7 @@ SPDX-License-Identifier: MIT
             }
 
             .hero {
-                padding: var(--space-3xl) var(--space-xl);
+                padding: var(--space-3xl) var(--space-lg);
             }
 
             .supporters-grid {
@@ -710,8 +797,13 @@ SPDX-License-Identifier: MIT
                 --space-3xl: 5rem;
             }
 
-            .container {
+            .brn-container {
                 max-width: 1400px;
+            }
+
+            .location-image,
+            .location-card .image-placeholder {
+                height: 400px;
             }
 
             .section-intro {
@@ -779,19 +871,19 @@ SPDX-License-Identifier: MIT
 
 <body>
     <!-- Header with Navigation -->
-    <header>
-        <div class="container header-content">
-            <a href="#" class="logo" aria-label="Back to top">
+    <header class="site-header">
+        <div class="brn-container header-inner">
+            <a href="#" class="site-logo" aria-label="Back to top">
                 <img src="https://basingstoke.repair/assets/images/logos/brn-logo.png"
                     alt="Basingstoke Repair Network - Fix It, Don't Bin It!">
             </a>
-            <button class="burger-menu" aria-label="Toggle navigation menu" aria-expanded="false"
+            <button class="burger-btn" aria-label="Toggle navigation menu" aria-expanded="false"
                 aria-controls="mobile-nav">
                 <span class="burger-line"></span>
                 <span class="burger-line"></span>
                 <span class="burger-line"></span>
             </button>
-            <nav id="mobile-nav" class="nav-menu">
+            <nav id="mobile-nav" class="site-nav nav-drawer">
                 <ul>
                     <li><a href="#about">About</a></li>
                     <li><a href="#why-repair">Why Repair</a></li>
@@ -805,22 +897,18 @@ SPDX-License-Identifier: MIT
     </header>
 
     <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <h1>Fix It, Don't Bin It!</h1>
-            <p class="hero-tagline">Our Repair Cafés are here to help fix your broken things, saving you money, and
-                keeping them out of landfill</p>
-            <div class="hero-cta">
-                <a href="#locations" class="btn btn-primary">Find a Repair Café</a>
-                <a href="#volunteer" class="btn btn-secondary">Volunteer With Us</a>
+    <section class="hero-section">
+        <div class="hero-slide">
+            <div class="hero-slide-overlay"></div>
+            <div class="brn-container hero-slide-content">
+                <h1>Fix It, Don't Bin It!</h1>
             </div>
-
         </div>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="bg-white section-compact">
-        <div class="container">
+    <section id="about" class="page-section section-compact">
+        <div class="brn-container">
             <h2>How it works</h2>
             <p class="section-intro">Come along to one of our Repair Café sessions, bring your broken items, and sit
                 with a cuppa while our friendly volunteers try to fix them. It's free, though donations are
@@ -877,8 +965,7 @@ SPDX-License-Identifier: MIT
                 <span class="skill-tag">...and more</span>
             </div>
             <div class="notice">
-                <p>Sharpening and Upholstery are not always available <a href"mailto:info@basingsoke.reapir">Email us
-                        beforehand</a></p>
+                <p>Sharpening and upholstery are not always available — <a href="mailto:info@basingstoke.repair">email us beforehand</a> to check.</p>
             </div>
             <h3>❌ What we can't fix</h3>
             <p>Unfortunately, for safety reasons, we <strong>cannot</strong> repair items where we can't test whether
@@ -886,7 +973,6 @@ SPDX-License-Identifier: MIT
             <div class="skills-grid">
                 <span class="skill-tag skill-tag-negative">Cane Furniture</span>
                 <span class="skill-tag skill-tag-negative">Electric Blankets</span>
-                <span class="skill-tag skill-tag-negative">Petrol Driven items</span>
                 <span class="skill-tag skill-tag-negative">Microwaves</span>
                 <span class="skill-tag skill-tag-negative">Fridges & Freezers</span>
             </div>
@@ -899,16 +985,25 @@ SPDX-License-Identifier: MIT
 
             <!-- Image Placeholder -->
             <div class="image-grid">
-                <div class="image-placeholder" title="Photo: Team in action">📸<br><small>Team in action</small></div>
-                <div class="image-placeholder" title="Photo: Repair work">🔧<br><small>Repairs underway</small></div>
-                <div class="image-placeholder" title="Photo: Happy customer">😊<br><small>Happy fix!</small></div>
+                <div class="image-grid-item">
+                    <p class="image-grid-label">Team in action</p>
+                    <div class="image-placeholder">📸</div>
+                </div>
+                <div class="image-grid-item">
+                    <p class="image-grid-label">Repairs underway</p>
+                    <div class="image-placeholder">🔧</div>
+                </div>
+                <div class="image-grid-item">
+                    <p class="image-grid-label">Happy fix!</p>
+                    <div class="image-placeholder">😊</div>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Why Repair Matters Section -->
-    <section id="why-repair" class="bg-white section-compact">
-        <div class="container">
+    <section id="why-repair" class="page-section section-alt section-compact">
+        <div class="brn-container">
             <h2>Why repair matters</h2>
             <p class="section-intro">Repairing instead of replacing helps create a more sustainable, connected, and
                 skillful community. Here's why repair matters:</p>
@@ -934,8 +1029,8 @@ SPDX-License-Identifier: MIT
     </section>
 
     <!-- Locations Section -->
-    <section id="locations" class="section-compact">
-        <div class="container">
+    <section id="locations" class="page-section section-compact">
+        <div class="brn-container">
             <h2>Our repair cafés</h2>
             <p class="section-intro">We run regular Repair Cafés across Basingstoke. Find your nearest location and pop
                 in.</p>
@@ -943,13 +1038,14 @@ SPDX-License-Identifier: MIT
             <div class="location-grid">
                 <div class="location-card">
                     <h3>Chineham Repair Café</h3>
-                    <img src="https://basingstoke.repair/assets/images/locations/chineham-team.jpg"
-                        alt="Chineham Repair Café Team" class="location-image">
+                    <div class="image-placeholder">Team Photo</div>
                     <div class="location-meta">
                         <span>📅 3rd Saturday of each month</span>
                         <span>🕐 10am - 1pm</span>
                     </div>
-                    <p><strong>Christ Church Chineham</strong><br>Reading Road (next to Surgery)<br>RG24 8LT</p>
+                    <p class="location-next-date"><strong>Next date:</strong> [Date]</p>
+                    <p class="location-last-items"><strong>Best arrive before:</strong> 12pm</p>
+                    <p class="location-address"><strong>Christ Church Chineham</strong><br>Reading Road (next to Surgery)<br>RG24 8LT</p>
                     <div class="map-container">
                         <iframe
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2495.456789012345!2d-1.078901!3d51.284567!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4874212345678901%3A0xabcdef1234567890!2sChrist%20Church%20Chineham!5e0!3m2!1sen!2suk!4v1234567890123!5m2!1sen!2suk"
@@ -961,13 +1057,14 @@ SPDX-License-Identifier: MIT
 
                 <div class="location-card">
                     <h3>Hatch Warren & Beggarwood Repair Café</h3>
-                    <img src="https://basingstoke.repair/assets/images/locations/hatch-warren-team.jpg"
-                        alt="Hatch Warren Repair Café Team" class="location-image">
+                    <div class="image-placeholder">Team Photo</div>
                     <div class="location-meta">
                         <span>📅 1st Saturday of each month</span>
                         <span>🕐 10:30am - 1pm</span>
                     </div>
-                    <p><strong>Hatch Warren Community Centre</strong><br>RG22 4XF</p>
+                    <p class="location-next-date"><strong>Next date:</strong> [Date]</p>
+                    <p class="location-last-items"><strong>Best arrive before:</strong> 12pm</p>
+                    <p class="location-address"><strong>Hatch Warren Community Centre</strong><br>RG22 4XF</p>
                     <div class="map-container">
                         <iframe
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2495.456789012345!2d-1.078901!3d51.284567!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4874212345678901%3A0xabcdef1234567890!2sHatch%20Warren%20Community%20Centre!5e0!3m2!1sen!2suk!4v1234567890123!5m2!1sen!2suk"
@@ -1003,8 +1100,8 @@ SPDX-License-Identifier: MIT
     </section>
 
     <!-- Volunteer Section -->
-    <section id="volunteer">
-        <div class="container">
+    <section id="volunteer" class="page-section section-alt section-compact">
+        <div class="brn-container">
             <h2>We need You!</h2>
             <p class="section-intro">We're always looking for friendly people to join our volunteer team. We've learned
                 that to run a successful and sustainable Cafe takes many different skills and personalities.</p>
@@ -1036,64 +1133,60 @@ SPDX-License-Identifier: MIT
                 <h3>Ready to get involved?</h3>
                 <p>To explore volunteering with our friendly team:</p>
                 <p style="margin-top: var(--space-md);">
-                    📧 <a href="mailto:info@basingstoke.repair">info@basingstoke.repair</a><br><br>
-                    🌐 <a href="https://basingstoke.repair" target="_blank">basingstoke.repair</a>
+                    📧 <a href="mailto:info@basingstoke.repair">info@basingstoke.repair</a>
                 </p>
                 <p style="margin-top: var(--space-md); font-size: 0.9rem;">Or just come along to one of our sessions and
                     say hello.</p>
-            </div>
-
-            <!-- Image Placeholder -->
-            <div class="image-placeholder" style="margin-top: var(--space-2xl);" title="Photo: Our volunteers">
-                👥<br><small>Our wonderful volunteers</small>
             </div>
         </div>
     </section>
 
     <!-- Supporters Section -->
-    <section id="supporters" class="supporters-section">
-        <div class="container">
+    <section id="supporters" class="page-section section-compact">
+        <div class="brn-container">
             <h2>Our supporters</h2>
             <p class="section-intro">We're grateful to the following organizations and funders who help keep our Repair
                 Cafés running.</p>
 
             <div class="supporters-grid">
                 <a href="https://www.basingstoke.gov.uk/" target="_blank" class="supporter-logo">
-                    <img src="https://basingstoke.repair/assets/images/supporters/basingstoke-council.png"
-                        alt="Basingstoke & Deane Council">
+                    <div class="image-placeholder">Logo</div>
                     <div class="supporter-name">Basingstoke & Deane Council</div>
                 </a>
                 <a href="https://fourlanestrust.org.uk/" target="_blank" class="supporter-logo">
-                    <img src="https://basingstoke.repair/assets/images/supporters/four-lanes-trust.png"
-                        alt="Four Lanes Trust">
+                    <div class="image-placeholder">Logo</div>
                     <div class="supporter-name">Four Lanes Trust</div>
                 </a>
                 <a href="https://restarters.net/" target="_blank" class="supporter-logo">
-                    <img src="https://basingstoke.repair/assets/images/supporters/restarters.png" alt="Restarters.net">
+                    <div class="image-placeholder">Logo</div>
                     <div class="supporter-name">Restarters.net</div>
                 </a>
                 <a href="https://www.repaircafe.org/" target="_blank" class="supporter-logo">
-                    <img src="https://basingstoke.repair/assets/images/supporters/repair-cafe-international.png"
-                        alt="Repair Café International">
+                    <div class="image-placeholder">Logo</div>
                     <div class="supporter-name">Repair Café International</div>
                 </a>
                 <a href="https://greenerbasingstoke.org/" target="_blank" class="supporter-logo">
-                    <img src="https://basingstoke.repair/assets/images/supporters/greener-basingstoke.png"
-                        alt="Greener Basingstoke">
+                    <div class="image-placeholder">Logo</div>
                     <div class="supporter-name">Greener Basingstoke</div>
                 </a>
                 <a href="https://www.tnlcommunityfund.org.uk/" target="_blank" class="supporter-logo">
-                    <img src="https://basingstoke.repair/assets/images/supporters/national-lottery.png"
-                        alt="National Lottery Community Fund">
+                    <div class="image-placeholder">Logo</div>
                     <div class="supporter-name">National Lottery Community Fund</div>
                 </a>
                 <a href="https://www.veolia.co.uk/" target="_blank" class="supporter-logo">
-                    <img src="https://basingstoke.repair/assets/images/supporters/veolia.png" alt="Veolia">
+                    <div class="image-placeholder">Logo</div>
                     <div class="supporter-name">Veolia</div>
                 </a>
+                <a href="https://www.basingstokelions.org.uk/index.html" target="_blank" class="supporter-logo">
+                    <div class="image-placeholder">Logo</div>
+                    <div class="supporter-name">The Lions Club of Basingstoke</div>
+                </a>
+                <a href="https://www.tesco.com/" target="_blank" class="supporter-logo">
+                    <div class="image-placeholder">Logo</div>
+                    <div class="supporter-name">Tesco</div>
+                </a>
                 <a href="https://www.oakleystitchers.org.uk/" target="_blank" class="supporter-logo">
-                    <img src="https://basingstoke.repair/assets/images/supporters/oakley-stitchers.jpg"
-                        alt="Oakley Stitchers CIC">
+                    <div class="image-placeholder">Logo</div>
                     <div class="supporter-name">Oakley Stitchers CIC</div>
                 </a>
             </div>
@@ -1101,13 +1194,12 @@ SPDX-License-Identifier: MIT
     </section>
 
     <!-- Footer / Contact -->
-    <footer id="contact">
-        <div class="container">
+    <footer id="contact" class="site-footer">
+        <div class="brn-container">
             <h2 style="color: var(--color-white);">Get in touch</h2>
 
             <div class="footer-links">
                 <a href="mailto:info@basingstoke.repair">📧 info@basingstoke.repair</a>
-                <a href="https://basingstoke.repair" target="_blank">🌐 basingstoke.repair</a>
             </div>
 
             <p>Part of the <a href="https://therestartproject.org" target="_blank">Restart Project</a> network</p>
@@ -1121,8 +1213,8 @@ SPDX-License-Identifier: MIT
     </footer>
     <script>
         // Burger menu toggle
-        const burger = document.querySelector('.burger-menu');
-        const nav = document.querySelector('.nav-menu');
+        const burger = document.querySelector('.burger-btn');
+        const nav = document.querySelector('.nav-drawer');
 
         burger.addEventListener('click', () => {
             const isOpen = nav.classList.toggle('is-open');
