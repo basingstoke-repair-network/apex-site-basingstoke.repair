@@ -742,7 +742,7 @@ SPDX-License-Identifier: MIT
 
         .impact-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: var(--space-md);
             margin-bottom: var(--space-md);
         }
@@ -753,6 +753,16 @@ SPDX-License-Identifier: MIT
             align-items: center;
             gap: var(--space-xs);
             text-align: center;
+        }
+
+        .impact-item-primary {
+            background: rgba(40, 39, 111, 0.05);
+            padding: var(--space-sm);
+            border-radius: var(--radius-md);
+        }
+
+        .impact-item-primary .impact-highlight {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
         }
 
         .impact-highlight {
@@ -1107,16 +1117,20 @@ SPDX-License-Identifier: MIT
                     <div class="impact-section">
                         <h3 class="impact-heading">Our total impact so far</h3>
                         <div class="impact-grid">
+                            <div class="impact-item impact-item-primary">
+                                <span class="impact-highlight">[X] items</span>
+                                <span class="impact-detail">repaired</span>
+                            </div>
                             <div class="impact-item">
-                                <span class="impact-highlight">[X] tonnes</span>
+                                <span class="impact-highlight">[X] kg</span>
                                 <span class="impact-detail">waste prevented</span>
                             </div>
                             <div class="impact-item">
-                                <span class="impact-highlight">[X] tonnes</span>
+                                <span class="impact-highlight">[X] kg</span>
                                 <span class="impact-detail">CO<sub>2</sub>e prevented</span>
                             </div>
                         </div>
-                        <p class="impact-footer">- Total stats as of [d MMM YYYY] -</p>
+                        <p class="impact-footer">Stats between [MMM YYY] and [MMM YYYY]</p>
                     </div>
                 </div>
 
@@ -1140,16 +1154,20 @@ SPDX-License-Identifier: MIT
                     <div class="impact-section">
                         <h3 class="impact-heading">Our total impact so far</h3>
                         <div class="impact-grid">
+                            <div class="impact-item impact-item-primary">
+                                <span class="impact-highlight">[X] items</span>
+                                <span class="impact-detail">repaired</span>
+                            </div>
                             <div class="impact-item">
-                                <span class="impact-highlight">[X] tonnes</span>
+                                <span class="impact-highlight">[X] kg</span>
                                 <span class="impact-detail">waste prevented</span>
                             </div>
                             <div class="impact-item">
-                                <span class="impact-highlight">[X] tonnes</span>
+                                <span class="impact-highlight">[X] kg</span>
                                 <span class="impact-detail">CO<sub>2</sub>e prevented</span>
                             </div>
                         </div>
-                        <p class="impact-footer">- Total stats as of [d MMM YYYY] -</p>
+                        <p class="impact-footer">Stats between [MMM YYY] and [MMM YYYY]</p>
                     </div>
                 </div>
             </div>
