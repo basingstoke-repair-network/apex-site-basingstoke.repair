@@ -134,6 +134,21 @@ SPDX-License-Identifier: MIT
             box-shadow: 0 2px 8px rgba(2, 1, 26, 0.08);
         }
 
+        /* Announcement Panel */
+        .announcement-panel {
+            background: linear-gradient(135deg, #fff9e6 0%, #fff5d6 100%);
+            color: var(--color-text);
+            padding: var(--space-sm) 0;
+            text-align: center;
+            font-size: 0.95rem;
+            border-bottom: 1px solid var(--color-gray);
+        }
+
+        .announcement-panel p {
+            margin-bottom: 0;
+            font-weight: 500;
+        }
+
         .header-inner {
             display: flex;
             flex-direction: column;
@@ -895,6 +910,13 @@ SPDX-License-Identifier: MIT
             </nav>
         </div>
     </header>
+
+    <!-- Announcement Panel -->
+    <div class="announcement-panel">
+        <div class="brn-container">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+    </div>
 
     <!-- Hero Section -->
     <section class="hero-section">
