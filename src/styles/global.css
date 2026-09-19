@@ -536,14 +536,6 @@ img {
   color: var(--color-primary);
 }
 
-/* FIXME: styling for the hardcoded Hatch Warren November 2026 notice in
-   Locations.astro — delete alongside that block once November 2026 has
-   passed. */
-.location-notice {
-  font-weight: bold;
-  color: var(--color-negative);
-}
-
 /* Reserves height for a 3-line address (venue + street + postcode) — the
    longest an address currently gets (see Chineham). Only applied once
    .location-grid goes multi-column (>=640px, see media query below), so
