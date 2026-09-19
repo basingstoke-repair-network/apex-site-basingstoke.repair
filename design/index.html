@@ -726,6 +726,67 @@ SPDX-License-Identifier: MIT
             color: var(--color-primary);
         }
 
+        .impact-section {
+            margin-top: var(--space-md);
+            padding-top: var(--space-md);
+            border-top: 1px solid var(--color-gray);
+            text-align: center;
+        }
+
+        .impact-heading {
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            color: var(--color-primary);
+            margin-bottom: var(--space-md);
+        }
+
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-md);
+            margin-bottom: var(--space-md);
+        }
+
+        .impact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-xs);
+            text-align: center;
+        }
+
+        .impact-item-primary {
+            background: rgba(40, 39, 111, 0.05);
+            padding: var(--space-sm);
+            border-radius: var(--radius-md);
+        }
+
+        .impact-item-primary .impact-highlight {
+            font-size: clamp(1.75rem, 4vw, 2.5rem);
+        }
+
+        .impact-highlight {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: clamp(1.25rem, 3vw, 1.75rem);
+            color: var(--color-primary);
+            line-height: 1;
+        }
+
+        .impact-detail {
+            font-size: 0.9rem;
+            color: var(--color-text);
+            opacity: 0.8;
+            line-height: 1.2;
+        }
+
+        .impact-footer {
+            font-size: 0.8rem;
+            color: var(--color-text);
+            opacity: 0.6;
+            margin-top: var(--space-md);
+        }
+
 
         /* Breakpoints */
 
@@ -1053,6 +1114,24 @@ SPDX-License-Identifier: MIT
                             title="Map showing Christ Church Chineham location">
                         </iframe>
                     </div>
+                    <div class="impact-section">
+                        <h3 class="impact-heading">Our total impact so far</h3>
+                        <div class="impact-grid">
+                            <div class="impact-item impact-item-primary">
+                                <span class="impact-highlight">[X] items</span>
+                                <span class="impact-detail">repaired</span>
+                            </div>
+                            <div class="impact-item">
+                                <span class="impact-highlight">[X] kg</span>
+                                <span class="impact-detail">waste prevented</span>
+                            </div>
+                            <div class="impact-item">
+                                <span class="impact-highlight">[X] kg</span>
+                                <span class="impact-detail">CO<sub>2</sub>e prevented</span>
+                            </div>
+                        </div>
+                        <p class="impact-footer">Stats between [MMM YYY] and [MMM YYYY]</p>
+                    </div>
                 </div>
 
                 <div class="location-card">
@@ -1071,6 +1150,24 @@ SPDX-License-Identifier: MIT
                             allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
                             title="Map showing Hatch Warren Community Centre location">
                         </iframe>
+                    </div>
+                    <div class="impact-section">
+                        <h3 class="impact-heading">Our total impact so far</h3>
+                        <div class="impact-grid">
+                            <div class="impact-item impact-item-primary">
+                                <span class="impact-highlight">[X] items</span>
+                                <span class="impact-detail">repaired</span>
+                            </div>
+                            <div class="impact-item">
+                                <span class="impact-highlight">[X] kg</span>
+                                <span class="impact-detail">waste prevented</span>
+                            </div>
+                            <div class="impact-item">
+                                <span class="impact-highlight">[X] kg</span>
+                                <span class="impact-detail">CO<sub>2</sub>e prevented</span>
+                            </div>
+                        </div>
+                        <p class="impact-footer">Stats between [MMM YYY] and [MMM YYYY]</p>
                     </div>
                 </div>
             </div>
