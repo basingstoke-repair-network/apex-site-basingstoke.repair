@@ -56,7 +56,26 @@ const supporters = defineCollection({
   }),
 });
 
+const announcements = defineCollection({
+  loader: glob({ pattern: '**/*.json', base: './src/content/announcements' }),
+  schema: z.object({
+    message: z.string(),
+    /** Announcement shows from the start of this date. Omit for "always". */
+    startDate: z
+      .string()
+      .regex(/^\d{4}-\d{2}-\d{2}$/, 'Expected YYYY-MM-DD')
+      .optional(),
+    /** Announcement shows until the end of this date. Omit for "always". */
+    endDate: z
+      .string()
+      .regex(/^\d{4}-\d{2}-\d{2}$/, 'Expected YYYY-MM-DD')
+      .optional(),
+    order: z.number().int().default(0),
+  }),
+});
+
 export const collections = {
   locations,
   supporters,
+  announcements,
 };
