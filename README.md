@@ -3,228 +3,138 @@ SPDX-FileCopyrightText: 2024-2026 Basingstoke Repair Network
 SPDX-License-Identifier: CC0-1.0
 -->
 
-# Basingstoke Repair Network - Initial Website
+# Basingstoke Repair Network - Website (V2)
 
-**Initial landing page for the Basingstoke Repair Network**
+**Official website for the Basingstoke Repair Network**
 
-A static HTML website for the Basingstoke Repair Network, showcasing community repair cafés across Basingstoke and North Hampshire. This is the initial version of the website, designed to establish an online presence and provide essential information about our repair cafés.
+A lightweight [Astro.js](https://astro.build) static site showcasing community repair cafés across Basingstoke and North Hampshire. V2 is a component-based rewrite of the original static HTML prototype, built to stay fast, dependency-light, and easy to maintain.
 
 ## Features
 
-- **Responsive Design**: Mobile-first design that works on all devices
-- **TailwindCSS**: Utility-first CSS framework served via CDN
-- **Image Carousel**: Hero section with automatic image rotation
-- **Mobile Navigation**: Hamburger menu for mobile devices
-- **Accessibility**: WCAG compliant with proper ARIA labels and keyboard navigation
-- **Performance**: Optimized with lazy loading and smooth animations
-- **No Build Step**: Pure static HTML, CSS, and JavaScript
+- **Responsive Design**: Mobile-first layout that works on all devices
+- **Zero JS by default**: Astro ships minimal HTML/CSS/JS; JavaScript is only added where genuinely required
+- **Content Collections**: Locations and supporters are managed as per-item JSON files through Astro's content layer
+- **Accessibility**: WCAG-conscious markup with ARIA labels, keyboard navigation, and high-contrast text
+- **Visual Regression Testing**: Playwright golden-master tests guard against unintended visual changes
 
 ## Technology Stack
 
-- **HTML5**: Semantic markup
-- **TailwindCSS**: v3.x via CDN
-- **Font Awesome**: v6.5.1 for icons
-- **Swiper.js**: v11 for carousel functionality
-- **JavaScript**: Vanilla JS for interactivity
-- **Node.js**: For local development server
+- **[Astro.js v7](https://astro.build)**: Static site generator, `output: 'static'`
+- **Plain CSS**: Hand-authored CSS custom properties (`src/styles/global.css`) — no CSS framework
+- **Font Awesome**: Icons, loaded via CDN
+- **Node.js**: Build tooling and dev server
+- **[Playwright](https://playwright.dev)**: Visual regression testing
+- **[prek](https://github.com/j178/prek)**: Pre-commit hook runner (linting, formatting, SPDX/REUSE checks, Conventional Commits linting)
+
+Third-party runtime libraries are preferred from a CDN over npm dependencies — see [CLAUDE.md](CLAUDE.md) for the full rationale.
 
 ## Project Structure
 
 ```
 apex-site-basingstoke.repair/
-├── public/
-│   ├── index.html              # Main HTML file
-│   └── assets/
-│       ├── css/
-│       │   └── styles.css      # Custom CSS with color palette
-│       ├── js/
-│       │   └── main.js         # JavaScript for interactivity
-│       └── images/
-│           ├── logos/           # BRN logo files
-│           ├── locations/       # Team photos for each café
-│           ├── supporters/      # Supporter logos
-│           └── hero-1.jpg, hero-2.jpg, hero-3.jpg  # Hero carousel images
-├── package.json
-└── README.md
+├── src/
+│   ├── components/         # Reusable Astro components (Header, Hero, HowItWorks,
+│   │                       # WhyRepair, Locations, NextDate, Volunteer, Supporters,
+│   │                       # Footer, GalleryCarousel)
+│   ├── layouts/            # Page layout templates (BaseLayout.astro)
+│   ├── pages/              # File-based routing — currently a single page (index.astro)
+│   ├── content.config.ts   # Astro content layer collection definitions
+│   ├── content/
+│   │   ├── locations/      # One JSON file per repair café location
+│   │   └── supporters/     # One JSON file per supporter organization
+│   └── styles/
+│       └── global.css      # Brand colors, spacing, typography as CSS custom properties
+├── public/                 # Static assets served as-is
+│   └── assets/images/      # Logos, location team photos, supporter logos, hero images
+├── tests/                  # Playwright visual regression tests
+├── astro.config.mjs        # Astro configuration
+├── eslint.config.*         # ESLint (eslint-plugin-astro)
+├── playwright.config.js    # Playwright configuration
+├── netlify.toml            # Netlify deployment config
+├── CLAUDE.md               # AI assistant context and project directives
+├── CONTRIBUTING.md         # Contribution guidelines
+└── VISUAL_TESTING.md       # Visual regression testing guide
 ```
 
 ## Color Palette
 
-The website uses the official BRN color scheme:
+The website uses the official BRN color scheme, defined as CSS custom properties in `src/styles/global.css`:
 
 - **Header**: `#c6c8c9` (light gray background) with `#28276f` (deep blue) for icons/text
-- **Main Content**: `#eeeeee` (off-white background) with `#02011A` (near-black) for text
+- **Content sections**: alternate between `#eeeeee` (off-white) and `#ffffff` (white) backgrounds, both with `#02011A` (near-black) for text
 - **Footer**: `#28276f` (deep blue background) with `#eeeeee` (off-white) for text
+
+**Do not change these colors without explicit approval.**
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js (v14 or higher)
-- npm or yarn
+- Node.js (LTS recommended)
+- npm
 
 ### Installation
 
-1. Clone the repository:
+CI runs on Node 22 — use the same version locally to avoid dependency mismatches:
+
 ```bash
 git clone <repository-url>
 cd apex-site-basingstoke.repair
-```
-
-2. Install dependencies:
-```bash
+nvm use 22
 npm install
 ```
 
-3. Add your images to the appropriate directories:
-   - `public/assets/images/logos/brn-logo.png` - Main BRN logo
-   - `public/assets/images/hero-1.jpg`, `hero-2.jpg`, `hero-3.jpg` - Hero carousel images
-   - `public/assets/images/locations/chineham-team.jpg` - Chineham team photo
-   - `public/assets/images/locations/hatch-warren-team.jpg` - Hatch Warren team photo
-   - `public/assets/images/supporters/*` - Supporter logos
-
 ### Development
-
-Run the local development server:
 
 ```bash
 npm run dev
 ```
 
-The site will be available at `http://localhost:3000`
+The dev server prints its local URL on startup (Astro's default is `http://localhost:4321`).
 
-### Production
-
-Run the production server:
+### Production Build
 
 ```bash
-npm start
+npm run build
+npm run preview   # serve the built output locally
 ```
 
-## Adding Images
+## Content Management
 
-### Required Images
+Repair café locations and supporter organizations are managed as per-item JSON files under `src/content/locations/` and `src/content/supporters/`, validated against schemas in `src/content.config.ts`. There is currently no browser-based CMS — content changes go through Git. (A Decap CMS integration has been proposed but is not yet implemented.)
 
-1. **BRN Logo** (`public/assets/images/logos/brn-logo.png`)
-   - Transparent PNG recommended
-   - Recommended size: 200x200px or larger
+Currently listed locations: Chineham and Hatch Warren & Beggarwood (active), Brookvale (coming soon).
 
-2. **Hero Carousel Images** (`public/assets/images/hero-[1-3].jpg`)
-   - 3 images showcasing repair café activities
-   - Recommended size: 1920x1080px
-   - Format: JPG or PNG
+## Quality Checks
 
-3. **Team Photos** (`public/assets/images/locations/`)
-   - `chineham-team.jpg`
-   - `hatch-warren-team.jpg`
-   - Recommended size: 800x600px
-
-> **Note (Astro V2):** the locations grid itself now lives in
-> `src/components/Locations.astro` / `src/styles/global.css` rather than
-> `public/index.html`. Its `.location-address` block has a min-height sized
-> for a 3-line address (venue, street, postcode) so map iframes stay aligned
-> when cards sit side-by-side — check that value if a new location's address
-> needs more lines.
-
-4. **Supporter Logos** (`public/assets/images/supporters/`)
-   - Individual logo files for each supporter
-   - Transparent PNG recommended
-   - Max height: 80px
-
-### Image Optimization
-
-For best performance, optimize images before adding them:
-
-- Use WebP format where possible
-- Compress JPG images to 80-85% quality
-- Ensure images are appropriately sized (don't use 4K images for thumbnails)
-
-## Customization
-
-### Updating Content
-
-All content is in `public/index.html`. Key sections to update:
-
-- **Header Navigation**: Lines 31-47
-- **Hero Section**: Lines 51-92
-- **Introduction**: Lines 98-114
-- **Locations**: Lines 135-213
-- **Get Involved**: Lines 232-293
-- **Supporters**: Lines 296-327
-- **Footer**: Lines 334-375
-
-### Updating Colors
-
-Edit `public/assets/css/styles.css` and modify the CSS variables:
-
-```css
-:root {
-    --header-bg: #c6c8c9;
-    --header-icon: #28276f;
-    --content-bg: #eeeeee;
-    --content-text: #02011A;
-    --footer-bg: #28276f;
-    --footer-text: #eeeeee;
-}
+```bash
+npm run lint          # ESLint (eslint-plugin-astro)
+npm run format:check  # Prettier (HTML)
+npx playwright test   # Visual regression tests — see VISUAL_TESTING.md
 ```
 
-### Adding New Sections
-
-1. Add HTML in `public/index.html`
-2. Add styles in `public/assets/css/styles.css` if needed
-3. Add JavaScript functionality in `public/assets/js/main.js` if needed
-
-## Browser Support
-
-- Chrome (latest)
-- Firefox (latest)
-- Safari (latest)
-- Edge (latest)
-- Mobile browsers (iOS Safari, Chrome Mobile)
-
-## Accessibility Features
-
-- Semantic HTML5 elements
-- ARIA labels for interactive elements
-- Keyboard navigation support
-- Screen reader friendly
-- High contrast text
-- Focus indicators
-- Skip to content link support
-
-## Performance
-
-- CDN-served libraries for fast loading
-- Lazy loading for images
-- Optimized CSS and JavaScript
-- Smooth scroll animations
-- Responsive images
+Alternatively, run `prek run --all-files` to run the full pre-commit hook suite (linting, formatting, YAML/JSON/TOML validation, SPDX/REUSE compliance, and Conventional Commits message linting) in one pass.
 
 ## Deployment
 
-### Static Hosting
+Hosted on **Netlify**, configured via `netlify.toml`:
 
-This site can be deployed to any static hosting service:
+- Build command: `npm run build`
+- Publish directory: `dist/`
 
-- **Netlify**: Drag and drop the `public` folder
-- **Vercel**: Connect your git repository
-- **GitHub Pages**: Push the `public` folder to `gh-pages` branch
-- **AWS S3**: Upload the `public` folder
-- **Cloudflare Pages**: Connect your git repository
+The static output is also compatible with Vercel, Cloudflare Pages, GitHub Pages, and any static file host.
 
-### Example: Deploying to Netlify
+## Accessibility
 
-1. Build is not required (static site)
-2. Set publish directory to `public`
-3. Deploy!
+- Semantic HTML5 elements (`<header>`, `<main>`, `<section>`, `<footer>`)
+- ARIA labels on interactive elements
+- Keyboard navigation support
+- Screen reader friendly markup
+- High contrast text ratios and visible focus indicators
 
 ## Contributing
 
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
+See [CONTRIBUTING.md](CONTRIBUTING.md) for branch naming, commit message conventions, and licensing requirements.
 
 ## Support
 
@@ -234,26 +144,13 @@ For questions or issues:
 
 ## License
 
-MIT License - See LICENSE file for details
+Code is licensed under the **MIT License**; documentation and images are licensed under **CC0-1.0**. See the `LICENSES/` directory and per-file SPDX headers for details.
 
 ## Credits
 
 - **Design & Development**: Basingstoke Repair Network
 - **Icons**: Font Awesome
-- **CSS Framework**: TailwindCSS
-- **Carousel**: Swiper.js
 - **Inspiration**: Global Repair Café movement
-
-## Changelog
-
-### Version 1.0.0 (2025)
-- Initial release
-- Full responsive design
-- Hero carousel
-- Three location sections
-- Get involved section
-- Supporter section
-- Mobile navigation
 
 ---
 
