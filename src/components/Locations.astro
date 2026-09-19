@@ -40,15 +40,6 @@ function formatTime(t: string) {
             <div class="location-card">
               <h3>{name}</h3>
 
-              {/* FIXME: Hardcoded one-off notice for Hatch Warren's cancelled
-                 November 2026 session (venue unavailable) — delete this
-                 block once November 2026 has passed. */}
-              {loc.data.slug === 'hatch-warren' && (
-                <p class="location-notice">
-                  ⚠️ Not running in November 2026 — see you in December!
-                </p>
-              )}
-
               {teamImage && (
                 <img
                   src={teamImage}
