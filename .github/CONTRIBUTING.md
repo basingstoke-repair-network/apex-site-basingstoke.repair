@@ -35,6 +35,29 @@ npm install -g @j178/prek   # or: pnpm add -g @j178/prek / bun install -g @j178/
 prek run --all-files
 ```
 
+### Using Nix, devenv, or a Dev Container
+
+The repo ships a [Nix flake](../flake.nix) that packages the built site, and a [devenv](https://devenv.sh) environment (`devenv.nix`) that provisions Node.js and npm for you — no manual `npm install` needed. You'll still need to run `prek install` yourself once inside the shell (see [#208](https://github.com/basingstoke-repair-network/apex-site-basingstoke.repair/issues/208) for automating that too).
+
+If you have [Nix](https://nixos.org) and [direnv](https://direnv.net) installed, `cd` into the repo and run `direnv allow` once; `.envrc` loads the devenv shell automatically from then on.
+
+Without direnv, enter the shell manually:
+
+```bash
+devenv shell
+```
+
+VS Code users can instead reopen the repo in the provided dev container (`.devcontainer.json`, based on `ghcr.io/cachix/devenv/devcontainer`) via the "Dev Containers: Reopen in Container" command — it provisions the same devenv environment on first build.
+
+`flake.nix` also exposes a plain Nix package build of the site (`nix build`) and a `nix run` target that serves the built output locally — mainly useful for CI/deployment parity checks, not day-to-day development.
+
+If `nix build` fails after a `package-lock.json` change, the pinned `npmDepsHash` in `flake.nix` is stale. Refresh it with:
+
+```bash
+nix run .#update-deps-hash
+# or: nix-update --flake --use-update-script site
+```
+
 ## Branch Naming
 
 Each pull request should solve one specific issue. Name branches as:
