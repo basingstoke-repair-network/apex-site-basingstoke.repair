@@ -81,11 +81,22 @@ export function getNextOccurrence(
   let month = now.getMonth();
 
   for (let i = 0; i < 12; i++) {
-    const date = nthWeekdayOfMonth(year, month, weekday, schedule.weekOfMonth);
-    const endTime = withTime(date, schedule.endTime);
+    // FIXME: Hatch Warren's November 2026 session is cancelled (venue
+    // unavailable). Hardcoded skip for the 1st-Saturday schedule that month —
+    // delete this block once November 2026 has passed.
+    const isHatchWarrenNov2026 =
+      year === 2026 &&
+      month === 10 &&
+      schedule.dayOfWeek.toLowerCase() === 'saturday' &&
+      schedule.weekOfMonth === '1st';
 
-    if (endTime >= now) {
-      return { isToday: date.toDateString() === now.toDateString(), date, endTime };
+    if (!isHatchWarrenNov2026) {
+      const date = nthWeekdayOfMonth(year, month, weekday, schedule.weekOfMonth);
+      const endTime = withTime(date, schedule.endTime);
+
+      if (endTime >= now) {
+        return { isToday: date.toDateString() === now.toDateString(), date, endTime };
+      }
     }
 
     month += 1;
