@@ -1,0 +1,57 @@
+# SPDX-FileCopyrightText: 2024-2026 Basingstoke Repair Network <dev@basingstoke.repair>
+#
+# SPDX-License-Identifier: MIT
+
+name: Protect new branches
+
+on:
+  create
+
+permissions:
+  contents: read
+  administration: write
+
+jobs:
+  apply-protection:
+    if: github.event.ref_type == 'branch'
+    runs-on: ubuntu-latest
+    name: Apply live-equivalent branch protection
+    steps:
+      - name: Check whether branch name is protected
+        id: match
+        env:
+          BRANCH: ${{ github.event.ref }}
+        run: |
+          if [[ "$BRANCH" == release/* ]] || [[ "$BRANCH" =~ ^[0-9]+/.+ ]]; then
+            echo "matched=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "matched=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Apply branch protection
+        if: steps.match.outputs.matched == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BRANCH: ${{ github.event.ref }}
+        run: |
+          gh api \
+            --method PUT \
+            -H "Accept: application/vnd.github+json" \
+            "repos/${{ github.repository }}/branches/$BRANCH/protection" \
+            --input - <<'EOF'
+          {
+            "required_status_checks": null,
+            "enforce_admins": false,
+            "required_pull_request_reviews": {
+              "dismiss_stale_reviews": true,
+              "require_code_owner_reviews": false,
+              "required_approving_review_count": 1,
+              "require_last_push_approval": true
+            },
+            "restrictions": null,
+            "required_conversation_resolution": true,
+            "allow_force_pushes": true,
+            "allow_deletions": false,
+            "block_creations": true
+          }
+          EOF
