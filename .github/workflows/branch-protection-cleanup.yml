@@ -1,0 +1,59 @@
+# SPDX-FileCopyrightText: 2024-2026 Basingstoke Repair Network <dev@basingstoke.repair>
+#
+# SPDX-License-Identifier: MIT
+
+name: Clean up stale branch protection rules
+
+on:
+  schedule:
+    - cron: "0 3 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  administration: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    name: Remove rules for branches that no longer exist
+    steps:
+      - name: Remove stale branch protection rules
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+
+          owner="${GITHUB_REPOSITORY%%/*}"
+          name="${GITHUB_REPOSITORY#*/}"
+
+          branches=$(gh api "repos/${GITHUB_REPOSITORY}/branches" --paginate --jq '.[].name')
+
+          gh api graphql --paginate -f query='
+            query($owner: String!, $name: String!, $endCursor: String) {
+              repository(owner: $owner, name: $name) {
+                branchProtectionRules(first: 100, after: $endCursor) {
+                  nodes {
+                    id
+                    pattern
+                  }
+                  pageInfo {
+                    hasNextPage
+                    endCursor
+                  }
+                }
+              }
+            }' \
+            -f owner="$owner" -f name="$name" \
+            --jq '.data.repository.branchProtectionRules.nodes[] | [.id, .pattern] | @tsv' \
+          | while IFS=$'\t' read -r id pattern; do
+              if ! grep -qxF "$pattern" <<< "$branches"; then
+                echo "Deleting stale branch protection rule for '$pattern' ($id)"
+                gh api graphql -f query='
+                  mutation($id: ID!) {
+                    deleteBranchProtectionRule(input: { branchProtectionRuleId: $id }) {
+                      clientMutationId
+                    }
+                  }' -f id="$id"
+              fi
+            done
