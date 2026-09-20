@@ -27,6 +27,22 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: withastro/action@v6
+      # Dependabot-triggered runs (and any other same-repo run) use a
+      # restricted secret store; when it's not configured there, the
+      # deploy step below silently no-ops instead of failing, which
+      # masks a broken preview/production deploy behind a green check.
+      # Fork PRs legitimately never get secrets, so only enforce this
+      # for runs against this repo.
+      - name: Verify deploy credentials are configured
+        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: |
+          if [[ -z "$NETLIFY_AUTH_TOKEN" || -z "$NETLIFY_SITE_ID" ]]; then
+            echo "::error::Netlify deploy credentials are missing for this run (actor: ${{ github.actor }}, event: ${{ github.event_name }}). If this was triggered by Dependabot, add NETLIFY_AUTH_TOKEN and NETLIFY_SITE_ID under Settings > Secrets and variables > Dependabot."
+            exit 1
+          fi
       - uses: nwtgck/actions-netlify@v4.0.0
         id: netlify-deploy
         with:
