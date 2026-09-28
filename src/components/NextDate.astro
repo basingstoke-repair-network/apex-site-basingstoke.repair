@@ -40,7 +40,13 @@ const { schedule } = Astro.props;
       endTime: el.dataset.endTime ?? '',
     };
 
-    el.textContent = formatNextDateLabel(getNextOccurrence(schedule));
+    // DEMO ONLY — simulates a visitor date between the October and
+    // (cancelled) November Hatch Warren sessions, so the "next date" is
+    // shown skipping straight to December for a management preview. Revert
+    // to `getNextOccurrence(schedule)` before merging.
+    el.textContent = formatNextDateLabel(
+      getNextOccurrence(schedule, new Date('2026-10-15T12:00:00')),
+    );
     el.closest<HTMLElement>('.location-next-date')?.removeAttribute('hidden');
   });
 </script>

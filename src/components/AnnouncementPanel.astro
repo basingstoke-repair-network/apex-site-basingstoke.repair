@@ -4,7 +4,10 @@
 
 import { getCollection } from 'astro:content';
 
-const now = new Date();
+// DEMO ONLY — simulates a visitor date between the October and (cancelled)
+// November Hatch Warren sessions, so the November announcement renders for
+// a management preview. Revert to `new Date()` before merging.
+const now = new Date('2026-10-15T12:00:00');
 
 const activeAnnouncements = (await getCollection('announcements'))
   .filter(({ data }) => {
