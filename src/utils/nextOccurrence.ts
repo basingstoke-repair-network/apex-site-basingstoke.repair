@@ -15,6 +15,8 @@ export interface NextOccurrence {
   isToday: boolean;
   date: Date;
   endTime: Date;
+  /** Set when a would-be occurrence between `now` and `date` was skipped (e.g. a cancelled session). */
+  skippedMessage?: string;
 }
 
 const DAY_NAMES = [
@@ -79,6 +81,7 @@ export function getNextOccurrence(
 
   let year = now.getFullYear();
   let month = now.getMonth();
+  let skippedMessage: string | undefined;
 
   for (let i = 0; i < 12; i++) {
     // FIXME: Hatch Warren's November 2026 session is cancelled (venue
@@ -90,12 +93,19 @@ export function getNextOccurrence(
       schedule.dayOfWeek.toLowerCase() === 'saturday' &&
       schedule.weekOfMonth === '1st';
 
-    if (!isHatchWarrenNov2026) {
+    if (isHatchWarrenNov2026) {
+      skippedMessage = '⚠️ Not running in November 2026';
+    } else {
       const date = nthWeekdayOfMonth(year, month, weekday, schedule.weekOfMonth);
       const endTime = withTime(date, schedule.endTime);
 
       if (endTime >= now) {
-        return { isToday: date.toDateString() === now.toDateString(), date, endTime };
+        return {
+          isToday: date.toDateString() === now.toDateString(),
+          date,
+          endTime,
+          skippedMessage,
+        };
       }
     }
 
@@ -135,8 +145,11 @@ const DATE_FORMATTER = new Intl.DateTimeFormat('en-GB', {
  * Locations.astro).
  */
 export function formatNextDateLabel(occurrence: NextOccurrence): string {
-  if (occurrence.isToday) {
-    return `Today, until ${formatEventTime(occurrence.endTime)}`;
-  }
-  return DATE_FORMATTER.format(occurrence.date);
+  const dateLabel = occurrence.isToday
+    ? `Today, until ${formatEventTime(occurrence.endTime)}`
+    : DATE_FORMATTER.format(occurrence.date);
+
+  return occurrence.skippedMessage
+    ? `${occurrence.skippedMessage} — ${dateLabel}`
+    : dateLabel;
 }
