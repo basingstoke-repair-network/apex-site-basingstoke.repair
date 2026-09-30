@@ -2,6 +2,6 @@
   "name": "Wickes",
   "websiteUrl": "https://www.wickes.co.uk/",
   "logo": "/assets/images/supporters/wickes-logo.svg",
-  "order": 10,
+  "order": 9,
   "isActive": true
 }
