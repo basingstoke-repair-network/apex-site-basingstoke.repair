@@ -1,0 +1,24 @@
+---
+// SPDX-FileCopyrightText: 2024-2026 Basingstoke Repair Network
+// SPDX-License-Identifier: MIT
+
+import { getCollection } from 'astro:content';
+
+const now = new Date();
+
+const activeAnnouncements = (await getCollection('announcements'))
+  .filter(({ data }) => {
+    if (data.startDate && now < new Date(`${data.startDate}T00:00:00`)) return false;
+    if (data.endDate && now > new Date(`${data.endDate}T23:59:59`)) return false;
+    return true;
+  })
+  .sort((a, b) => a.data.order - b.data.order);
+---
+
+{activeAnnouncements.length > 0 && (
+  <div class="announcement-panel">
+    <div class="brn-container">
+      {activeAnnouncements.map(({ data }) => <p>{data.message}</p>)}
+    </div>
+  </div>
+)}
