@@ -4,21 +4,44 @@
 
 import { getCollection } from 'astro:content';
 
-const now = new Date();
-
-const activeAnnouncements = (await getCollection('announcements'))
-  .filter(({ data }) => {
-    if (data.startDate && now < new Date(`${data.startDate}T00:00:00`)) return false;
-    if (data.endDate && now > new Date(`${data.endDate}T23:59:59`)) return false;
-    return true;
-  })
-  .sort((a, b) => a.data.order - b.data.order);
+const announcements = (await getCollection('announcements')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
 ---
 
-{activeAnnouncements.length > 0 && (
-  <div class="announcement-panel">
+{announcements.length > 0 && (
+  // This is a statically-built site, so `startDate`/`endDate` can't be
+  // trusted against a server-rendered "now" — that would freeze to
+  // whenever the site was last built, not the visitor's actual today (see
+  // NextDate.astro for the same issue). Render hidden and let the script
+  // below decide visibility against the visitor's own clock.
+  <div class="announcement-panel" data-announcement-panel hidden>
     <div class="brn-container">
-      {activeAnnouncements.map(({ data }) => <p>{data.message}</p>)}
+      {announcements.map(({ data }) => (
+        <p data-announcement data-start-date={data.startDate} data-end-date={data.endDate}>
+          {data.message}
+        </p>
+      ))}
     </div>
   </div>
 )}
+
+<script>
+  const panel = document.querySelector<HTMLElement>('[data-announcement-panel]');
+  if (panel) {
+    const now = new Date();
+    let anyVisible = false;
+
+    panel.querySelectorAll<HTMLElement>('[data-announcement]').forEach((el) => {
+      const { startDate, endDate } = el.dataset;
+      const visible =
+        (!startDate || now >= new Date(`${startDate}T00:00:00`)) &&
+        (!endDate || now <= new Date(`${endDate}T23:59:59`));
+
+      el.hidden = !visible;
+      if (visible) anyVisible = true;
+    });
+
+    panel.hidden = !anyVisible;
+  }
+</script>
