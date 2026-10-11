@@ -24,7 +24,7 @@ jobs:
           node-version: 22
           cache: 'npm'
       - run: npm ci
-      - uses: j178/prek-action@v3.0.0
+      - uses: j178/prek-action@v3.0.1
         with:
           extra-args: --all-files --stage pre-commit
 
