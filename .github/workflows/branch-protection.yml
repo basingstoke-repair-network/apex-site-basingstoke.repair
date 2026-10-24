@@ -9,7 +9,6 @@ on:
 
 permissions:
   contents: read
-  administration: write
 
 jobs:
   apply-protection:
@@ -28,10 +27,22 @@ jobs:
             echo "matched=false" >> "$GITHUB_OUTPUT"
           fi
 
+      # The branch protection API needs admin rights on the repo, which
+      # GITHUB_TOKEN can't be granted via `permissions:` (there's no
+      # `administration` scope). Mint a short-lived token from the BRN
+      # bot GitHub App instead, which does have that permission.
+      - name: Generate app installation token
+        if: steps.match.outputs.matched == 'true'
+        id: app-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.BRN_BOT_APP_ID }}
+          private-key: ${{ secrets.BRN_BOT_APP_PRIVATE_KEY }}
+
       - name: Apply branch protection
         if: steps.match.outputs.matched == 'true'
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
           BRANCH: ${{ github.event.ref }}
         run: |
           gh api \
