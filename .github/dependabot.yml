@@ -34,3 +34,6 @@ updates:
       npm-deps:
         patterns:
           - "*"
+    ignore:
+      - dependency-name: "typescript"
+        versions: [">=6.1.0"]
