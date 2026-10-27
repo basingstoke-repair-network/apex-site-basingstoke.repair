@@ -19,7 +19,7 @@
 
       # Build the site using Nix-native NPM building
       site = let
-        nodejs = pkgs.nodejs_20;
+        nodejs = pkgs.nodejs_22;
       in
         pkgs.buildNpmPackage {
           pname = "apex-site-basingstoke-repair";
@@ -27,8 +27,9 @@
 
           src = ./.;
 
-          # Hash of the npm dependencies (you may need to update this)
-          npmDepsHash = import ./deps-hash.nix;
+          # Hash of the npm dependencies. Refresh after `package-lock.json`
+          # changes by running `nix-update --flake --version=skip site`.
+          npmDepsHash = "sha256-v8qtb/LAyDZV4eESr6mskMQnonj66Dbn+Akz6yzTM74=";
 
           npmFlags = ["--legacy-peer-deps"];
 
