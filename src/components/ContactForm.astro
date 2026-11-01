@@ -1,0 +1,223 @@
+---
+// SPDX-FileCopyrightText: 2024-2026 Basingstoke Repair Network
+// SPDX-License-Identifier: MIT
+---
+
+<div class="contact-form-container">
+  <form id="contact-form" class="contact-form" enctype="multipart/form-data">
+    <div class="form-group">
+      <label for="email" class="required">Your Email</label>
+      <input type="email" id="email" name="email" required placeholder="email@example.com" />
+    </div>
+
+    <div class="form-group">
+      <label for="subject" class="required">Enquiry type</label>
+      <select id="subject" name="subject" required>
+        <option value="" disabled selected>Please select an enquiry type...</option>
+        <option value="repair_query">Can my item be fixed?</option>
+        <option value="volunteer_interest">I want to volunteer</option>
+        <option value="general">General Inquiry</option>
+        <option value="feedback">Feedback or Suggestion</option>
+        <option value="partnership">Partnership or Sponsorship</option>
+        <option value="media">Press or Media Inquiry</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+
+    <div id="fields-repair_query" class="conditional-fields" style="display: none;">
+      <div class="form-group">
+        <label for="item_name">Item</label>
+        <input type="text" id="item_name" name="item_name" />
+      </div>
+      <div class="form-group">
+        <label for="brand_model">Brand/Model</label>
+        <input type="text" id="brand_model" name="brand_model" />
+      </div>
+      <div class="form-group">
+        <label for="item_age">Approximate age (yrs)</label>
+        <input type="text" id="item_age" name="item_age" />
+      </div>
+      <div class="form-group">
+        <label for="item_photo">Photo of item/issue</label>
+        <input type="file" id="item_photo" name="item_photo" accept="image/*" />
+      </div>
+    </div>
+
+    <div id="fields-volunteer_interest" class="conditional-fields" style="display: none;">
+      <div class="form-group">
+        <label for="primary_skill">Primary Skill</label>
+        <select id="primary_skill" name="primary_skill">
+          <option value="" disabled selected>Select skill...</option>
+          <option value="technical">Technical Repair</option>
+          <option value="admin">Admin/Org</option>
+          <option value="event">Event Support</option>
+          <option value="communication">Communication</option>
+          <option value="none">None/Willing to Learn</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="required">Which café(s) would you like to volunteer for?</label>
+        <div class="checkbox-group">
+          <label class="checkbox-item">
+            <input type="checkbox" name="cafe_preference" value="chineham" /> Chineham
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" name="cafe_preference" value="hatch_warren" /> Hatch Warren & Beggarwood
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" name="cafe_preference" value="kings_furlong" /> Kings Furlong (Coming Soon)
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" name="cafe_preference" value="any" /> Any/All
+          </label>
+          <label class="checkbox-item">
+            <input type="checkbox" name="cafe_preference" value="dont_know" /> Don't know
+          </label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="experience">Specific skills</label>
+        <p style="font-size: 0.8rem; opacity: 0.8; margin-bottom: var(--space-xs);">
+          List the skills you wish to bring to the cafe or ones that you wish to learn
+        </p>
+        <textarea id="experience" name="experience" rows="3"></textarea>
+      </div>
+    </div>
+
+    <div id="fields-feedback" class="conditional-fields" style="display: none;">
+      <div class="form-group">
+        <label for="feedback_type">Feedback Type</label>
+        <select id="feedback_type" name="feedback_type">
+          <option value="" disabled selected>Select type...</option>
+          <option value="cafes">Cafés</option>
+          <option value="website">Website</option>
+          <option value="social_media">Social Media</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="fields-partnership" class="conditional-fields" style="display: none;">
+      <div class="form-group">
+        <label for="org_name">Organization Name</label>
+        <input type="text" id="org_name" name="org_name" />
+      </div>
+      <div class="form-group">
+        <label for="partnership_type">Type of Partnership</label>
+        <select id="partnership_type" name="partnership_type">
+          <option value="" disabled selected>Select type...</option>
+          <option value="financial">Financial Sponsorship</option>
+          <option value="donation">Tool/Space Donation</option>
+          <option value="outreach">Community Outreach</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="partnership_url">Website/LinkedIn</label>
+        <input type="url" id="partnership_url" name="partnership_url" placeholder="https://..." />
+      </div>
+    </div>
+
+    <div id="fields-media" class="conditional-fields" style="display: none;">
+      <div class="form-group">
+        <label for="publication">Publication/Outlet</label>
+        <input type="text" id="publication" name="publication" />
+      </div>
+      <div class="form-group">
+        <label for="deadline">Deadline for Response</label>
+        <input type="date" id="deadline" name="deadline" />
+      </div>
+      <div class="form-group">
+        <label for="interview_format">Interview Format</label>
+        <select id="interview_format" name="interview_format">
+          <option value="" disabled selected>Select format...</option>
+          <option value="written">Written</option>
+          <option value="phone">Phone</option>
+          <option value="inperson">In-person</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="fields-other" class="conditional-fields" style="display: none;">
+      <div class="form-group">
+        <label for="other_subject">Subject</label>
+        <input type="text" id="other_subject" name="other_subject" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="message" id="message-label" class="required">Message</label>
+      <textarea id="message" name="message" rows="4" required placeholder="How can we help?"></textarea>
+    </div>
+
+    <button type="submit" class="btn-submit">Send Message</button>
+  </form>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const contactForm = document.getElementById('contact-form');
+    const subjectSelect = document.getElementById('subject');
+    const conditionalGroups = document.querySelectorAll('.conditional-fields');
+    if (!(contactForm instanceof HTMLFormElement) || !(subjectSelect instanceof HTMLSelectElement)) return;
+
+    // Fields within each conditional group that become required once
+    // that enquiry type is selected.
+    const requiredFieldsMap: Record<string, string[]> = {
+      repair_query: ['item_name'],
+      volunteer_interest: ['primary_skill', 'cafe_preference', 'experience'],
+      feedback: ['feedback_type'],
+      partnership: ['org_name', 'partnership_type', 'partnership_url'],
+      media: ['publication'],
+      other: ['other_subject'],
+    };
+
+    const updateFormVisibility = (selectedSubject: string) => {
+      const messageLabel = document.getElementById('message-label');
+      if (messageLabel) {
+        messageLabel.textContent = selectedSubject === 'repair_query' ? 'Description of issue' : 'Message';
+      }
+
+      conditionalGroups.forEach((group) => {
+        const groupId = group.id.replace('fields-', '');
+        const isVisible = groupId === selectedSubject;
+        (group as HTMLElement).style.display = isVisible ? 'flex' : 'none';
+
+        const requiredList = requiredFieldsMap[groupId] || [];
+        group.querySelectorAll('input, select, textarea').forEach((input) => {
+          const label = input.closest('.form-group')?.querySelector('label');
+
+          // The café checkboxes share a single label, so mark it
+          // required whenever the volunteer group is visible rather
+          // than per-checkbox.
+          if (input instanceof HTMLInputElement && input.name === 'cafe_preference' && groupId === 'volunteer_interest') {
+            label?.classList.add('required');
+            return;
+          }
+
+          if (isVisible && requiredList.includes(input.id)) {
+            input.setAttribute('required', 'required');
+            label?.classList.add('required');
+          } else {
+            input.removeAttribute('required');
+            label?.classList.remove('required');
+          }
+        });
+      });
+    };
+
+    subjectSelect.addEventListener('change', (e) => updateFormVisibility((e.target as HTMLSelectElement).value));
+
+    contactForm.addEventListener('submit', (e) => {
+      if (subjectSelect.value === 'volunteer_interest') {
+        const checked = contactForm.querySelectorAll('input[name="cafe_preference"]:checked');
+        if (checked.length === 0) {
+          e.preventDefault();
+          alert('Please select at least one café you would like to volunteer for.');
+        }
+      }
+    });
+
+    updateFormVisibility(subjectSelect.value);
+  });
+</script>
