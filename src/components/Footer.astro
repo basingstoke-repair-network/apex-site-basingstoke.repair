@@ -2,6 +2,8 @@
 // SPDX-FileCopyrightText: 2024-2026 Basingstoke Repair Network
 // SPDX-License-Identifier: MIT
 
+import ContactForm from './ContactForm.astro';
+
 const year = new Date().getFullYear();
 ---
 
@@ -10,9 +12,7 @@ const year = new Date().getFullYear();
     <h2>Get in touch</h2>
 
     <div class="footer-links">
-      <a href="mailto:info@basingstoke.repair">
-        📧 info@basingstoke.repair
-      </a>
+      <ContactForm />
     </div>
 
     <p>
