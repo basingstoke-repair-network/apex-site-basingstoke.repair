@@ -28,7 +28,7 @@ function formatTime(t: string) {
       {locations
         .filter((loc) => loc.data.status !== 'coming-soon')
         .map((loc) => {
-          const { name, schedule, address, teamImage, description } = loc.data;
+          const { name, schedule, closures, address, teamImage, description } = loc.data;
           const scheduleText = schedule
             ? `${schedule.weekOfMonth} ${schedule.dayOfWeek} of each month`
             : null;
@@ -59,7 +59,7 @@ function formatTime(t: string) {
               )}
 
               <p class="location-next-date" hidden={!!schedule}>
-                <strong>Next date:</strong> <NextDate schedule={schedule} />
+                <strong>Next date:</strong> <NextDate schedule={schedule} closures={closures} />
               </p>
 
               {/* Same cutoff every occurrence, so — unlike the next date

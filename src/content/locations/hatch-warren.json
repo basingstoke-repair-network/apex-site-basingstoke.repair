@@ -9,6 +9,12 @@
     "lastItemsTime": "12:30",
     "endTime": "13:00"
   },
+  "closures": [
+    {
+      "date": "2026-11-07",
+      "message": "⚠️ Not running in November 2026"
+    }
+  ],
   "address": {
     "venue": "Hatch Warren Community Centre",
     "postcode": "RG22 4XF",

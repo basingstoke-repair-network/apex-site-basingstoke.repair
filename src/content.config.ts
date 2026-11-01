@@ -30,6 +30,16 @@ const locations = defineCollection({
         endTime: z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/, 'Expected 24-hour HH:MM'),
       })
       .optional(),
+    /** One-off dates this location's recurring schedule doesn't run; the next-date calculation skips past these. */
+    closures: z
+      .array(
+        z.object({
+          date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Expected YYYY-MM-DD'),
+          /** Shown alongside the next calculated date when this closure is the most recently skipped one. */
+          message: z.string().optional(),
+        }),
+      )
+      .optional(),
     address: z
       .object({
         venue: z.string(),
