@@ -34,7 +34,7 @@ jobs:
       - name: Generate app installation token
         if: steps.match.outputs.matched == 'true'
         id: app-token
-        uses: actions/create-github-app-token@v2
+        uses: actions/create-github-app-token@v3
         with:
           app-id: ${{ secrets.BRN_BOT_APP_ID }}
           private-key: ${{ secrets.BRN_BOT_APP_PRIVATE_KEY }}
