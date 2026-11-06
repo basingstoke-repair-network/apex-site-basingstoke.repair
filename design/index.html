@@ -1154,7 +1154,7 @@ SPDX-License-Identifier: MIT
                 <span class="skill-tag">...and more</span>
             </div>
             <div class="notice">
-                <p>Sharpening and upholstery are not always available — <a href="mailto:info@basingstoke.repair">email us beforehand</a> to check.</p>
+                <p>Sharpening and upholstery are not always available — <a href="#contact?type=repair_query">email us beforehand</a> to check.</p>
             </div>
             <h3>❌ What we can't fix</h3>
             <p>Unfortunately, for safety reasons, we <strong>cannot</strong> repair items where we can't test whether
@@ -1168,7 +1168,7 @@ SPDX-License-Identifier: MIT
             <p>Or anything our volunteers consider unsafe to work on.</p>
 
             <div class="notice">
-                <p><strong>Not sure?</strong> <a href="mailto:info@basingstoke.repair">Email us beforehand</a> with
+                <p><strong>Not sure?</strong> <a href="#contact?type=repair_query">Email us beforehand</a> with
                     brief details of your item and we'll let you know if we can help</p>
             </div>
 
@@ -1358,7 +1358,7 @@ SPDX-License-Identifier: MIT
                 <h3>Ready to get involved?</h3>
                 <p>To explore volunteering with our friendly team:</p>
                 <p style="margin-top: var(--space-md);">
-                    📧 <a href="mailto:info@basingstoke.repair">info@basingstoke.repair</a>
+                    <a href="#contact?type=volunteer_interest">Contact us</a>
                 </p>
                 <p style="margin-top: var(--space-md); font-size: 0.9rem;">Or just come along to one of our sessions and
                     say hello.</p>
@@ -1673,7 +1673,38 @@ SPDX-License-Identifier: MIT
             });
 
             // Initialize on load
+            const hash = window.location.hash;
+            const queryString = hash.split('?')[1];
+            if (queryString) {
+                const params = new URLSearchParams(queryString);
+                const type = params.get('type');
+                if (type) {
+                    subjectSelect.value = type;
+                }
+            }
             updateFormVisibility(subjectSelect.value);
+
+            // Handle click on contact links to pre-fill form and scroll
+            document.addEventListener('click', (e) => {
+                const link = e.target.closest('a');
+                if (link && link.getAttribute('href') && link.getAttribute('href').startsWith('#contact?type=')) {
+                    e.preventDefault();
+                    const hash = link.getAttribute('href');
+                    const queryString = hash.split('?')[1];
+                    if (queryString) {
+                        const params = new URLSearchParams(queryString);
+                        const type = params.get('type');
+                        if (type) {
+                            subjectSelect.value = type;
+                            updateFormVisibility(type);
+                        }
+                    }
+                    const contactSection = document.getElementById('contact');
+                    if (contactSection) {
+                        contactSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            });
         });
     </script>
 </body>
