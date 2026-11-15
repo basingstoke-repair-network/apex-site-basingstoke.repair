@@ -29,7 +29,7 @@
 
           # Hash of the npm dependencies. Refresh after `package-lock.json`
           # changes by running `nix-update --flake --version=skip site`.
-          npmDepsHash = "sha256-n5jEUbO80K/S5ZcZ3V/PTcSzv/bY81tSvSG7NVCh/Xg=";
+          npmDepsHash = "sha256-oXdqesjxvSRIR+o36/OZRctDndYuYmu4nnYRdYaq+7Q=";
 
           npmFlags = ["--legacy-peer-deps"];
 
