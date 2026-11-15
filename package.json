@@ -21,15 +21,15 @@
   "author": "Basingstoke Repair Network",
   "license": "MIT",
   "dependencies": {
-    "astro": "^7.4.7"
+    "astro": "^7.4.11"
   },
   "devDependencies": {
-    "@playwright/test": "^1.64.1",
+    "@playwright/test": "^1.65.0",
     "@types/node": "^26.6.6",
-    "@typescript-eslint/parser": "^8.72.1",
+    "@typescript-eslint/parser": "^8.72.2",
     "eslint": "^10.14.0",
     "eslint-plugin-astro": "^3.2.1",
-    "prettier": "^3.9.10",
+    "prettier": "^3.10.1",
     "typescript": "^6.0.3"
   }
 }
