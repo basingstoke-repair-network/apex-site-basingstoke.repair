@@ -67,7 +67,7 @@
         program = let
           inherit (pkgs.lib) getExe;
           server = pkgs.writeShellScriptBin "server" ''
-            ${getExe pkgs.python3} -m http.server 8080 --directory ${site}""
+            ${getExe pkgs.python3} -m http.server 8080 --directory ${site}
           '';
         in
           getExe server;
