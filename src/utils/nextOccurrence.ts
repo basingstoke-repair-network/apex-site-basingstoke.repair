@@ -10,6 +10,13 @@ export interface RepairCafeSchedule {
   endTime: string;
 }
 
+export interface ClosureDate {
+  /** YYYY-MM-DD */
+  date: string;
+  /** Shown alongside the next calculated date when this is the most recently skipped closure. */
+  message?: string;
+}
+
 export interface NextOccurrence {
   /** True when the computed occurrence falls on today's date. */
   isToday: boolean;
@@ -66,12 +73,21 @@ function withTime(date: Date, time: string): Date {
   return result;
 }
 
+function toDateKey(date: Date): string {
+  const year = date.getFullYear();
+  const month = (date.getMonth() + 1).toString().padStart(2, '0');
+  const day = date.getDate().toString().padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
 /**
  * Walks forward month by month from `now` until it finds the next occurrence
- * of the recurring schedule (e.g. "3rd Saturday") that hasn't finished yet.
+ * of the recurring schedule (e.g. "3rd Saturday") that hasn't finished yet,
+ * skipping any date listed in `closures`.
  */
 export function getNextOccurrence(
   schedule: RepairCafeSchedule,
+  closures: ClosureDate[] = [],
   now: Date = new Date(),
 ): NextOccurrence {
   const weekday = DAY_NAMES.indexOf(schedule.dayOfWeek.toLowerCase());
@@ -84,19 +100,12 @@ export function getNextOccurrence(
   let skippedMessage: string | undefined;
 
   for (let i = 0; i < 12; i++) {
-    // FIXME: Hatch Warren's November 2026 session is cancelled (venue
-    // unavailable). Hardcoded skip for the 1st-Saturday schedule that month —
-    // delete this block once November 2026 has passed.
-    const isHatchWarrenNov2026 =
-      year === 2026 &&
-      month === 10 &&
-      schedule.dayOfWeek.toLowerCase() === 'saturday' &&
-      schedule.weekOfMonth === '1st';
+    const date = nthWeekdayOfMonth(year, month, weekday, schedule.weekOfMonth);
+    const closure = closures.find((c) => c.date === toDateKey(date));
 
-    if (isHatchWarrenNov2026) {
-      skippedMessage = '⚠️ Not running in November 2026';
+    if (closure) {
+      skippedMessage = closure.message;
     } else {
-      const date = nthWeekdayOfMonth(year, month, weekday, schedule.weekOfMonth);
       const endTime = withTime(date, schedule.endTime);
 
       if (endTime >= now) {

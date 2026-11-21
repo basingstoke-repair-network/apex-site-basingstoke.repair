@@ -2,13 +2,14 @@
 // SPDX-FileCopyrightText: 2024-2026 Basingstoke Repair Network
 // SPDX-License-Identifier: MIT
 
-import type { RepairCafeSchedule } from '../utils/nextOccurrence';
+import type { ClosureDate, RepairCafeSchedule } from '../utils/nextOccurrence';
 
 interface Props {
   schedule?: RepairCafeSchedule;
+  closures?: ClosureDate[];
 }
 
-const { schedule } = Astro.props;
+const { schedule, closures = [] } = Astro.props;
 ---
 
 {schedule ? (
@@ -24,13 +25,14 @@ const { schedule } = Astro.props;
     data-week-of-month={schedule.weekOfMonth}
     data-start-time={schedule.startTime}
     data-end-time={schedule.endTime}
+    data-closures={JSON.stringify(closures)}
   ></span>
 ) : (
   <span class="next-date next-date-tbd">TBD</span>
 )}
 
 <script>
-  import { getNextOccurrence, formatNextDateLabel, type RepairCafeSchedule } from '../utils/nextOccurrence';
+  import { getNextOccurrence, formatNextDateLabel, type ClosureDate, type RepairCafeSchedule } from '../utils/nextOccurrence';
 
   document.querySelectorAll<HTMLElement>('[data-next-date]').forEach((el) => {
     const schedule: RepairCafeSchedule = {
@@ -39,8 +41,9 @@ const { schedule } = Astro.props;
       startTime: el.dataset.startTime ?? '',
       endTime: el.dataset.endTime ?? '',
     };
+    const closures: ClosureDate[] = JSON.parse(el.dataset.closures ?? '[]');
 
-    el.textContent = formatNextDateLabel(getNextOccurrence(schedule));
+    el.textContent = formatNextDateLabel(getNextOccurrence(schedule, closures));
     el.closest<HTMLElement>('.location-next-date')?.removeAttribute('hidden');
   });
 </script>
