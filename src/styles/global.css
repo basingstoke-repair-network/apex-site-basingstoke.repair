@@ -655,12 +655,34 @@ img {
   color: var(--color-primary);
 }
 
+/* Swiper's own stylesheet loads non-render-blocking (see BaseLayout),
+   so these layout-critical rules — copied from swiper-bundle.min.css —
+   are inlined here to avoid a layout shift when it arrives late and
+   the wrapper/slides jump from static block flow into their flex/
+   absolute positions. */
+.gallery-swiper .swiper-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  display: flex;
+  box-sizing: content-box;
+}
+
+.gallery-swiper .swiper-slide {
+  flex-shrink: 0;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
 .gallery-swiper {
   width: 100%;
   height: 330px;
   border-radius: var(--radius-lg);
   overflow: hidden;
   background: var(--color-gray);
+  position: relative;
 }
 
 @media (min-width: 1024px) {
