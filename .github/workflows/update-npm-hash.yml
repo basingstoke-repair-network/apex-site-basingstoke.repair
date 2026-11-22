@@ -5,6 +5,12 @@
 name: Update npm deps hash
 
 on:
+  push:
+    branches:
+      - live
+    paths:
+      - package.json
+      - package-lock.json
   schedule:
     - cron: '0 6 * * *'
   workflow_dispatch:
@@ -40,7 +46,7 @@ jobs:
             exit 0
           fi
 
-          branch="chore/update-npm-hash-$(date +%Y%m%d)"
+          branch="chore/update-npm-hash-$(date +%Y%m%d-%H%M%S)"
 
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -52,8 +58,9 @@ jobs:
           pr_url="$(gh pr create \
             --base live \
             --head "$branch" \
+            --reviewer shymega \
             --title "chore: update npmDepsHash in flake.nix" \
-            --body "Automated daily refresh of the npm dependencies hash used by \`buildNpmPackage\` in \`flake.nix\`.")"
+            --body "Automated refresh of the npm dependencies hash used by \`buildNpmPackage\` in \`flake.nix\` after Node.js package file changes.")"
 
           # Merges automatically as a merge commit once the other required
           # checks (build, pre-commit, etc.) pass on this PR.
