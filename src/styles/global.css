@@ -294,7 +294,18 @@ img {
 .hero-slide {
   width: 100%;
   height: clamp(420px, 60vh, 700px);
-  background-image: var(--hero-bg-mobile);
+  /* Plain-url fallback first for browsers that don't understand
+     image-set(), then the avif/webp/jpg image-set — browsers that
+     parse the second declaration use it, others keep the fallback
+     (an invalid value here can't be expressed via a custom property,
+     since var() substitution happens after the cascade has already
+     picked the winning declaration). */
+  background-image: url('/assets/images/hero/textile-repairs-mobile.jpg');
+  background-image: image-set(
+    url('/assets/images/hero/textile-repairs-mobile.avif') type('image/avif'),
+    url('/assets/images/hero/textile-repairs-mobile.webp') type('image/webp'),
+    url('/assets/images/hero/textile-repairs-mobile.jpg') type('image/jpeg')
+  );
   background-size: cover;
   background-position: center;
   background-color: var(--color-primary-dark);
@@ -306,7 +317,12 @@ img {
 
 @media (min-width: 640px) {
   .hero-slide {
-    background-image: var(--hero-bg-desktop);
+    background-image: url('/assets/images/hero/textile-repairs.jpg');
+    background-image: image-set(
+      url('/assets/images/hero/textile-repairs.avif') type('image/avif'),
+      url('/assets/images/hero/textile-repairs.webp') type('image/webp'),
+      url('/assets/images/hero/textile-repairs.jpg') type('image/jpeg')
+    );
   }
 }
 
