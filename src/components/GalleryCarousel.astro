@@ -32,7 +32,8 @@ const { images, altPrefix, swiperClass } = Astro.props;
 
 <script define:vars={{ swiperClass }}>
   document.addEventListener('DOMContentLoaded', () => {
-    if (typeof window.Swiper === 'undefined') return;
+    const el = document.querySelector(`.${swiperClass}`);
+    if (!el) return;
 
     const prefersReducedMotion = window.matchMedia(
       '(prefers-reduced-motion: reduce)'
@@ -57,29 +58,51 @@ const { images, altPrefix, swiperClass } = Astro.props;
       });
     }
 
-    new window.Swiper(`.${swiperClass}`, {
-      loop: true,
-      autoplay: prefersReducedMotion
-        ? false
-        : { delay: 4000, disableOnInteraction: false, pauseOnMouseEnter: true },
-      keyboard: { enabled: true, onlyInViewport: true },
-      pagination: {
-        el: `.${swiperClass} .swiper-pagination`,
-        clickable: true,
-      },
-      navigation: {
-        nextEl: `.${swiperClass} .swiper-button-next`,
-        prevEl: `.${swiperClass} .swiper-button-prev`,
-      },
-      a11y: {
-        prevSlideMessage: 'Previous photo',
-        nextSlideMessage: 'Next photo',
-        enabled: true,
-      },
-      on: {
-        init: loadNearbySlides,
-        slideChange: loadNearbySlides,
-      },
-    });
+    function initSwiper() {
+      if (typeof window.Swiper === 'undefined') return;
+
+      new window.Swiper(el, {
+        loop: true,
+        autoplay: prefersReducedMotion
+          ? false
+          : { delay: 4000, disableOnInteraction: false, pauseOnMouseEnter: true },
+        keyboard: { enabled: true, onlyInViewport: true },
+        pagination: {
+          el: `.${swiperClass} .swiper-pagination`,
+          clickable: true,
+        },
+        navigation: {
+          nextEl: `.${swiperClass} .swiper-button-next`,
+          prevEl: `.${swiperClass} .swiper-button-prev`,
+        },
+        a11y: {
+          prevSlideMessage: 'Previous photo',
+          nextSlideMessage: 'Next photo',
+          enabled: true,
+        },
+        on: {
+          init: loadNearbySlides,
+          slideChange: loadNearbySlides,
+        },
+      });
+    }
+
+    // Each page can render several of these carousels; only pay the
+    // network/JS cost of loading a carousel's slides once it's about
+    // to scroll into view, rather than all of them on page load.
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((entry) => entry.isIntersecting)) {
+            observer.disconnect();
+            initSwiper();
+          }
+        },
+        { rootMargin: '200px' }
+      );
+      observer.observe(el);
+    } else {
+      initSwiper();
+    }
   });
 </script>
