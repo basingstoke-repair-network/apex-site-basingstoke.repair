@@ -28,18 +28,24 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://basingst
 
     <!-- Hero background is a CSS background-image, so the LCP element
          won't be fetched at high priority without this preload hint.
-         Matches the mobile/desktop split in .hero-slide (global.css). -->
+         Matches the mobile/desktop split and avif/webp/jpg image-set
+         in .hero-slide (global.css). type="image/avif" makes browsers
+         that can't decode avif skip this preload rather than fetch a
+         file they'll discard; they fall back to discovering the jpg
+         through normal CSS parsing instead. -->
     <link
       rel="preload"
       as="image"
-      href="/assets/images/hero/textile-repairs-mobile.jpg"
+      type="image/avif"
+      href="/assets/images/hero/textile-repairs-mobile.avif"
       fetchpriority="high"
       media="(max-width: 639px)"
     />
     <link
       rel="preload"
       as="image"
-      href="/assets/images/hero/textile-repairs.jpg"
+      type="image/avif"
+      href="/assets/images/hero/textile-repairs.avif"
       fetchpriority="high"
       media="(min-width: 640px)"
     />
